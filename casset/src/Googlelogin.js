@@ -3,8 +3,6 @@ import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const localStorageKey = "lotion-v1";
-
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState();
