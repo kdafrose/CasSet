@@ -7,32 +7,33 @@ function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState();
 
+    // Css for Google sign in button
     const GoogleButton = styled.button`
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.54);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-    transition: box-shadow 0.2s ease-in-out;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
-  }
-
-  & > svg {
-    margin-right: 0.5rem;
-  }
-`;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.54);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  
+    &:hover {
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+      transition: box-shadow 0.2s ease-in-out;
+    }
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
+    }
+  
+    & > svg {
+      margin-right: 0.5rem;
+    }
+    `;
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
@@ -94,20 +95,10 @@ function GoogleSignInAuthorization() {
             ) : (
                 <div id="container">
                     <div id="main-container">
-                        <button onClick={() => login()} style={{ marginLeft: '550px', paddingTop: '150px', paddingTop: '0px', marginTop: '150px' }}>
-                            <GoogleButton>      <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="1"
-                                height="18"
-                                viewBox="0 0 18 18"
-                            >
-                                <path fill="none" d="M0 0h18v18H0z" />
-                            </svg>
+                        <GoogleButton onClick={() => login()} style={{width:"15%"}}> 
                                 Sign in with Google &nbsp;
-                                <span role="img" aria-label="email">
-                                    ✉
-                                </span></GoogleButton>
-                        </button>
+                                <div class ="google-logo"></div>
+                        </GoogleButton>
                     </div>
                 </div>
             )
