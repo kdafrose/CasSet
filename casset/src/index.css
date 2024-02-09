@@ -14,39 +14,41 @@ code {
 
 .google-logo {
   position: relative;
-  border-top: 12px solid #EA4335;
-  border-right: 12px solid #4285F4;
-  border-bottom: 12px solid #34A853;
-  border-left: 12px solid #FBBC05;
+  border-top: 8px solid #EA4335;
+  border-right: 8px solid #4285F4;
+  border-bottom: 8px solid #34A853;
+  border-left: 8px solid #FBBC05;
   border-radius: 50%;
   background-color: #FFFFFF;
-  width: 36px; /* Adjust the width and height accordingly */
-  height: 36px;
+  width: 24px; /* Adjust the width and height accordingly */
+  height: 24px;
   padding: 0;
-  margin: 10vh auto 0;
+  margin-right: 10px;
 }
 
 .google-logo::before {
   content: "";
   position: absolute;
   top: 50%;
-  right: -10px; /* Adjust the position accordingly */
+  right: -6px; /* Adjust the position accordingly */
   transform: translateY(-50%);
-  width: 28px; /* Adjust the width accordingly */
-  height: 12px;
+  width: 16px; /* Adjust the width accordingly */
+  height: 7px;
   background: #4285F4;
 }
 
 .google-logo::after {
   content: "";
   position: absolute;
-  border-top: 24px solid transparent; /* Adjust the border size accordingly */
-  border-right: 24px solid #FFFFFF; /* Adjust the border size accordingly */
-  top: -12px; /* Adjust the position accordingly */
-  right: -12px; /* Adjust the position accordingly */
+  border-top: 16px solid transparent; /* Adjust the border size accordingly */
+  border-right: 16px solid #FFFFFF; /* Adjust the border size accordingly */
+  top: -8px; /* Adjust the position accordingly */
+  right: -8px; /* Adjust the position accordingly */
   width: 0;
   height: 0;
 }
+
+
 
 
 

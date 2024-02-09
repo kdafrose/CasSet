@@ -6,13 +6,14 @@ import styled from 'styled-components';
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState();
-
+    const [signin, setSignin] = useState(false); // true is if theyre signed in, default is not signed in  
+    
     // Css for Google sign in button
     const GoogleButton = styled.button`
     background-color: #fff;
     color: rgba(0, 0, 0, 0.54);
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
+    border-radius: 30px;
     font-size: 14px;
     font-weight: 500;
     padding: 0.8rem 1rem;
@@ -25,14 +26,6 @@ function GoogleSignInAuthorization() {
       transition: box-shadow 0.2s ease-in-out;
     }
   
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.3);
-    }
-  
-    & > svg {
-      margin-right: 0.5rem;
-    }
     `;
 
     const login = useGoogleLogin({
@@ -65,7 +58,6 @@ function GoogleSignInAuthorization() {
         setProfile(null);
     };
 
-    const [signin, setSignin] = useState(false); // true is if theyre signed in, default is not signed in  
 
     useEffect(() => {
 
@@ -78,26 +70,21 @@ function GoogleSignInAuthorization() {
 
     return (
         <div>
-            <h2></h2>
-            <br />
-            <br />
+            <h2 style ={{display:"flex", justifyContent:"center"}}>Bullet Fragment Bih</h2>
             {profile ? (
                 <div>
                     <div id="container"></div>
-                    <div style={{ postion: "relative", marginTop: "-100px", marginLeft: "1200px", fontSize: "13px" }}>
-                        <p>Signed In: {profile.name}</p>
-                        <button style={{ marginTop: "-90px", fontFamily: "Geneva" }} onClick={logOut}>(Log out)</button>
-                        <br />
-                        <br />
+                    <div style={{display:"flex", justifyContent:"flex-end", alignItems:"center", flexDirection:"column"}}>
+                        <p>{profile.name}</p>
+                        <button onClick={logOut} style={{width:"5%", height:"5%"}}>Log out</button>
                     </div>
                 </div>
-
             ) : (
-                <div id="container">
-                    <div id="main-container">
-                        <GoogleButton onClick={() => login()} style={{width:"15%"}}> 
-                                Sign in with Google &nbsp;
+                <div id="container" >
+                    <div id="main-container" style={{display:"flex", width:"100%", justifyContent:"center"}}>
+                        <GoogleButton onClick={() => login()} style={{width:"13%"}}> 
                                 <div class ="google-logo"></div>
+                                Sign in with Google &nbsp;
                         </GoogleButton>
                     </div>
                 </div>
