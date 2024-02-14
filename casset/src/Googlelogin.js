@@ -70,7 +70,7 @@ function GoogleSignInAuthorization() {
 
     return (
         <div>
-            <h2 style ={{display:"flex", justifyContent:"center"}}>Bullet Fragment Bih</h2>
+            <h2 style ={{display:"flex", justifyContent:"center"}}>CasSet</h2>
             {profile ? (
                 <div>
                     <div id="container"></div>
