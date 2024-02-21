@@ -81,7 +81,8 @@ function GoogleSignInAuthorization() {
                     </div>
                 </div>
             ) : (
-                <div id="google-login-div" style={{flex:"1"}}>
+                <div id="google-login-div" style={{flexDirection:"column",flex:"1"}}>
+                    <img src="https://bestanimations.com/media/dancers/127847890funny-panda-dancing.gif" style={{height:"10%"}}></img>
                     <GoogleButton onClick={() => login()} style={{width:"23%"}}> 
                             <div class ="google-logo"></div>
                             Sign in with Google &nbsp;

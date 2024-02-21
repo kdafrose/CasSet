@@ -3,9 +3,9 @@ import Googlelogin from './Googlelogin';
 
 function App() {
   return (
-  <div style={{height:"100vh"}}>
+  <div style={{height:"90vh"}}>
 
-    <div id = "Nav-bar" style ={{height:"8%"}}>
+    <div id = "Nav-bar" style ={{height:"10vh"}}>
       <h2 style={{}}>CasSet</h2>
     </div>
 
