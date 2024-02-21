@@ -30,8 +30,6 @@ export default function SongSearch(){
   
     }, [])
   
-    // Search time :)
-  
     async function search(){
       console.log("Search for " + searchInput);
   
