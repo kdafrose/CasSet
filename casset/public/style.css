@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5dcf5
+  }
+
+  #everything-box {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: stretch
+  }
+
+  #left-side {
+    display: flex;
+    flex-direction: column;
+    flex: 5
+  }
+
+  #top-box {
+    display: flex;
+    flex-direction: row
+  }
+
+  #import-button {
+    
+  }
+
+  #middle-box {
+    flex: 2
+  }
+
+  #bottom-box {
+    background-color: #edb9e5;
+    display: flex;
+    flex-direction: column
+  }
+
+  #groups-box {
+    background-color: #db86bd;
+  }
+
+  #right-side {
+    display: flex;
+    flex-direction: column;
+    flex: 1
+  }
+
+  #account-menu {
+    background-color: #db86bd;
+  }
+
+  #friends-box {
+    background-color: #edb9e5;
+    flex: 2
+  }
+  
+body.dark-theme {
+    background: #222222;
+    color: white;
+    
+  }
+  
+  body.dark-theme button {
+    background-color: #222222;
+    color: white;
+  }
+  
+  body.dark-theme button:hover {
+    background-color: #454545;
+  }
+  
+  #placeholder-box {
+    flex:1;
+  }
+  
+  #title-box {
+    flex:2;
+  }
+  
+  #icons-box {
+    flex:1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  
+  button {
+    flex: 1;
+    margin: 20px;
+    align-self: stretch;
+    background-color: #edceed;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5rem; 
+  }
+  
+  button:hover {
+    background-color: #edb9e5;
+  }
