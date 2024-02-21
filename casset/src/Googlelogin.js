@@ -20,6 +20,7 @@ function GoogleSignInAuthorization() {
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
   
     &:hover {
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
@@ -61,7 +62,7 @@ function GoogleSignInAuthorization() {
 
     useEffect(() => {
 
-        const mainDiv = document.getElementById("main-container");
+        const mainDiv = document.getElementById("google-login-div");
         if (!signin) {
             mainDiv.classList.toggle("hidden");
         }
@@ -69,27 +70,30 @@ function GoogleSignInAuthorization() {
     }, signin)
 
     return (
-        <div>
-            <h2 style ={{display:"flex", justifyContent:"center"}}>CasSet</h2>
+        <div id ="login-container" style ={{width:"100%", height:"100%",display:"flex"}}>
+
             {profile ? (
-                <div>
-                    <div id="container"></div>
+                // div for logout button
+                <div id ="logout-button" style ={{flex:"1"}}>
                     <div style={{display:"flex", justifyContent:"flex-end", alignItems:"center", flexDirection:"column"}}>
                         <p>{profile.name}</p>
                         <button onClick={logOut} style={{width:"5%", height:"5%"}}>Log out</button>
                     </div>
                 </div>
             ) : (
-                <div id="container" >
-                    <div id="main-container" style={{display:"flex", width:"100%", justifyContent:"center"}}>
-                        <GoogleButton onClick={() => login()} style={{width:"13%"}}> 
-                                <div class ="google-logo"></div>
-                                Sign in with Google &nbsp;
-                        </GoogleButton>
-                    </div>
+                <div id="google-login-div" style={{flex:"1"}}>
+                    <GoogleButton onClick={() => login()} style={{width:"23%"}}> 
+                            <div class ="google-logo"></div>
+                            Sign in with Google &nbsp;
+                    </GoogleButton>
                 </div>
             )
             }
+
+            <div id = "gif-div" style={{flex:"1"}}>
+                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0afde9f2-c206-496e-b9c4-5b251f64729a/dg8oecb-c7d0d497-d086-4471-9c18-221821587f30.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzBhZmRlOWYyLWMyMDYtNDk2ZS1iOWM0LTViMjUxZjY0NzI5YVwvZGc4b2VjYi1jN2QwZDQ5Ny1kMDg2LTQ0NzEtOWMxOC0yMjE4MjE1ODdmMzAuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.aIyOfJLYrZUI5_6XDWkzvGxQyAP-w-oY3AhOpNRnsMo" alt="pls work" style ={{height:"40%"}}></img>
+            </div>
+
         </div >
     );
 }
