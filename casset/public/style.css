@@ -2,62 +2,59 @@ body {
     margin: 0;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    border: 5px solid pink
+    background: #f5dcf5
   }
 
   #everything-box {
     height: 100%;
     display: flex;
     flex-direction: row;
-    border: 1px solid red;
     flex-grow: 1;
     align-items: stretch
   }
 
   #left-side {
-    border: 1px solid blue;
     display: flex;
     flex-direction: column;
     flex: 5
   }
 
   #top-box {
-    border: 1px solid pink;
     display: flex;
     flex-direction: row
   }
 
   #import-button {
-    border: 1px solid yellow
+    
   }
 
   #middle-box {
-    border: 1px solid pink
+    flex: 2
   }
 
   #bottom-box {
-    border: 1px solid pink;
+    background-color: #edb9e5;
     display: flex;
     flex-direction: column
   }
 
   #groups-box {
-    border: 1px solid orange
+    background-color: #db86bd;
   }
 
   #right-side {
-    border: 1px solid blue;
     display: flex;
     flex-direction: column;
     flex: 1
   }
 
   #account-menu {
-    border: 1px solid orange
+    background-color: #db86bd;
   }
 
   #friends-box {
-    border: 1px solid orange
+    background-color: #edb9e5;
+    flex: 2
   }
   
 body.dark-theme {
@@ -93,8 +90,9 @@ body.dark-theme {
   
   button {
     flex: 1;
+    margin: 20px;
     align-self: stretch;
-    background-color: white;
+    background-color: #edceed;
     border: none;
     color: black;
     text-align: center;
@@ -104,5 +102,5 @@ body.dark-theme {
   }
   
   button:hover {
-    background-color: gainsboro;
+    background-color: #edb9e5;
   }
