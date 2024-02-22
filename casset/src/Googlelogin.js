@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { googleLogout, useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import styled from 'styled-components';
+import SpotifyConnect from './SpotifyConnect';
 
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState();
     const [signin, setSignin] = useState(false); // true is if theyre signed in, default is not signed in  
-    
+    const [showSpotifyConnect, setShowSpotifyConnect] = useState(false);
+
     // Css for Google sign in button
     const GoogleButton = styled.button`
     background-color: #fff;
@@ -33,6 +35,7 @@ function GoogleSignInAuthorization() {
         onSuccess: (codeResponse) => {
             setUser(codeResponse);
             setSignin(true);
+            setShowSpotifyConnect(true); // showSpotifyConnect to true when logged in
         },
         onError: (error) => console.log('Login Failed:', error),
     });
@@ -57,6 +60,7 @@ function GoogleSignInAuthorization() {
         googleLogout();
         setUser(null);
         setProfile(null);
+        setShowSpotifyConnect(false); // showSpotifyConnect to false when logged out
     };
 
 
@@ -73,14 +77,16 @@ function GoogleSignInAuthorization() {
         <div id ="login-container" style ={{width:"100%", height:"100%",display:"flex"}}>
 
             {profile ? (
-                // div for logout button
+                // div for logout button and SpotifyConnect button
                 <div id ="logout-button" style ={{flex:"1"}}>
                     <div style={{display:"flex", justifyContent:"flex-end", alignItems:"center", flexDirection:"column"}}>
                         <p>{profile.name}</p>
                         <button onClick={logOut} style={{width:"5%", height:"5%"}}>Log out</button>
+                        {showSpotifyConnect && <SpotifyConnect />} {/* Show SpotifyConnect conditionally */}
                     </div>
                 </div>
             ) : (
+                // div for Google login button
                 <div id="google-login-div" style={{flexDirection:"column",flex:"1"}}>
                     <img src="https://bestanimations.com/media/dancers/127847890funny-panda-dancing.gif" style={{height:"10%"}}></img>
                     <GoogleButton onClick={() => login()} style={{width:"23%"}}> 

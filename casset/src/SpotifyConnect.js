@@ -31,24 +31,24 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 const SpotifyConnect = () => {
   // Css for Spotify connect button
   const SpotifyButton = styled.button`
-   background-color: #fff;
-   color: rgba(0, 0, 0, 0.54);
-   border: 1px solid rgba(0, 0, 0, 0.12);
-   border-radius: 30px;
-   font-size: 14px;
-   font-weight: 500;
-   padding: 0.8rem 1rem;
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
- 
-   &:hover {
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-    transition: box-shadow 0.2s ease-in-out;
-   }
-   
-   `;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.54);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.2s ease-in-out;
+  }
+  
+  `;
   
   useEffect(() => {
     if (window.location.hash) {
