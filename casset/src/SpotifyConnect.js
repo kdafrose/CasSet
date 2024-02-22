@@ -29,9 +29,9 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 };
 
 const SpotifyConnect = () => {
-   // Css for Google sign in button
-   const SpotifyButton = styled.button
-   `background-color: #fff;
+  // Css for Spotify connect button
+  const SpotifyButton = styled.button`
+   background-color: #fff;
    color: rgba(0, 0, 0, 0.54);
    border: 1px solid rgba(0, 0, 0, 0.12);
    border-radius: 30px;
@@ -44,11 +44,13 @@ const SpotifyConnect = () => {
    justify-content: center;
  
    &:hover {
-     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-     transition: box-shadow 0.2s ease-in-out;
-   }`;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+    transition: box-shadow 0.2s ease-in-out;
+   }
+   
+   `;
   
-    useEffect(() => {
+  useEffect(() => {
     if (window.location.hash) {
       const { access_token, expires_in, token_type } =
         getReturnedParamsFromSpotifyAuth(window.location.hash);
@@ -68,7 +70,7 @@ const SpotifyConnect = () => {
 
   return (
     <div>
-      <SpotifyButton onClick={handleLogin}>connect with spotify</SpotifyButton>
+      <SpotifyButton onClick={handleLogin}>Connect with Spotify</SpotifyButton>
     </div>
   );
 };
