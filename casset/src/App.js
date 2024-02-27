@@ -5,8 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SongSearch from './components/SongSearch';
 import Home from './components/Home';
 import CreatePlaylist from './components/CreatePlaylist';
+import Googlelogin from './Googlelogin';
 
 function App() {
+  //const [isLoading, setIsLoading] = useState(true);
+
   return (
     <BrowserRouter>
       <Routes>
