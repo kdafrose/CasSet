@@ -80,7 +80,8 @@ export default function SongSearch(){
       })
       
     }
-  
+
+    // The below only works if we log in with Spotify I think which is something else
     async function userUpdate(){
       // var userIDRetrieval = {
       //   method: 'GET',

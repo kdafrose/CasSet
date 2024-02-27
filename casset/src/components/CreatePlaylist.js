@@ -4,8 +4,8 @@ import {Container, InputGroup, FormControl, Button} from 'react-bootstrap'
 const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
-const params = new URLSearchParams(window.location.search);
-const code = params.get("code");
+// const params = new URLSearchParams(window.location.search);
+// const code = params.get("code");
 
 export default function CreatePlaylist() {
     const [playlistName, setPlaylistName] = useState("");
@@ -27,42 +27,6 @@ export default function CreatePlaylist() {
         .then(data => setAccessToken(data.access_token))
     
     }, [])
-
-    async function redirectToAuthCodeFlow(CLIENT_ID) {
-        const verifier = generateCodeVerifier(128);
-        const challenge = await generateCodeChallenge(verifier);
-    
-        localStorage.setItem("verifier", verifier);
-    
-        const params = new URLSearchParams();
-        params.append("client_id", CLIENT_ID);
-        params.append("response_type", code);
-        params.append("redirect_uri", "http://localhost:3000/");
-        params.append("scope", "user-read-private user-read-email playlist-modify-public");
-        params.append("code_challenge_method", "S256");
-        params.append("code_challenge", challenge);
-    
-        document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
-    }
-
-    function generateCodeVerifier(length) {
-        let text = '';
-        let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    
-        for (let i = 0; i < length; i++) {
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-        return text;
-    }
-    
-    async function generateCodeChallenge(codeVerifier) {
-        const data = new TextEncoder().encode(codeVerifier);
-        const digest = await window.crypto.subtle.digest('SHA-256', data);
-        return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=+$/, '');
-    }
 
     async function makePlaylist() {
         if(playlistName.trim() === ""){
