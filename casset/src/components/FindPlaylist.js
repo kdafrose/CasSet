@@ -1,69 +1,60 @@
 import {useState, useEffect} from 'react'
 import {Container, InputGroup, FormControl, Button} from 'react-bootstrap'
 
-// USER_ID is hard_coded I'd have to do this myself 
 const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
-// const params = new URLSearchParams(window.location.search);
-// const code = params.get("code");
 
-export default function CreatePlaylist() {
-    const [playlistName, setPlaylistName] = useState("");
+export default function FindPlaylist() {
+    const [userSearched, setUserSearched] = useState("");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
 
-    async function makePlaylist() {
-        if(playlistName.trim() === ""){
-            console.log("Please input a name for your playlist.");
+    async function searchForPlaylists() {
+        if(userSearched.trim() === ""){
+            console.log("Enter a user's name");
             return;
         }
 
         var playlistParams = {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type' : 'application/json',
                 'Authorization' : 'Bearer ' + accessToken
             },
-            body: JSON.stringify({ 
-                "name": playlistName,
-                "description": 'made with CasSet',
-                "public" : true,
-            })
         };
         
         var playlistCreate = await fetch('https://api.spotify.com/v1/users/' + USER_ID + '/playlists', playlistParams)
             .then(response => response.json())
             .then(data => {
-                console.log("The owner of this playlist is: " + data.owner.display_name);
-                console.log("The description of said playlist is: " + data.description);
-                console.log("The ID for the playlist is: " + data.id);
-                console.log("The href (super useful) is: " + data.href);
-
+                console.log("The name of the playlist is: " + data.items[3].name);
             })
     }
 
+    // TO DO:
+    // USER_ID is hardcoded: find a way to get that from the /v1/me API call
+    //be able to display playlists in a more readable way: console.log is not a good way of doing that lol
 
     return(
         <div>
             <Container>
                 <InputGroup className='mb-3' size='lg'>
                     <FormControl
-                        placeholder="Playlist Name"
+                        placeholder="Enter User Name"
                         type="input"
                         onClick={event => {
                             if(event.key === "Enter"){
-                            makePlaylist();
+                                searchForPlaylists();
                             }
                         }}
                         onChange={event => {
-                            setPlaylistName(event.target.value);
-                            console.log(playlistName);
+                            setUserSearched(event.target.value);
+                            console.log(userSearched);
                         }}
                     />
-                    <Button onClick={makePlaylist}>
-                        Make!
+                    <Button onClick={searchForPlaylists}>
+                        Find the playlists
                     </Button>
                 </InputGroup>
             </Container>

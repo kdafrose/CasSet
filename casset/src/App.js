@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SongSearch from './components/SongSearch';
 import Home from './components/Home';
 import CreatePlaylist from './components/CreatePlaylist';
+import FindPlaylist from './components/FindPlaylist';
 
 function App() {
   //const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
         <Route path="/createplaylist" element={<CreatePlaylist/>}/>
         <Route path="/song" element={<SongSearch/>}/>
+        <Route path="/findplaylist" element={<FindPlaylist/>}/>
       </Routes>
     </BrowserRouter>
   )
