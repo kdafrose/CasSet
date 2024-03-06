@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from 'styled-components';
+import '../App.css';
 
 const CLIENT_ID = "21fea0db3247431798d002572894627c"; 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
@@ -19,7 +19,7 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
   const stringAfterHashtag = hash.substring(1);
   const paramsInUrl = stringAfterHashtag.split("&");
   const paramsSplitUp = paramsInUrl.reduce((accumulater, currentValue) => {
-    console.log(currentValue);
+    //console.log(currentValue);
     const [key, value] = currentValue.split("=");
     accumulater[key] = value;
     return accumulater;
@@ -30,25 +30,6 @@ const getReturnedParamsFromSpotifyAuth = (hash) => {
 
 const SpotifyConnect = () => {
   // Css for Spotify connect button
-  const SpotifyButton = styled.button`
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.54);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
-  transition: box-shadow 0.2s ease-in-out;
-  }
-  
-  `;
   
   useEffect(() => {
     if (window.location.hash) {
@@ -56,7 +37,10 @@ const SpotifyConnect = () => {
         getReturnedParamsFromSpotifyAuth(window.location.hash);
         
     // CHANGE localStorage to database later...
-      localStorage.clear();
+      //localStorage.clear();
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("tokenType");
+      localStorage.removeItem("expiresIn");
 
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("tokenType", token_type);
@@ -70,7 +54,7 @@ const SpotifyConnect = () => {
 
   return (
     <div>
-      <SpotifyButton onClick={handleLogin}>Connect with Spotify</SpotifyButton>
+      <button id="SpotifyButton" onClick={handleLogin}>Connect with Spotify</button>
     </div>
   );
 };
