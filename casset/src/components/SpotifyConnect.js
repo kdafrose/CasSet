@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import '../App.css';
 
-const CLIENT_ID = "21fea0db3247431798d002572894627c"; 
+const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe"; 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000";
 const SPACE_DELIMITER = "%20";
@@ -9,6 +9,8 @@ const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-read-private",
+  "playlist-modify-public",
+  "playlist-modify-private",
 ];
 const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
 

@@ -7,12 +7,20 @@ const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
 
 export default function SongSearch(){
     const [searchInput, setSearchInput] = useState("");
-    const [accessToken, setAccessToken] = useState("");
+    const [accessToken, setAccessToken] = useState(() => {
+      const storedToken = localStorage.getItem("accessToken");
+      console.log("Access Token: " + storedToken);
+      return storedToken ? storedToken : null;
+    });
     const [albums, setAlbums] = useState([]);
     const [songs, setSongs] = useState([]);
   
     // THIS IS GOING TO CHANGE WHEN WE DO PROPER IMPLEMENTATION
-    // const [userProfile, setUserProfile] = useState("");
+    const [profile, setProfile] = useState(() => {
+      const storedProfile = localStorage.getItem("profile");
+      console.log("Does a profile exist?  " + storedProfile);
+      return storedProfile ? JSON.parse(storedProfile) : null;
+    });
   
     useEffect(() => {
       // API Access Token

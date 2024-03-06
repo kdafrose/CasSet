@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import {Container, InputGroup, FormControl, Button} from 'react-bootstrap'
 
+// USER_ID is hard_coded I'd have to do this myself 
 const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
@@ -9,30 +10,17 @@ const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
 
 export default function CreatePlaylist() {
     const [playlistName, setPlaylistName] = useState("");
-    const [accessToken, setAccessToken] = useState("");
-
-    useEffect(() => {
-        // API Access Token
-        // Make Error Handling????
-
-        var authorizeParam = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        }
-        fetch('https://accounts.spotify.com/api/token', authorizeParam)
-        .then(result => result.json())
-        .then(data => setAccessToken(data.access_token))
-    
-    }, [])
+    const [accessToken, setAccessToken] = useState(() => {
+        const storedToken = localStorage.getItem("accessToken");
+        console.log("Access Token: " + storedToken);
+        return storedToken ? storedToken : null;
+    });;
 
     async function makePlaylist() {
         if(playlistName.trim() === ""){
             console.log("Please input a name for your playlist.");
             return;
-          }
+        }
 
         var playlistParams = {
             method: 'POST',
@@ -40,12 +28,12 @@ export default function CreatePlaylist() {
                 'Content-Type' : 'application/json',
                 'Authorization' : 'Bearer ' + accessToken
             },
-            body: {
-                'name': playlistName,
-                'description': 'made with CasSet',
-                'public' : true
-            }
-        }
+            body: JSON.stringify({ 
+                "name": playlistName,
+                "description": 'made with CasSet',
+                "public" : true,
+            })
+        };
 
         var playlistCreate = await fetch('https://api.spotify.com/v1/users/' + USER_ID + '/playlists', playlistParams)
             .then(response => response.json())
@@ -66,12 +54,15 @@ export default function CreatePlaylist() {
                     <FormControl
                         placeholder="Playlist Name"
                         type="input"
-                        onKeyPress={event => {
+                        onClick={event => {
                             if(event.key === "Enter"){
                             makePlaylist();
                             }
                         }}
-                        onChange={event => setPlaylistName(event.target.value)}
+                        onChange={event => {
+                            setPlaylistName(event.target.value);
+                            console.log(playlistName);
+                        }}
                     />
                     <Button onClick={makePlaylist}>
                         Make!
