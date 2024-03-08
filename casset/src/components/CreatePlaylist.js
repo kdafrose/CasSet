@@ -8,6 +8,7 @@ const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 
 export default function CreatePlaylist() {
     const [playlistName, setPlaylistName] = useState("");
+    const [playlistDescription, setPLaylistDescription] = useState("Made with CasSet");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         console.log("Access Token: " + storedToken);
@@ -28,7 +29,7 @@ export default function CreatePlaylist() {
             },
             body: JSON.stringify({ 
                 "name": playlistName,
-                "description": 'made with CasSet',
+                "description": playlistDescription,
                 "public" : true,
             })
         };
@@ -66,6 +67,15 @@ export default function CreatePlaylist() {
                         Make!
                     </Button>
                 </InputGroup>
+                <FormControl 
+                    placeholder="Enter description here" 
+                    type="input"
+                    onChange={event =>{
+                        setPLaylistDescription(event.target.value);
+                    }}
+                    >
+
+                </FormControl>
             </Container>
         </div>
     )

@@ -14,6 +14,10 @@ export default function SongSearch(){
     });
     const [albums, setAlbums] = useState([]);
     const [songs, setSongs] = useState([]);
+    const [playlistID, setPlaylistID] = useState(() => {
+      const storedPlaylistID = localStorage.getItem("playlistID");
+      return storedPlaylistID ? storedPlaylistID : null;
+    })
   
     // THIS IS GOING TO CHANGE WHEN WE DO PROPER IMPLEMENTATION
     const [profile, setProfile] = useState(() => {
@@ -105,10 +109,47 @@ export default function SongSearch(){
       //     console.log(accessToken)  
       //   })
     }
-  
-    async function spotifyLogin(){
-      console.log("There's a Spotify Web API tutorial on this... look at that")
+
+    async function handleSongAdd(songURI, playlistID) {
+      var trackAddParams = {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json',
+          'Authorization' : 'Bearer ' + accessToken
+        },
+        body: JSON.stringify({
+          "uris": [songURI],
+        })
+      };
+      var trackResult = await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', trackAddParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log("Song added?");
+      })
     }
+
+    const getRefreshToken = async () => {
+
+      // refresh token that has been previously stored
+      const refreshToken = localStorage.getItem('refresh_token');
+      const url = "https://accounts.spotify.com/api/token";
+   
+       const payload = {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         body: new URLSearchParams({
+           grant_type: 'refresh_token',
+           refresh_token: refreshToken,
+         }),
+       }
+       const body = await fetch(url, payload);
+       const response = await body.json();
+   
+       localStorage.setItem('access_token', response.accessToken);
+       localStorage.setItem('refresh_token', response.refreshToken);
+      }   
   
     return (
       <div className="App">
@@ -127,9 +168,6 @@ export default function SongSearch(){
             <Button onClick={searchSong}>
               Search
             </Button>
-            <Button onClick={spotifyLogin}>
-              Spotify Login (temp)
-            </Button>
           </InputGroup>
         </Container>
         <Container>
@@ -137,13 +175,14 @@ export default function SongSearch(){
             {songs.map( (song, i) => {
               // console.log("-");
               return (
-                <Card>
+                <Card key={song.id}>
                 <Card.Img src={song.album.images[0].url}/>
                 <Card.Body>
                   <Card.Title>{song.name}</Card.Title>
                   <Card.Subtitle>{song.artists[0].name}</Card.Subtitle>
                 </Card.Body>
-                <Button onClick={() => console.log("Song clicked :)")}>
+                <Button 
+                  onClick={() => {handleSongAdd(song.uri, playlistID)}}>
                   Add to Playlist
                 </Button>
               </Card>
