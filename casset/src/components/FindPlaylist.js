@@ -36,8 +36,6 @@ export default function FindPlaylist() {
                 return data.items;
             })
             .then(playlists =>{
-                console.log("Here's the first playlist name: " + playlists[0].name
-                + " and here's the second playlist: " + playlists[1].name);
                 return playlists;
             })
     }

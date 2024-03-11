@@ -37,6 +37,7 @@ export default function CreatePlaylist() {
         var playlistCreate = await fetch('https://api.spotify.com/v1/users/' + USER_ID + '/playlists', playlistParams)
             .then(response => response.json())
             .then(data => {
+                console.log(data);
                 console.log("The owner of this playlist is: " + data.owner.display_name);
                 console.log("The description of said playlist is: " + data.description);
                 console.log("The ID for the playlist is: " + data.id);

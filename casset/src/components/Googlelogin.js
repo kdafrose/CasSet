@@ -8,7 +8,6 @@ function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState(() => {
         const storedProfile = localStorage.getItem("profile");
-        console.log("Does a profile exist?  " + storedProfile);
         return storedProfile ? JSON.parse(storedProfile) : null;
     });
     const [signin, setSignin] = useState(() => {

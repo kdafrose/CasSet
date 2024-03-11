@@ -8,6 +8,7 @@ import CreatePlaylist from './components/CreatePlaylist';
 import FindPlaylist from './components/FindPlaylist';
 import AddSong from './components/AddSong';
 import DisplayPlaylist from './components/DisplayPlaylist';
+import PlaySong from './components/PlaySong';
 
 function App() {
   //const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,7 @@ function App() {
         <Route path="/song" element={<SongSearch/>}/>
         <Route path="/findplaylist" element={<FindPlaylist/>}/>
         <Route path="/addsong" element={<AddSong/>}/> 
+        <Route path="/playsong" element={<PlaySong/>}/>
         <Route path="/displayplaylist" element={<DisplayPlaylist/>}/>
       </Routes>
     </BrowserRouter>
