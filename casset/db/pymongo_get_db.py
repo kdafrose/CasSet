@@ -1,9 +1,21 @@
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
-def get_database():
- 
-   # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-   client = MongoClient(CONNECTION_STRING)
- 
-   # Create the database for our example (we will use the same database throughout the tutorial
-   return client['user_shopping_list']
+
+client = MongoClient(CONNECTION_STRING)
+
+db = client.usersInfo
+
+coll = db.users
+
+# find code goes here
+
+cursor = coll.find({})
+
+# iterate code goes here
+
+for doc in cursor:
+    print(doc)
+
+# Close the connection to MongoDB when you're done.
+
+client.close()
