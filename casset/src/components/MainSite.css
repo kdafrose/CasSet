@@ -1,4 +1,4 @@
-body {
+#main {
     margin: 0;
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
@@ -28,6 +28,18 @@ body {
     margin: 0cap;
     font-weight: bold;
     font-size: xx-large;
+    flex: 1;
+    align-self: stretch;
+    background-color: #edceed;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  #import-button:hover {
+    background-color: #edb9e5;
   }
 
   #middle-box {
@@ -88,21 +100,4 @@ body.dark-theme {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-  }
-  
-  button {
-    flex: 1;
-    margin: 20px;
-    align-self: stretch;
-    background-color: #edceed;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.5rem; 
-  }
-  
-  button:hover {
-    background-color: #edb9e5;
   }
