@@ -6,7 +6,7 @@ function MainSite() {
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
 
     return (
-        <body>
+        <body id="main">
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
