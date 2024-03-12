@@ -72,11 +72,9 @@ export default function DisplayPlaylist() {
                     </Row>
                 </Container>
                 ) : (
-                    <Card>
-                        <Card.Title>
-                            Loading...
-                        </Card.Title>
-                    </Card>
+                    <p>
+                        No songs in this playlist
+                    </p>
                 )
             }
         </div>

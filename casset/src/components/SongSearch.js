@@ -54,7 +54,8 @@ export default function SongSearch(){
           'Authorization' : 'Bearer ' + accessToken
         }
       }
-      var trackResult = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&limit=20', trackSearchParams)
+
+      await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&limit=20', trackSearchParams)
       .then(response => response.json())
       .then(data => {
         console.log("Fetched songs");
@@ -64,45 +65,23 @@ export default function SongSearch(){
     }
 
     async function handleSongAdd(songURI, playlistID) {
+
       var trackAddParams = {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',
-          'Authorization' : 'Bearer ' + accessToken
+          'Authorization' : 'Bearer ' + accessToken,
         },
-        body: JSON.stringify({
-          "uris": [songURI],
-        })
+        body: JSON.stringify({ "uris": [songURI] })
       };
-      var trackResult = await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', trackAddParams)
+
+      await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', trackAddParams)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         console.log("Song added?");
       })
-    }
-
-    const getRefreshToken = async () => {
-
-      // refresh token that has been previously stored
-      const refreshToken = localStorage.getItem('refresh_token');
-      const url = "https://accounts.spotify.com/api/token";
-   
-       const payload = {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/x-www-form-urlencoded'
-         },
-         body: new URLSearchParams({
-           grant_type: 'refresh_token',
-           refresh_token: refreshToken,
-         }),
-       }
-       const body = await fetch(url, payload);
-       const response = await body.json();
-   
-       localStorage.setItem('access_token', response.accessToken);
-       localStorage.setItem('refresh_token', response.refreshToken);
-      }   
+    }  
   
     return (
       <div className="App">

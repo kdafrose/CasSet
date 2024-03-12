@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
 import {Container, InputGroup, FormControl, Button} from 'react-bootstrap'
 
-// USER_ID is hard_coded I'd have to do this myself 
+// USER_ID is hard_coded change it if you want to test this
 const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
@@ -38,11 +38,6 @@ export default function CreatePlaylist() {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                console.log("The owner of this playlist is: " + data.owner.display_name);
-                console.log("The description of said playlist is: " + data.description);
-                console.log("The ID for the playlist is: " + data.id);
-                console.log("The href (super useful) is: " + data.href);
-
             })
     }
 
