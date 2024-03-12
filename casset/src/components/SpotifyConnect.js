@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const CLIENT_ID = "21fea0db3247431798d002572894627c"; 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000";
+const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
 const SPACE_DELIMITER = "%20";
 const SCOPES = [
   "user-read-currently-playing",
