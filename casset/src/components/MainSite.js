@@ -1,5 +1,7 @@
 import './MainSite.css';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 
 function MainSite() {
@@ -20,6 +22,8 @@ function MainSite() {
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [profile, setProfile] = useState(null);
+    const navigate = useNavigate();
 
     async function tokenCall(inputString) {
         var newString = inputString.substring(6); 
@@ -76,6 +80,22 @@ function MainSite() {
         // CHANGE localStorage to database later...
     }, []);
 
+    useEffect(() => {
+        // Retrieve profile information from local storage
+        const storedProfile = localStorage.getItem("profile");
+        if (storedProfile) {
+            setProfile(JSON.parse(storedProfile));
+        }
+    }, []);
+
+    const logOut = () => {
+        googleLogout();
+        localStorage.removeItem("profile");
+        localStorage.removeItem("accessToken");
+        setProfile(null);
+        navigate('/')
+    };
+
     const toggleCreatePlaylist = () => {
         setShowCreatePlaylist(!showCreatePlaylist);
     };
@@ -106,6 +126,15 @@ function MainSite() {
                 <div id="right-side">
                     <div id="account-menu">
                         <p>icon here</p>
+                        <div id="account-menu">
+                            {/* Display profile name and logout button if user is logged in */}
+                            {profile && (
+                                <div>
+                                    <p>{profile.name}</p>
+                                    <button onClick={logOut}>Log out</button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <div id="friends-box">
                         <p>friends here</p>
