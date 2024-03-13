@@ -44,15 +44,12 @@ export default function SongSearch(){
       await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&limit=20', trackSearchParams)
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched songs");
         setSongs(data.tracks.items);
       })
       
     }
 
     async function handleSongAdd(songURI, playlistID) {
-      console.log("here's the song URI");
-      console.log(songURI);
 
       var trackAddParams = {
         method: 'POST',
@@ -65,10 +62,6 @@ export default function SongSearch(){
 
       await fetch('https://api.spotify.com/v1/playlists/' + playlistID.toString() + '/tracks', trackAddParams)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        console.log("Song added?");
-      })
     }  
   
     return (
@@ -78,7 +71,7 @@ export default function SongSearch(){
             <FormControl
               placeholder="Search For a Song"
               type="input"
-              onKeyPress={event => {
+              onKeyDown={event => {
                 if(event.key === "Enter"){
                   searchSong();
                 }

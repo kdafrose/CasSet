@@ -1,4 +1,4 @@
-import './MainSite.css';
+import '../css/MainSite.css';
 import React, { useState, useEffect } from 'react';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 
@@ -20,6 +20,11 @@ function MainSite() {
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [accessToken] = useState(() => {
+      const storedToken = localStorage.getItem("accessToken");
+      console.log("Access Token: " + storedToken);
+      return storedToken ? storedToken : null;
+    });
 
     async function tokenCall(inputString) {
         var newString = inputString.substring(6); 
@@ -39,6 +44,14 @@ function MainSite() {
           },
           body: requestBody.toString(),
         };
+
+        const meParams = {
+          method: 'GET',
+          headers: {
+              'Content-Type' : 'application/json',
+              'Authorization' : 'Bearer ' + accessToken
+          },
+        };
       
         var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
@@ -49,7 +62,8 @@ function MainSite() {
             }
             console.log("Below is from the fetch of the token");
             console.log(data);
-      
+
+            // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             localStorage.removeItem("accessToken");
             localStorage.removeItem("tokenType");
             localStorage.removeItem("expiresIn");
@@ -59,7 +73,15 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+            
             return;
+          })
+
+        await fetch('https://api.spotify.com/v1/me', meParams)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            localStorage.setItem("user_spotify_id", data.id);
           })
       
         if (waiting === false){
