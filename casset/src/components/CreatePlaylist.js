@@ -6,7 +6,7 @@ const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
 
-export default function CreatePlaylist() {
+export default function CreatePlaylist({ onClose }) {
     const [playlistName, setPlaylistName] = useState("");
     const [playlistDescription, setPLaylistDescription] = useState("Made with CasSet");
     const [accessToken, setAccessToken] = useState(() => {
@@ -41,38 +41,48 @@ export default function CreatePlaylist() {
             })
     }
 
+    const handleClose = () => {
+        setPlaylistName("");
+        setAccessToken(""); // Reset access token when form is closed
+        onClose(); // Notify parent component to close the form
+    };
 
     return(
-        <div>
-            <Container>
-                <InputGroup className='mb-3' size='lg'>
-                    <FormControl
-                        placeholder="Playlist Name"
-                        type="input"
-                        onClick={event => {
-                            if(event.key === "Enter"){
-                            makePlaylist();
-                            }
-                        }}
-                        onChange={event => {
-                            setPlaylistName(event.target.value);
-                            console.log(playlistName);
-                        }}
-                    />
-                    <Button onClick={makePlaylist}>
-                        Make!
-                    </Button>
-                </InputGroup>
-                <FormControl 
-                    placeholder="Enter description here" 
-                    type="input"
-                    onChange={event =>{
-                        setPLaylistDescription(event.target.value);
-                    }}
-                    >
+        <div className="overlay">
+            <div className="form-container">
+                <form className="create-playlist-form">
+                    <button id="close-button" onClick={handleClose}>X</button>
+                    <Container>
+                        <InputGroup className='mb-3' size='lg'>
+                            <FormControl
+                                placeholder="Playlist Name"
+                                type="input"
+                                onClick={event => {
+                                    if(event.key === "Enter"){
+                                    makePlaylist();
+                                    }
+                                }}
+                                onChange={event => {
+                                    setPlaylistName(event.target.value);
+                                    console.log(playlistName);
+                                }}
+                            />
+                            <Button onClick={makePlaylist}>
+                                Make!
+                            </Button>
+                        </InputGroup>
+                        <FormControl 
+                            placeholder="Enter description here" 
+                            type="input"
+                            onChange={event =>{
+                                setPLaylistDescription(event.target.value);
+                            }}
+                            >
 
-                </FormControl>
-            </Container>
+                        </FormControl>
+                    </Container>
+                </form>
+            </div>
         </div>
     )
 }

@@ -74,7 +74,15 @@ function MainSite() {
           tokenCall(window.location.search);
         }
         // CHANGE localStorage to database later...
-      }, []);
+    }, []);
+
+    const toggleCreatePlaylist = () => {
+        setShowCreatePlaylist(!showCreatePlaylist);
+    };
+
+    const closeCreatePlaylist = () => {
+        setShowCreatePlaylist(false);
+    };
 
     return (
         <body id="main">
@@ -82,7 +90,7 @@ function MainSite() {
                 <div id="left-side">
                     <div id="top-box">
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="import-button" onClick={() => setShowCreatePlaylist(!showCreatePlaylist)}>create playlist</button>
+                        <button type="button" id="import-button" onClick={toggleCreatePlaylist}>create playlist</button>
                         <h1>CasSet</h1>
                     </div>
                     <div id="middle-box">
@@ -105,7 +113,7 @@ function MainSite() {
                 </div>
             </div>
             {/* Conditionally render the CreatePlaylist component based on the state */}
-            {showCreatePlaylist && <CreatePlaylist />}
+            {showCreatePlaylist && <CreatePlaylist onClose={closeCreatePlaylist} />}
         </body>
     )
 }
