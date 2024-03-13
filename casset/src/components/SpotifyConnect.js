@@ -5,7 +5,7 @@ const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
-const SPACE_DELIMITER = "%20";
+const SPACE_DELIMITER = "%20"; 
 const SCOPES = [
   "user-read-currently-playing",
   "user-read-playback-state",

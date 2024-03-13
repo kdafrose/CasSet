@@ -64,7 +64,6 @@ export default function CreatePlaylist({ onClose }) {
                                 }}
                                 onChange={event => {
                                     setPlaylistName(event.target.value);
-                                    console.log(playlistName);
                                 }}
                             />
                             <Button onClick={makePlaylist}>
