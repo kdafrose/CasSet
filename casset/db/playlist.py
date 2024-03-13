@@ -31,7 +31,8 @@ def deletePlaylist():
     print("Deleting playlist " + deleteName)
 
 def listPlaylist():
-    print(pl.find())
+    pllist = pl.find()
+    print(pllist)
 
 if __name__ == '__main__':
     client = MongoClient(CONNECTION_STRING)
