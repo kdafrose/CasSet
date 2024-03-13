@@ -1,19 +1,24 @@
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 
-def get_database():
+client = MongoClient(CONNECTION_STRING)
 
-    # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
-    test = 0
-    
+db = client.usersInfo
 
-    
+coll = db.users
 
-if __name__ == "__main__":
-    client = MongoClient(CONNECTION_STRING)
-    # Send a ping to confirm a successful connection
-    try:
-        client.admin.command('ping')
-        print("Pinged your deployment. You successfully connected to MongoDB!")
-    except Exception as e:
-        print(e)
+# find code goes here
+email = input("emai lspls ")
+fname = input("firsrtname ")
+lname = input("lllllast name ")
+coll.insert_one({ "email": email, "name": {"first": fname, "last": lname}})
+#cursor = coll.find({})
+
+# iterate code goes here
+
+#for doc in cursor:
+#    print(doc)
+
+# Close the connection to MongoDB when you're done.
+
+client.close()
