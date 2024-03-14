@@ -1,48 +1,3 @@
-# from flask import Flask, request, jsonify
-# from pymongo import MongoClient
-# from connectDB import CONNECTION_STRING
-
-# app = Flask(__name__)
-
-# client = MongoClient(CONNECTION_STRING)
-
-# db = client.usersInfo
-
-# coll = db.users
-
-# # find code goes here
-# #email = input("emai lspls ")
-# #fname = input("firsrtname ")
-# #lname = input("lllllast name ")
-# @app.route('/call_python_function', methods=['POST'])
-# def call_python_function():
-#     # Retrieve parameters from the request
-#     param1 = request.json['email']
-#     param2 = request.json['name']
-    
-#     # Call your Python function with the parameters
-#     result = your_python_function(param1, param2)
-    
-#     # Do something with the result
-#     return result
-
-
-# def your_python_function(param1, param2):
-#     # Your Python function implementation
-#     # This function can interact with MongoDB if needed
-#     coll.insert_one({ "email": param1, "name": param2})
-#     return 0
-# #cursor = coll.find({})
-
-# # iterate code goes here
-
-# #for doc in cursor:
-# #    print(doc)
-
-# # Close the connection to MongoDB when you're done.
-
-# #client.close()
-
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
@@ -70,8 +25,12 @@ def call_python_function():
 
 
 def your_python_function(email, name):
-    # Your Python function implementation
-    # This function interacts with MongoDB
+    # Check if the email already exists in the database
+    if coll.find_one({"email": email}):
+        # Email already exists, return a message instead of inserting
+        return "Email already exists in the database."
+    
+    # If the email does not exist, insert a new document
     insert_result = coll.insert_one({"email": email, "name": name})
     return str(insert_result.inserted_id)
 
