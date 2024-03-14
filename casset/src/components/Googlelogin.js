@@ -44,6 +44,25 @@ function GoogleSignInAuthorization() {
                 .then((res) => {
                     setProfile(res.data);
                     localStorage.setItem("profile", JSON.stringify(res.data))
+                    // Data to pass in
+                    const profileData ={
+                        "name": res.data.name,
+                        "email":res.data.email,
+                    };
+                    fetch('http://localhost:5000/call_python_function', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(profileData) // Use profileData instead of params
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
                     console.log("Profile got set");
                 })
                 .catch((err) => console.log(err));
@@ -77,6 +96,7 @@ function GoogleSignInAuthorization() {
                 <div id ="logout-button" style ={{flex:"1"}}>
                     <div style={{display:"flex", justifyContent:"flex-end", alignItems:"center", flexDirection:"column"}}>
                         <p>{profile.name}</p>
+                        <p>{profile.email}</p>
                         <button onClick={logOut} style={{width:"10%", height:"5%"}}>Log out</button>
                         {showSpotifyConnect && <SpotifyConnect />} {/* Show SpotifyConnect conditionally */}
                     </div>
