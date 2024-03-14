@@ -127,10 +127,10 @@ export default function PlaySong() {
                             </button>
                         </div>
                         <Form.Label>
-                            Range
+                            Volume
                         </Form.Label>
                         <Form.Range
-                            onChange={event => {player.setVolume(event.target.value)}}
+                            onChange={event => {player.setVolume((event.target.value) /100 )}}
                         />
                     </div>
                 </div>

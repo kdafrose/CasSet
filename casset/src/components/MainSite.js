@@ -69,7 +69,7 @@ function MainSite() {
       
         var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
-          .then(data => {
+          .then(async data => {
       
             if(data.error === "invalid_grant"){
               return false;
@@ -84,15 +84,15 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+
+            await fetch('https://api.spotify.com/v1/me', meParams)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              localStorage.setItem("userSpotifyID", data.id);
+          })
             
             return;
-          })
-
-        await fetch('https://api.spotify.com/v1/me', meParams)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data);
-            localStorage.setItem("userSpotifyID", data.id);
           })
       
         if (waiting === false){
