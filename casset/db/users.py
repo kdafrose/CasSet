@@ -10,21 +10,21 @@ client = MongoClient(CONNECTION_STRING)
 db = client.usersInfo
 coll = db.users
 
-@app.route('/call_python_function', methods=['POST'])
+@app.route('/postUserInfo', methods=['POST'])
 def call_python_function():
     try:
         data = request.json
         email = data['email']
         name = data['name']
         
-        result = your_python_function(email, name)
+        result = checkUserInDB(email, name)
         
         return jsonify({"success": True, "result": result}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 
-def your_python_function(email, name):
+def checkUserInDB(email, name):
     # Check if the email already exists in the database
     if coll.find_one({"email": email}):
         # Email already exists, return a message instead of inserting

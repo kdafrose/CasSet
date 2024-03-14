@@ -49,7 +49,7 @@ function GoogleSignInAuthorization() {
                         "name": res.data.name,
                         "email":res.data.email,
                     };
-                    fetch('http://localhost:5000/call_python_function', {
+                    fetch('http://localhost:5000/postUserInfo', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
