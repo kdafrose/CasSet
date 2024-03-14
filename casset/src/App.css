@@ -38,18 +38,7 @@
 }
 
 #GoogleButton {
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.54);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  
 }
 
 #GoogleButton:hover{
@@ -58,17 +47,7 @@
 }
 
 #SpotifyButton{
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.54);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 30px;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  
 }
 
 #SpotifyButton:hover{
