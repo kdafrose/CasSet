@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
@@ -47,7 +47,7 @@ export default function AddSong() {
     // HOLY THIS WORKS
     function getMe() {
 
-        const saved_user = localStorage.getItem("user_spotify_id");
+        const saved_user = localStorage.getItem("userSpotifyID");
         console.log(saved_user);
 
         // await fetch('https://api.spotify.com/v1/me', meParams)   if you uncomment this, put async back in front of function

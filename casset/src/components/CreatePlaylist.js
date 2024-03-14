@@ -1,8 +1,6 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button} from 'react-bootstrap'
 
-// USER_ID is hard_coded change it if you want to test this
-const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
 
@@ -14,6 +12,10 @@ export default function CreatePlaylist({ onClose }) {
         console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
+    const [savedUserSpotifyID] = useState(() => {
+        const storedSpotifyID = localStorage.getItem("userSpotifyID");
+        return storedSpotifyID ? storedSpotifyID : null;
+    })
 
     async function makePlaylist() {
         if(playlistName.trim() === ""){
@@ -34,7 +36,7 @@ export default function CreatePlaylist({ onClose }) {
             })
         };
         
-        var playlistCreate = await fetch('https://api.spotify.com/v1/users/' + USER_ID + '/playlists', playlistParams)
+        await fetch('https://api.spotify.com/v1/users/' + savedUserSpotifyID + '/playlists', playlistParams)
             .then(response => response.json())
             .then(data => {
                 console.log(data);

@@ -7,7 +7,6 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
-    const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
@@ -29,6 +28,17 @@ function MainSite() {
     });
     const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
+
+    function clearAll(){
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userSpotifyID")
+      localStorage.removeItem("tokenType");
+      localStorage.removeItem("expiresIn");
+      localStorage.removeItem("refresh_token");
+
+      return;
+    }
 
     async function tokenCall(inputString) {
         var newString = inputString.substring(6); 
@@ -64,14 +74,11 @@ function MainSite() {
             if(data.error === "invalid_grant"){
               return false;
             }
-            console.log("Below is from the fetch of the token");
+            console.log("Below is from the fetch of the token: this is mainsite");
             console.log(data);
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("tokenType");
-            localStorage.removeItem("expiresIn");
-            localStorage.removeItem("refresh_token");
+            clearAll();
       
             localStorage.setItem("accessToken", data.access_token);
             localStorage.setItem("tokenType", data.token_type);
@@ -85,7 +92,7 @@ function MainSite() {
           .then(response => response.json())
           .then(data => {
             console.log(data);
-            localStorage.setItem("user_spotify_id", data.id);
+            localStorage.setItem("userSpotifyID", data.id);
           })
       
         if (waiting === false){
@@ -100,9 +107,7 @@ function MainSite() {
           tokenCall(window.location.search);
         }
         // CHANGE localStorage to database later...
-    }, []);
 
-    useEffect(() => {
         // Retrieve profile information from local storage
         const storedProfile = localStorage.getItem("profile");
         if (storedProfile) {
@@ -112,8 +117,7 @@ function MainSite() {
 
     const logOut = () => {
         googleLogout();
-        localStorage.removeItem("profile");
-        localStorage.removeItem("accessToken");
+        clearAll();
         setProfile(null);
         navigate('/')
     };

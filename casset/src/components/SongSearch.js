@@ -1,9 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
-import {useState, useEffect} from 'react'
-
-const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
-const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
+import {useState} from 'react'
 
 // https://oauth.pstmn.io/v1/browser-callback for testing :)
 

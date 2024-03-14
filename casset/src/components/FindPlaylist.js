@@ -1,17 +1,19 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 
-const USER_ID = "m71y2aj3ermljpzjs9d8e6gxd";
-
 export default function FindPlaylist() {
     const [userSearched, setUserSearched] = useState("");
-    const [accessToken, setAccessToken] = useState(() => {
+    const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
     const [playlists, setPlaylists] = useState([]);
+    const [savedUserSpotifyID] = useState(() => {
+        const storedSpotifyID = localStorage.getItem("userSpotifyID");
+        return storedSpotifyID ? storedSpotifyID : null;
+    })
 
     const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ export default function FindPlaylist() {
             },
         };
         
-        var playlistCreate = await fetch('https://api.spotify.com/v1/users/' + USER_ID + '/playlists?limit=40', playlistParams)
+        await fetch('https://api.spotify.com/v1/users/' + savedUserSpotifyID + '/playlists?limit=40', playlistParams)
             .then(response => response.json())
             .then(data => {
                 setPlaylists(data.items);
@@ -45,7 +47,6 @@ export default function FindPlaylist() {
     }
 
     // TO DO:
-    // USER_ID is hardcoded: find a way to get that from the /v1/me API call
     //be able to display playlists in a more readable way: console.log is not a good way of doing that lol
 
     return(

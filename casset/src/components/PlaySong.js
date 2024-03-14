@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 const track = {
     name: "",
@@ -10,43 +12,63 @@ const track = {
     artists: [
         { name: "" }
     ]
-}    
+}
 
 export default function PlaySong() {
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
-    const [current_track, setTrack] = useState(track);
     const [player, setPlayer] = useState(undefined);
-    const [accessToken, setAccessToken] = useState(() => {
+    const [current_track, setTrack] = useState(track);
+    const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
 
+    async function transferAuto(deviceSpecific){
+
+        const transferParams = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({
+                'device_ids' : [deviceSpecific],
+                'play' : true,
+            }),
+        }
+    
+        await fetch('https://api.spotify.com/v1/me/player', transferParams);
+    
+        console.log("Transferred? To: " + deviceSpecific);
+    }
 
     useEffect(() => {
 
         const script = document.createElement("script");
         script.src = "https://sdk.scdn.co/spotify-player.js";
         script.async = true;
-    
+
         document.body.appendChild(script);
-    
+
         window.onSpotifyWebPlaybackSDKReady = () => {
-    
+
             const player = new window.Spotify.Player({
                 name: 'Web Playback SDK',
-                getOAuthToken: cb => {cb(accessToken);},
+                getOAuthToken: cb => { cb(accessToken); },
                 volume: 0.5
             });
-    
+
             setPlayer(player);
-    
+
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
+
+                transferAuto(device_id);
             });
-    
+
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
             });
@@ -56,49 +78,63 @@ export default function PlaySong() {
                 if (!state) {
                     return;
                 }
-            
+
                 setTrack(state.track_window.current_track);
                 setPaused(state.paused);
-            
-            
+
                 player.getCurrentState().then( state => { 
                     (!state)? setActive(false) : setActive(true) 
                 });
-            
-            }));            
-    
+
+            }));
+
             player.connect();
-    
+
         };
-
     }, []);
-    
 
-    return (
-        <div>
-            <img src={current_track.album.images[0].url} 
-                 className="now-playing__cover" alt="" />
+    if (!is_active) { 
+        return (
+            <>
+                <div className="container">
+                    <div className="main-wrapper">
+                        <b> Instance not active. Transfer your playback using your Spotify app </b>
+                    </div>
+                </div>
+            </>)
+    } else {
+        return (
+            <>
+                <div className="container">
+                    <div className="main-wrapper">
 
-            <div className="now-playing__side">
-                <div className="now-playing__name">{
-                        current_track.name
-                }</div>
+                        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
 
-                <div className="now-playing__artist">{
-                    current_track.artists[0].name
-                }</div>
-            </div>
-            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
-                &lt;&lt;
-            </button>
+                        <div className="now-playing__side">
+                            <div className="now-playing__name">{current_track.name}</div>
+                            <div className="now-playing__artist">{current_track.artists[0].name}</div>
 
-            <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
-                { is_paused ? "PLAY" : "PAUSE" }
-            </button>
+                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
+                                &lt;&lt;
+                            </button>
 
-            <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
-                &gt;&gt;
-            </button>
-        </div>
-    )
+                            <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
+                                { is_paused ? "PLAY" : "PAUSE" }
+                            </button>
+
+                            <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
+                                &gt;&gt;
+                            </button>
+                        </div>
+                        <Form.Label>
+                            Range
+                        </Form.Label>
+                        <Form.Range
+                            onChange={event => {player.setVolume(event.target.value)}}
+                        />
+                    </div>
+                </div>
+            </>
+        );
+    }
 }

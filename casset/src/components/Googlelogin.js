@@ -14,11 +14,6 @@ function GoogleSignInAuthorization() {
         return profile ? true : false; 
     }); // true is if theyre signed in, default is not signed in  
     const [showSpotifyConnect, setShowSpotifyConnect] = useState(() =>{ return signin ? true: false});
-    const [accessToken, setAccessToken] = useState(() => {
-        const storedToken = localStorage.getItem("accessToken");
-        console.log("Access Token: " + storedToken);
-        return storedToken ? storedToken : null;
-    });;
     const googleLoginDivRef = useRef(null); 
 
     // Css for Google sign in button moved to the App.css file
@@ -43,8 +38,7 @@ function GoogleSignInAuthorization() {
                 })
                 .then((res) => {
                     setProfile(res.data);
-                    localStorage.setItem("profile", JSON.stringify(res.data))
-                    console.log("Profile got set");
+                    localStorage.setItem("profile", JSON.stringify(res.data));
                 })
                 .catch((err) => console.log(err));
         }
