@@ -40,6 +40,21 @@ export default function CreatePlaylist({ onClose }) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                // MAKE POST REQUEST HERRRREEEE
+                const playlistData = {
+                    "name": data.name,
+                    "num_songs":data.items.length,
+                    "_id": data.id,
+                    "owner":data.owner.id,
+                }
+                fetch('http://localhost:5000/postNewPlaylist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(playlistData) // Use profileData instead of params
+                    })
+
             })
     }
 
