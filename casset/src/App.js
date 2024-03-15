@@ -19,12 +19,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/casset" element={<MainSite/>}/>
+        
         <Route path="/createplaylist" element={<CreatePlaylist/>}/>
-        <Route path="/song" element={<SongSearch/>}/>
+        <Route path="/displayplaylist" element={<DisplayPlaylist/>}/>
         <Route path="/findplaylist" element={<FindPlaylist/>}/>
+
+        <Route path="/song" element={<SongSearch/>}/>
         <Route path="/addsong" element={<AddSong/>}/> 
         <Route path="/playsong" element={<PlaySong/>}/>
-        <Route path="/displayplaylist" element={<DisplayPlaylist/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -41,7 +41,7 @@ export default function DisplayPlaylist() {
         const minutes = Math.floor(seconds / 60);
         const remainSeconds = seconds % 60;
 
-        return("Length: " + minutes + ":" + remainSeconds);
+        return(minutes + "m " + remainSeconds + "s");
     }
 
     return ( 
@@ -56,7 +56,8 @@ export default function DisplayPlaylist() {
                                     <Card.Img src={trackObj.album.images?.[0]?.url} style={{ height: '100px', width: '100px', objectFit:'cover'}}/>
                                     <Card.Body className='flex-grow-1' style={{width:'300px'}}>
                                         <Card.Title>{trackObj.name}</Card.Title>
-                                        <Card.Subtitle>{trackLengthToMinutes(trackObj.duration_ms)}</Card.Subtitle>
+                                        <Card.Subtitle>by: {trackObj.artists[0].name}</Card.Subtitle>
+                                        <Card.Text>{trackLengthToMinutes(trackObj.duration_ms)}</Card.Text>
                                     </Card.Body>
                                     <Button 
                                         style={{height:'100px', width: '100px', objectFit:'cover'}} 
