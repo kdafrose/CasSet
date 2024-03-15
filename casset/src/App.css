@@ -38,7 +38,13 @@
 }
 
 #GoogleButton {
-  
+  background-color: #959CFC;
+  color: white;
+  border: none; 
+  padding: 2vh 12vh; 
+  font-size: 5vh; 
+  font-weight: 750;
+  cursor: pointer;
 }
 
 #GoogleButton:hover{

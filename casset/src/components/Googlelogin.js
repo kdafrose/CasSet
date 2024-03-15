@@ -85,7 +85,7 @@ function GoogleSignInAuthorization() {
                 // div for Google login button
                 <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
                     <button id="GoogleButton"onClick={() => login()}> 
-                            Sign in with Google &nbsp;
+                        Login
                     </button>
                 </div>
             )
