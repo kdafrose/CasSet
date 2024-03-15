@@ -35,8 +35,10 @@ def postNewPlaylist():
                 "notes": notes,
                 "owner": owner
             })
-
-        return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
+            return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
+        
+        else:
+            return jsonify({"success":False, "result":"Playlist already exists."}), 409 # Playlist cannot be created as already exists in db
     except Exception as e:
         return jsonify({"error":str(e)}), 400
 
