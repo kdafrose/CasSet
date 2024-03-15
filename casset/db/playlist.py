@@ -19,18 +19,18 @@ def postNewPlaylist():
 
         data = request.json
         name = data['name'] # playlist name 
-        date_created = data['created'] # date of when playlist created
-        sharing_link = data['sharing_link'] # link to share cassette
+        sharing_link = data['uri'] # link to share cassette
         notes = data['playlist_annotation'] # playlist annotation for the entire cassette
         owner = data['user'] # user who owns cassette --> foreign key
+        spotifyID = data['spotifyID'] 
 
         # Checks if playlist exists in db 
         exists = checkPlaylistInDB(name)
 
         if not exists:
             object_playlist = pl.insert_one({
+                "_id": spotifyID,
                 "playlist_name": name,
-                "date_created": date_created,
                 "sharing_link": sharing_link,
                 "notes": notes,
                 "owner": owner
