@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 
-const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
-const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b";
+// https://oauth.pstmn.io/v1/browser-callback for testing :)
 
 export default function SongSearch(){
     const [searchInput, setSearchInput] = useState("");
-    const [accessToken, setAccessToken] = useState(() => {
+    const [accessToken] = useState(() => {
       const storedToken = localStorage.getItem("accessToken");
       console.log("Access Token: " + storedToken);
       return storedToken ? storedToken : null;
@@ -23,22 +22,6 @@ export default function SongSearch(){
       const storedProfile = localStorage.getItem("profile");
       return storedProfile ? JSON.parse(storedProfile) : null;
     });
-  
-    useEffect(() => {
-      // API Access Token
-      // Make Error Handling????
-      var authorizeParam = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-      }
-      fetch('https://accounts.spotify.com/api/token', authorizeParam)
-      .then(result => result.json())
-      .then(data => setAccessToken(data.access_token))
-  
-    }, [])
   
     async function searchSong(){
   
@@ -58,7 +41,6 @@ export default function SongSearch(){
       await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&limit=20', trackSearchParams)
       .then(response => response.json())
       .then(data => {
-        console.log("Fetched songs");
         setSongs(data.tracks.items);
       })
       
@@ -72,15 +54,11 @@ export default function SongSearch(){
           'Content-Type' : 'application/json',
           'Authorization' : 'Bearer ' + accessToken,
         },
-        body: JSON.stringify({ "uris": [songURI] })
+        body: JSON.stringify({'uris' : [songURI]}),
       };
 
-      await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', trackAddParams)
+      await fetch('https://api.spotify.com/v1/playlists/' + playlistID.toString() + '/tracks', trackAddParams)
       .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        console.log("Song added?");
-      })
     }  
   
     return (
@@ -90,7 +68,7 @@ export default function SongSearch(){
             <FormControl
               placeholder="Search For a Song"
               type="input"
-              onKeyPress={event => {
+              onKeyDown={event => {
                 if(event.key === "Enter"){
                   searchSong();
                 }

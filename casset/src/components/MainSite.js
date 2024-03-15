@@ -1,4 +1,4 @@
-import './MainSite.css';
+import '../css/MainSite.css';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
@@ -7,7 +7,6 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
-    const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
     const SPACE_DELIMITER = "%20";
     const SCOPES = [
@@ -22,8 +21,24 @@ function MainSite() {
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [accessToken] = useState(() => {
+      const storedToken = localStorage.getItem("accessToken");
+      console.log("Access Token: " + storedToken);
+      return storedToken ? storedToken : null;
+    });
     const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
+
+    function clearAll(){
+      localStorage.removeItem("profile");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userSpotifyID")
+      localStorage.removeItem("tokenType");
+      localStorage.removeItem("expiresIn");
+      localStorage.removeItem("refresh_token");
+
+      return;
+    }
 
     async function tokenCall(inputString) {
         var newString = inputString.substring(6); 
@@ -43,26 +58,40 @@ function MainSite() {
           },
           body: requestBody.toString(),
         };
+
+        const meParams = {
+          method: 'GET',
+          headers: {
+              'Content-Type' : 'application/json',
+              'Authorization' : 'Bearer ' + accessToken
+          },
+        };
       
         var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
-          .then(data => {
+          .then(async data => {
       
             if(data.error === "invalid_grant"){
               return false;
             }
-            console.log("Below is from the fetch of the token");
+            console.log("Below is from the fetch of the token: this is mainsite");
             console.log(data);
-      
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("tokenType");
-            localStorage.removeItem("expiresIn");
-            localStorage.removeItem("refresh_token");
+
+            // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
+            clearAll();
       
             localStorage.setItem("accessToken", data.access_token);
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+
+            await fetch('https://api.spotify.com/v1/me', meParams)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              localStorage.setItem("userSpotifyID", data.id);
+          })
+            
             return;
           })
       
@@ -78,9 +107,7 @@ function MainSite() {
           tokenCall(window.location.search);
         }
         // CHANGE localStorage to database later...
-    }, []);
 
-    useEffect(() => {
         // Retrieve profile information from local storage
         const storedProfile = localStorage.getItem("profile");
         if (storedProfile) {
@@ -90,8 +117,7 @@ function MainSite() {
 
     const logOut = () => {
         googleLogout();
-        localStorage.removeItem("profile");
-        localStorage.removeItem("accessToken");
+        clearAll();
         setProfile(null);
         navigate('/')
     };
