@@ -1,17 +1,19 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app) 
+# app = Flask(__name__)
+# CORS(app) 
+
+playlist_bp = Blueprint('playlist_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 db = client.playlists
 coll = db.playlists ## Do we need this?
 pl = db.playlistInfo
 
-@app.route('/postNewPlaylist', methods = ['POST'])
+@playlist_bp.route('/postNewPlaylist', methods = ['POST'])
 def postNewPlaylist():
 
     try:
@@ -48,7 +50,7 @@ def checkPlaylistInDB(name):
         return True
     return False
     
-@app.route('/deletePlaylist', methods = ['DELETE'])
+@playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
 def deletePlaylist():
 
     try:
@@ -65,5 +67,5 @@ def deletePlaylist():
 def listPlaylist():
     print(pl.find())
 
-if __name__ == '__main__':
-    app.run(debug=True, port = 5000)
+# if __name__ == '__main__':
+#     playlist_bp.run(debug=True, port = 5000)

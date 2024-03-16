@@ -44,7 +44,7 @@ function GoogleSignInAuthorization() {
                         "name": res.data.name,
                         "email":res.data.email,
                     };
-                    fetch('http://localhost:5000/postUserInfo', {
+                    fetch('http://localhost:5000/users/postUserInfo', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

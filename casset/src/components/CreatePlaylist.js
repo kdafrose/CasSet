@@ -47,13 +47,20 @@ export default function CreatePlaylist({ onClose }) {
                     "_id": data.id,
                     "owner":data.owner.id,
                 }
-                fetch('http://localhost:5000/postNewPlaylist', {
+                fetch('http://localhost:5000/playlist/postNewPlaylist', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(playlistData) // Use profileData instead of params
                     })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
 
             })
     }

@@ -1,17 +1,19 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)  
+# app = Flask(__name__)
+# CORS(app)  
+
+users_bp = Blueprint('users_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 db = client.usersInfo
 coll = db.users
 
-@app.route('/postUserInfo', methods=['POST'])
-def call_python_function():
+@users_bp.route('/postUserInfo', methods=['POST'])
+def postUserInfo():
     try:
         data = request.json
         email = data['email']
@@ -33,7 +35,3 @@ def checkUserInDB(email, name):
     # If the email does not exist, insert a new document
     insert_result = coll.insert_one({"email": email, "name": name})
     return str(insert_result.inserted_id)
-
-if __name__ == '__main__':
-    app.run(debug=True, port = 5000)
-
