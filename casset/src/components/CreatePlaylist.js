@@ -40,13 +40,13 @@ export default function CreatePlaylist({ onClose }) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                // MAKE POST REQUEST HERRRREEEE
+                
                 const playlistData = {
-                    "name": data.name,
-                    "num_songs":data.items.length,
-                    "_id": data.id,
-                    "owner":data.owner.id,
+                    "name": data.name, // playlist name
+                    "_id": data.id, // id of playlist (primary key)
+                    "owner":data.owner.id, // id of owner of playlist (foreign key)
                 }
+                console.log(playlistData)
                 fetch('http://localhost:5000/playlist/postNewPlaylist', {
                         method: 'POST',
                         headers: {
@@ -61,7 +61,7 @@ export default function CreatePlaylist({ onClose }) {
                     .catch(error => {
                         console.error('Error:', error);
                     });
-
+                
             })
     }
 

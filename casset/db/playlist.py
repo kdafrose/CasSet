@@ -21,10 +21,10 @@ def postNewPlaylist():
 
         data = request.json
         name = data['name'] # playlist name 
-        sharing_link = data['uri'] # link to share cassette
-        notes = data['playlist_annotation'] # playlist annotation for the entire cassette
-        owner = data['user'] # user who owns cassette --> foreign key
-        spotifyID = data['spotifyID'] 
+        #sharing_link = data['uri'] # link to share cassette
+        #notes = data['playlist_annotation'] # playlist annotation for the entire cassette
+        owner = data['owner'] # user who owns cassette --> foreign key
+        spotifyID = data['_id'] 
 
         # Checks if playlist exists in db 
         exists = checkPlaylistInDB(name)
@@ -33,8 +33,8 @@ def postNewPlaylist():
             object_playlist = pl.insert_one({
                 "_id": spotifyID,
                 "playlist_name": name,
-                "sharing_link": sharing_link,
-                "notes": notes,
+                # "sharing_link": sharing_link,
+                # "notes": notes,
                 "owner": owner
             })
             return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
@@ -46,7 +46,7 @@ def postNewPlaylist():
 
 
 def checkPlaylistInDB(name):
-    if pl.find_one({"name": name}):
+    if pl.find_one({"playlist_name": name}):
         return True
     return False
     
