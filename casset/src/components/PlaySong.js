@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 const track = {
@@ -14,7 +13,9 @@ const track = {
     ]
 }
 
-export default function PlaySong() {
+export default function PlaySong(props) {
+
+    const { songURI, playlistURI} = props;
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);

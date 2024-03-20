@@ -1,14 +1,12 @@
-import {useState} from 'react'
-import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
+import {useState, useEffect} from 'react'
+import {Container, Button, Row, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
 
 
 export default function FindPlaylist({onClose}) {
-    const [userSearched, setUserSearched] = useState("");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
-        console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
     const [playlists, setPlaylists] = useState([]);
@@ -19,30 +17,30 @@ export default function FindPlaylist({onClose}) {
 
     const navigate = useNavigate();
 
-    async function searchForPlaylists() {
-        if(userSearched.trim() === ""){
-            console.log("Enter a user's name");
-            return;
-        }
+    var playlistParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessToken
+        },
+    };
 
-        var playlistParams = {
-            method: 'GET',
-            headers: {
-                'Content-Type' : 'application/json',
-                'Authorization' : 'Bearer ' + accessToken
-            },
-        };
-        
+    async function searchForPlaylists(){
         await fetch('https://api.spotify.com/v1/users/' + savedUserSpotifyID + '/playlists?limit=40', playlistParams)
-            .then(response => response.json())
-            .then(data => {
-                setPlaylists(data.items);
-                return data.items;
-            })
-            .then(playlists =>{
-                return playlists;
-            })
+        .then(response => response.json())
+        .then(data => {
+            setPlaylists(data.items);
+            return data.items;
+        })
+        .then(playlists =>{
+            return playlists;
+        })
     }
+
+    useEffect(() => {
+
+        searchForPlaylists();
+    }, []);
 
     async function handlePlaylistChoice() {
         navigate('/displayplaylist');
@@ -59,26 +57,6 @@ export default function FindPlaylist({onClose}) {
                 <form className="find-playlist-form">
                     <button id="close-button" onClick={handleClose}>X</button>
                     <Container>
-                        <InputGroup className='mb-3' size='lg'>
-                            <FormControl
-                                placeholder="Enter User Name"
-                                type="input"
-                                onClick={event => {
-                                    if(event.key === "Enter"){
-                                        searchForPlaylists();
-                                    }
-                                }}
-                                onChange={event => {
-                                    setUserSearched(event.target.value);
-                                    console.log(userSearched);
-                                }}
-                            />
-                            <Button onClick={searchForPlaylists}>
-                                Find the playlists
-                            </Button>
-                        </InputGroup>
-                    </Container>
-                    <Container>
                         <Row className="mx-2 row row-cols-2">
                             {playlists.map( (playlist, i) => {
                             return (
@@ -91,6 +69,8 @@ export default function FindPlaylist({onClose}) {
                                 <Button 
                                     style={{height:'150px', width: '150px', objectFit:'cover'}} 
                                     onClick={() => {
+
+                                        // Change this to hold the selected playlistID with database connection
                                         localStorage.removeItem("playlistID");
                                         localStorage.setItem("playlistID", playlist.id);
                                         handlePlaylistChoice();
