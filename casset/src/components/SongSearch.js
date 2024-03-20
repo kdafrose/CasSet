@@ -83,7 +83,7 @@ export default function SongSearch(){
         <Container>
           <Row className="mx-2 row row-cols-4">
             {songs.map( (song, i) => {
-              // console.log("-");
+              console.log(song)
               return (
                 <Card key={song.id}>
                 <Card.Img src={song.album.images[0].url}/>
