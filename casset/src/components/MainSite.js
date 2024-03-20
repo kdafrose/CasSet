@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
+import FindPlaylist  from './FindPlaylist';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -21,6 +22,7 @@ function MainSite() {
     ];
     const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [accessToken] = useState(() => {
       const storedToken = localStorage.getItem("accessToken");
       console.log("Access Token: " + storedToken);
@@ -130,6 +132,14 @@ function MainSite() {
         setShowCreatePlaylist(false);
     };
 
+    const toggleUploadPlaylist = () => {
+      setShowUploadPlaylist(!showUploadPlaylist);
+    };
+
+    const closeUploadPlaylist = () => {
+      setShowUploadPlaylist(false);
+    };
+
     return (
         <body id="main">
             <div id="everything-box">
@@ -158,6 +168,7 @@ function MainSite() {
                                 <div>
                                     <p>{profile.name}</p>
                                     <button onClick={logOut}>Log out</button>
+                                    <button onClick={toggleUploadPlaylist}>Choose an Existing Spotify Playlist</button>
                                 </div>
                             )}
                         </div>
@@ -169,6 +180,7 @@ function MainSite() {
             </div>
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={closeCreatePlaylist} />}
+            {showUploadPlaylist && <FindPlaylist onClose={closeUploadPlaylist}/>}
         </body>
     )
 }
