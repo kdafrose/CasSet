@@ -40,7 +40,7 @@ export default function CreatePlaylist({ onClose }) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                
+
                 const playlistData = {
                     "name": data.name, // playlist name
                     "_id": data.id, // id of playlist (primary key)

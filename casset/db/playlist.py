@@ -1,7 +1,6 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
-from flask_cors import CORS
 
 # app = Flask(__name__)
 # CORS(app) 
