@@ -2,9 +2,6 @@ from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 
-# app = Flask(__name__)
-# CORS(app) 
-
 playlist_bp = Blueprint('playlist_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
@@ -65,6 +62,3 @@ def deletePlaylist():
 
 def listPlaylist():
     print(pl.find())
-
-# if __name__ == '__main__':
-#     playlist_bp.run(debug=True, port = 5000)
