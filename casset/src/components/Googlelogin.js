@@ -77,16 +77,18 @@ function GoogleSignInAuthorization() {
                 <div id ="logout-button" style ={{flex:"1"}}>
                     <div>
                         <p>{profile.name}</p>
-                        <button onClick={logOut} style={{width:"10%", height:"5%"}}>Log out</button>
+                        <button onClick={logOut} style={{width:"10%", height:"5%"}}>Rewind</button>
                         {showSpotifyConnect && <SpotifyConnect />} {/* Show SpotifyConnect conditionally */}
                     </div>
                 </div>
             ) : (
                 // div for Google login button
-                <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
-                    <button id="GoogleButton"onClick={() => login()}> 
-                        Login
-                    </button>
+                <div className="login-auth-button-container">
+                    <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
+                        <button id="GoogleButton"onClick={() => login()}> 
+                            &nbsp;&nbsp;&emsp;Login&emsp;&nbsp;&nbsp;
+                        </button>
+                    </div>
                 </div>
             )
             }

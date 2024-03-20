@@ -11,11 +11,12 @@ export default function Home() {
       <div className="container">
         <div className="rectangle-container">
           <img src={rectangleImageSrc} alt="Rectangle Image" className="rectangle-image" />
-          <div className="login-button-container">
-            <Googlelogin />
-          </div>
+          <Googlelogin />
         </div>
       </div>
+      <footer>
+        LOGO_HERE © 2024 CasSet 
+      </footer> 
     </div>
   );
 }

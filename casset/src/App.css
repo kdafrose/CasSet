@@ -37,27 +37,20 @@
   }
 }
 
-#GoogleButton { 
-  background-color: #6cb4e8; 
+#GoogleButton,
+#SpotifyButton {
+  background-color: #6cb4e8;
   color: white;
-  border: none; 
-  padding: 2vh 12vh; 
-  font-size: 5vh; 
+  border: none;
+  padding: 1vh 2.5vh;
+  font-size: 3vw; /* Adjust font size */
   font-weight: 750;
   cursor: pointer;
 }
 
-#GoogleButton:hover{
-    background-color: #54a7e2;
-    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
-    transition: box-shadow 0.2s ease-in-out;
-}
-
-#SpotifyButton{
-  
-}
-
-#SpotifyButton:hover{
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+#GoogleButton:hover,
+#SpotifyButton:hover {
+  background-color: #54a7e2;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
   transition: box-shadow 0.2s ease-in-out;
 }
