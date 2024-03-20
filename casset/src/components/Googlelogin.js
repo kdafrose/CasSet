@@ -3,6 +3,7 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import SpotifyConnect from './SpotifyConnect';
 import '../App.css';
+import './Home.css';
 
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
@@ -70,15 +71,13 @@ function GoogleSignInAuthorization() {
     }, [signin])
 
     return (
-        <div id ="login-container" style ={{width:"100%", height:"100%",display:"flex"}}>
-
+        <div id ="login-container">
             {profile ? (
                 // div for logout button and SpotifyConnect button
-                <div id ="logout-button" style ={{flex:"1"}}>
-                    <div>
-                        <p>{profile.name}</p>
-                        <button onClick={logOut} style={{width:"10%", height:"5%"}}>Rewind</button>
-                        {showSpotifyConnect && <SpotifyConnect />} {/* Show SpotifyConnect conditionally */}
+                <div>
+                    {showSpotifyConnect && <SpotifyConnect />}
+                    <div id="logout-button-container">
+                        <button id="logout-button" onClick={logOut}><i>rewind</i></button>
                     </div>
                 </div>
             ) : (

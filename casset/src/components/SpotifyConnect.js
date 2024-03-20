@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import '../App.css';
+import './Home.css';
 
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 

@@ -15,6 +15,9 @@
   position: relative;
   max-width: 75%; /* Set the maximum width of the rectangle container */
   margin-top: 5vh; /* Add margin to the top */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
 .rectangle-image {
@@ -22,9 +25,6 @@
   height: auto;
 }
 
-/* Will probably have to change this depending on the spotify authentication & logout button 
-    * Do we still want a name display & logout button on the spotify authentication page?
-*/
 .login-auth-button-container { 
   position: absolute;
   top: 50%;
