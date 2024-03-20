@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Container, Button, Row, Card} from 'react-bootstrap'
+import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
 
@@ -56,32 +56,43 @@ export default function FindPlaylist({onClose}) {
             <div className="form-container-find">
                 <form className="find-playlist-form">
                     <button id="close-button" onClick={handleClose}>X</button>
-                    <Container>
-                        <Row className="mx-2 row row-cols-2">
-                            {playlists.map( (playlist, i) => {
-                            return (
-                                <Card className='d-flex flex-row' key={playlist.name}>
-                                    <Card.Img src={playlist.images?.[0]?.url} style={{ height: '150px', width: '150px', objectFit:'cover'}}/>
-                                    <Card.Body className='flex-grow-1' style={{width:'300px'}}>
-                                        <Card.Title>{playlist.name}</Card.Title>
-                                        <Card.Subtitle>{playlist.description}</Card.Subtitle>
-                                    </Card.Body>
-                                <Button 
-                                    style={{height:'150px', width: '150px', objectFit:'cover'}} 
-                                    onClick={() => {
+                    {playlists.length !== 0 ? (
+                        <Container>
+                            <Row className="mx-2 row row-cols-2">
+                                {playlists.map( (playlist, i) => {
+                                return (
+                                    <Card className='d-flex flex-row' key={playlist.name}>
+                                        <Card.Img src={playlist.images?.[0]?.url} style={{ height: '150px', width: '150px', objectFit:'cover'}}/>
+                                        <Card.Body className='flex-grow-1' style={{width:'300px'}}>
+                                            <Card.Title>{playlist.name}</Card.Title>
+                                            <Card.Subtitle>{playlist.description}</Card.Subtitle>
+                                        </Card.Body>
+                                    <Button 
+                                        style={{height:'150px', width: '150px', objectFit:'cover'}} 
+                                        onClick={() => {
 
-                                        // Change this to hold the selected playlistID with database connection
-                                        localStorage.removeItem("playlistID");
-                                        localStorage.setItem("playlistID", playlist.id);
-                                        handlePlaylistChoice();
-                                    }}>
-                                    Select playlist
-                                </Button>
-                                </Card>
-                                )
-                            })}
-                        </Row>
-                    </Container>
+                                            // Change this to hold the selected playlistID with database connection
+                                            localStorage.removeItem("playlistID");
+                                            localStorage.setItem("playlistID", playlist.id);
+                                            handlePlaylistChoice();
+                                        }}>
+                                        Select playlist
+                                    </Button>
+                                    </Card>
+                                    )
+                                })}
+                            </Row>
+                        </Container>
+                    ) : (
+                        <Container className="loading-container">
+                            <Spinner 
+                                id="spin"
+                                animation="border" 
+                                variant="primary" 
+                            />
+                        </Container>
+                    )
+                    }
                 </form>
             </div>
         </div>
