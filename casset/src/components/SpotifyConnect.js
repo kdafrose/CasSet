@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import '../App.css';
 import './Home.css';
 
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -87,7 +86,7 @@ const SpotifyConnect = () => {
 
   return (
     <div className="login-auth-button-container">
-      <button id="SpotifyButton" onClick={handleLogin}>Authenticate</button>
+      <button class="login-auth-buttons" id="SpotifyButton" onClick={handleLogin}>Authenticate</button>
     </div>
   );
 };
