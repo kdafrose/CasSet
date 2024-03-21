@@ -1,9 +1,9 @@
 import React from 'react';
 import Googlelogin from './Googlelogin';
 import './Home.css';
-import imageSrc from './Header.png'; // header image
-import rectangleImageSrc from './Rolling.gif'; // home box image
-import logoSrc from './casset.png';
+import imageSrc from '../media/Header.png'; // header image
+import rectangleImageSrc from '../media/Rolling.gif'; // home box image
+import logoSrc from '../media/casset.png';
 
 export default function Home() {
   return (
