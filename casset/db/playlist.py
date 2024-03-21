@@ -5,9 +5,8 @@ from connectDB import CONNECTION_STRING
 playlist_bp = Blueprint('playlist_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
-db = client.playlists
-coll = db.playlists ## Do we need this?
-pl = db.playlistInfo
+pl = client.playlists.playlistInfo
+us = client.usersInfo.users
 
 @playlist_bp.route('/postNewPlaylist', methods = ['POST'])
 def postNewPlaylist():
@@ -16,22 +15,20 @@ def postNewPlaylist():
         # Change attributes based on request data json file
 
         data = request.json
-        name = data['name'] # playlist name 
-        #sharing_link = data['uri'] # link to share cassette
-        #notes = data['playlist_annotation'] # playlist annotation for the entire cassette
-        owner = data['owner'] # user who owns cassette --> foreign key
-        spotifyID = data['_id'] 
 
         # Checks if playlist exists in db 
-        exists = checkPlaylistInDB(name)
+        exists = checkPlaylistInDB(data['name'])
+        #Finds userID object in database
+        ownerID = findUserID(data['owner_name'])
 
         if not exists:
             object_playlist = pl.insert_one({
-                "_id": spotifyID,
-                "playlist_name": name,
-                # "sharing_link": sharing_link,
-                # "notes": notes,
-                "owner": owner
+                "_id": data['_id'] , # PlaylistID (Primary key)
+                "owner": ownerID, # UserID (Foreign key)
+                "playlist_name": data['name'], 
+                "date_created": data['date_created'],
+                "sharing_link": data['sharing_link'],
+                "note": data['note'],
             })
             return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
         
@@ -45,6 +42,11 @@ def checkPlaylistInDB(name):
     if pl.find_one({"playlist_name": name}):
         return True
     return False
+
+def findUserID(user_name):
+    info = us.find_one({"name":user_name})
+    return info["_id"]
+
     
 @playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
 def deletePlaylist():

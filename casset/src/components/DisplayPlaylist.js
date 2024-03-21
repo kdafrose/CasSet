@@ -26,8 +26,9 @@ export default function DisplayPlaylist() {
             try {
                 const response = await fetch("https://api.spotify.com/v1/playlists/" + playlistID + "/tracks", trackFetchParams);
                 const result = await response.json();
-                setPlaylistTracks(result.items);
-                console.log(result.items);
+                setPlaylistTracks(result.items); // song items
+                console.log(result)
+                // console.log(result.items);
             }
             catch(error) {
                 console.error("Error: ", error);
