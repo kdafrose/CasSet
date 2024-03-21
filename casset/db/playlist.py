@@ -12,36 +12,22 @@ us = client.usersInfo.users
 def postNewPlaylist():
 
     try:
-        # Change attributes based on request data json file
-
         data = request.json
-
-        # Checks if playlist exists in db 
-        exists = checkPlaylistInDB(data['name'])
         #Finds userID object in database
         ownerID = findUserID(data['owner_name'])
 
-        if not exists:
-            object_playlist = pl.insert_one({
-                "_id": data['_id'] , # PlaylistID (Primary key)
-                "owner": ownerID, # UserID (Foreign key)
-                "playlist_name": data['name'], 
-                "date_created": data['date_created'],
-                "sharing_link": data['sharing_link'],
-                "note": data['note'],
-            })
-            return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
-        
-        else:
-            return jsonify({"success":False, "result":"Playlist already exists."}), 409 # Playlist cannot be created as already exists in db
+        object_playlist = pl.insert_one({
+            "_id": data['_id'] , # PlaylistID (Primary key)
+            "owner": ownerID, # UserID (Foreign key)
+            "playlist_name": data['name'], 
+            "date_created": data['date_created'],
+            "sharing_link": data['sharing_link'],
+            "note": data['note'],
+        })
+        return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
     except Exception as e:
         return jsonify({"error":str(e)}), 400
 
-
-def checkPlaylistInDB(name):
-    if pl.find_one({"playlist_name": name}):
-        return True
-    return False
 
 def findUserID(user_name):
     info = us.find_one({"name":user_name})
@@ -55,12 +41,20 @@ def deletePlaylist():
         data = request.json
         playlistName = data['playlist_name'] # playlist name
 
-        pl.delete_one({"name": playlistName})
+        pl.delete_one({"name": playlistName, "_id":data['_id']})
         return jsonify({"success":True, "staus":"Playlist has been successfully deleted."}), 200
     except Exception as e:
         return jsonify({"error":str(e)}), 400
 
+@playlist_bp.route('/changePlaylistNote', methods = ['POST'])
+def changePlaylistNote():
+    try:
+        data = request.json
+        pl.update_one({"name": data['playlist_name'], "_id": data['_id']},{"$set": { "note": data['new_note']} })
 
+        return jsonify({"success":True, "state":"Edited playlist note successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}),400
 
 def listPlaylist():
     print(pl.find())
