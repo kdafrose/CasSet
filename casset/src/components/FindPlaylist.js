@@ -30,6 +30,7 @@ export default function FindPlaylist({onClose}) {
         .then(response => response.json())
         .then(data => {
             setPlaylists(data.items);
+            console.log(data);
             return data.items;
         })
         .then(playlists =>{
@@ -42,7 +43,33 @@ export default function FindPlaylist({onClose}) {
         searchForPlaylists();
     }, []);
 
-    async function handlePlaylistChoice() {
+    async function handlePlaylistChoice(data) {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+
+        const playlistData = {
+            "_id": data['_id'],
+            "name": data['playlist_name'],
+            "owner_name":profile.name,
+            "date_created":new Date().toJSON().slice(0, 10),
+            "sharing_link":data['sharing_link'],
+            "note": "fill in later",
+        }
+
+        fetch('http://localhost:5000/playlist/postNewPlaylist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(playlistData) // Use profileData instead of params
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
         navigate('/displayplaylist');
     }
 
@@ -73,7 +100,14 @@ export default function FindPlaylist({onClose}) {
                                         // Change this to hold the selected playlistID with database connection
                                         localStorage.removeItem("playlistID");
                                         localStorage.setItem("playlistID", playlist.id);
-                                        handlePlaylistChoice();
+
+                                        const playlistInfo = {
+                                            "_id": playlist.id,
+                                            "playlist_name": playlist.name, 
+                                            "sharing_link":playlist.external_urls.spotify,
+                                        }
+                                    
+                                        handlePlaylistChoice(playlistInfo);
                                     }}>
                                     Select playlist
                                 </Button>
