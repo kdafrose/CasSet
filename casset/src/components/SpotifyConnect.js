@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import './Home.css';
+import '../css/Home.css';
 
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";

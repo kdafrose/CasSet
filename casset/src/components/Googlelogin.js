@@ -3,7 +3,7 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import SpotifyConnect from './SpotifyConnect';
 import '../App.css';
-import './Home.css';
+import '../css/Home.css';
 
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);

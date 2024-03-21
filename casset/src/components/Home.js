@@ -1,6 +1,6 @@
 import React from 'react';
 import Googlelogin from './Googlelogin';
-import './Home.css';
+import '../css/Home.css';
 import imageSrc from '../media/Header.png'; // header image
 import rectangleImageSrc from '../media/Rolling.gif'; // home box image
 import logoSrc from '../media/casset.png';
