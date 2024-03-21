@@ -1,101 +1,101 @@
-import React, {useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
+import {useState} from 'react'
 
-const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
-const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
+// https://oauth.pstmn.io/v1/browser-callback for testing :)
 
-export default function AddSong() {
-
-    const [playlist] = useState(() => {
-        const storedPlaylistID = localStorage.getItem("playlistID");
-        return storedPlaylistID ? storedPlaylistID : null;
-    })
-
+export default function AddSong(props){
+    const [searchInput, setSearchInput] = useState("");
     const [accessToken] = useState(() => {
-        const storedToken = localStorage.getItem("accessToken");
-        console.log("Access Token: " + storedToken);
-        return storedToken ? storedToken : null;
-    });;
-    const [refreshTokenSaved] = useState(() => {
-        const storedRefresh = localStorage.getItem("refresh_token");
-        return storedRefresh ? storedRefresh : null;
-    });;
-
-    const meParams = {
+      const storedToken = localStorage.getItem("accessToken");
+      return storedToken ? storedToken : null;
+    });
+    const [songs, setSongs] = useState([]);
+    // const [playlistID] = useState(() => {
+    //   const storedPlaylistID = localStorage.getItem("playlistID");
+    //   return storedPlaylistID ? storedPlaylistID : null;
+    // })
+  
+    // THIS IS GOING TO CHANGE WHEN WE DO PROPER IMPLEMENTATION
+    const {onSongUpdate} = props;
+  
+    async function searchSong(){ 
+  
+      if(searchInput.trim() === ""){
+        console.log("No input.");
+        return;
+      }
+  
+      var trackSearchParams = {
         method: 'GET',
         headers: {
-            'Content-Type' : 'application/json',
-            'Authorization' : 'Bearer ' + accessToken
-        },
-    };
+          'Content-Type' : 'application/json',
+          'Authorization' : 'Bearer ' + accessToken
+        }
+      }
 
-    const baseString = CLIENT_ID + ":" + CLIENT_SECRET;
+      await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=track&limit=20', trackSearchParams)
+      .then(response => response.json())
+      .then(data => {
+        setSongs(data.tracks.items);
+      })
+      
+    }
 
-    const requestBody = new URLSearchParams();
-    requestBody.append('grant_type', 'refresh_token');
-    requestBody.append('refresh_token', refreshTokenSaved);
+    async function handleSongAdd(songURI, songName, songArtist, playlistID) {
 
-    const refreshParams = {
+      var trackAddParams = {
         method: 'POST',
         headers: {
-            'content-type' : 'application/x-www-form-urlencoded',
-            'Authorization' : 'Basic ' + btoa(baseString),
+          'Content-Type' : 'application/json',
+          'Authorization' : 'Bearer ' + accessToken,
         },
-        body: requestBody.toString(),
-    };
+        body: JSON.stringify({'uris' : [songURI]}),
+      };
 
-
-    // HOLY THIS WORKS
-    function getMe() {
-
-        const saved_user = localStorage.getItem("userSpotifyID");
-        console.log(saved_user);
-
-        // await fetch('https://api.spotify.com/v1/me', meParams)   if you uncomment this, put async back in front of function
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log(data);
-        // })
-    }
-
-    async function refreshToken() {
-        await fetch('https://accounts.spotify.com/api/token', refreshParams)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Did it work? Refreshing?");
-            console.log(data);
-
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("tokenType");
-            localStorage.removeItem("expiresIn");
-            localStorage.removeItem("refresh_token");
-      
-            localStorage.setItem("accessToken", data.access_token);
-            localStorage.setItem("tokenType", data.token_type);
-            localStorage.setItem("expiresIn", data.expires_in);
-            localStorage.setItem("refresh_token", data.refresh_token);
-        })
-    }
-
-    async function getPlaylistDetails() {
-        await fetch('https://api.spotify.com/v1/playlists/' + playlist, meParams)
-            .then(response => response.json())
-            .then(data => {
-                console.log("Here's all the playlist stuff")
-                console.log(data);
-            })
-    }
-
+      await fetch('https://api.spotify.com/v1/playlists/' + playlistID.toString() + '/tracks', trackAddParams)
+      .then(response => response.json())
+    }  
+  
     return (
-        <>
-            <div>
-                Nothing here for now....will be able to add songs to playlist in a bit
-                <button onClick= {getMe}>
-                    HE HE
-                </button>
-            </div>
-            <button onClick= {refreshToken}>
-                Refresh token!?
-            </button>
-        </>
-    )
+      <div className="App">
+        <Container>
+          <InputGroup className="mb-3" size="lg">
+            <FormControl
+              placeholder="Search For a Song"
+              type="input"
+              // onKeyDown={event => {            THIS BREAKS THE THING???
+              //   if(event.key === "Enter"){
+              //     searchSong();
+              //   }
+              // }}
+              onChange={event => setSearchInput(event.target.value)}
+            />
+            <Button onClick={searchSong}>
+              Search
+            </Button>
+          </InputGroup>
+        </Container>
+        <Container>
+          <Row className="mx-2 row row-cols-4">
+            {songs.map( (song, i) => {
+              //console.log(song)
+              return (
+                <Card key={song.id}>
+                <Card.Img src={song.album.images[0].url}/>
+                <Card.Body>
+                  <Card.Title>{song.name}</Card.Title>
+                  <Card.Subtitle>{song.artists[0].name}</Card.Subtitle>
+                </Card.Body>
+                <Button 
+                  onClick={() => onSongUpdate(song)}>
+                  Add to Playlist
+                </Button>
+              </Card>
+              )
+            })}
+          </Row>
+        </Container>
+      </div>
+    );
 }

@@ -9,18 +9,6 @@ function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
-    const SPACE_DELIMITER = "%20";
-    const SCOPES = [
-      "user-read-currently-playing",
-      "user-read-playback-state",
-      "playlist-read-private",
-      "playlist-read-collaborative",
-      "playlist-modify-public",
-      "playlist-modify-private",
-      "streaming",
-      "user-read-private",
-    ];
-    const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [accessToken] = useState(() => {
@@ -32,6 +20,9 @@ function MainSite() {
     const navigate = useNavigate();
 
     function clearAll(){
+
+      // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
+
       localStorage.removeItem("profile");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
@@ -122,30 +113,16 @@ function MainSite() {
         navigate('/');
     };
 
-    const toggleCreatePlaylist = () => {
-        setShowCreatePlaylist(!showCreatePlaylist);
-    };
-
-    const closeCreatePlaylist = () => {
-        setShowCreatePlaylist(false);
-    };
-
-    const toggleUploadPlaylist = () => {
-      setShowUploadPlaylist(!showUploadPlaylist);
-    };
-
-    const closeUploadPlaylist = () => {
-      setShowUploadPlaylist(false);
-    };
-
     return (
         <body id="main">
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="import-button" onClick={toggleCreatePlaylist}>create playlist</button>
-                        <button id="import-button"onClick={toggleUploadPlaylist}>Choose an Existing Spotify Playlist</button>
+                        <button type="button" id="import-button" 
+                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Playlist</button>
+                        <button id="import-button"
+                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Choose an Existing Spotify Playlist</button>
                         <h1>CasSet</h1>
                     </div>
                     <div id="middle-box">
@@ -177,8 +154,8 @@ function MainSite() {
                 </div>
             </div>
             {/* Conditionally render the CreatePlaylist component based on the state */}
-            {showCreatePlaylist && <CreatePlaylist onClose={closeCreatePlaylist} />}
-            {showUploadPlaylist && <FindPlaylist onClose={closeUploadPlaylist}/>}
+            {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}
+            {showUploadPlaylist && <FindPlaylist onClose={() => (setShowUploadPlaylist(false))}/>}
         </body>
     )
 }

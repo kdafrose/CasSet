@@ -55,7 +55,7 @@ export default function FindPlaylist({onClose}) {
         <div className='overlay-find'>
             <div className="form-container-find">
                 <form className="find-playlist-form">
-                    <button id="close-button" onClick={handleClose}>X</button>
+                    <button className="close-button" onClick={handleClose}>X</button>
                     {playlists.length !== 0 ? (
                         <Container>
                             <Row className="mx-2 row row-cols-2">

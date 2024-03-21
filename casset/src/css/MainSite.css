@@ -86,6 +86,41 @@
   width: 500px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
+.new-playlist-songs{
+  position:absolute;
+  background-color: #fff;
+  left: 5%;
+  border-radius: 10px;
+  width: 1080px;
+  height: 80vh;
+  overflow:auto;
+}
+#song-playlist-add{
+  overflow:auto;
+}
+#new-playlist-div{
+  display:flex;
+}
+.song-add-display{
+  width:20vh;
+  height:10vh;
+  display:flex;
+  background-color: red; 
+}
+#songs-added{
+  display:flex;
+  background-color: #f60aa3;
+  position:fixed;
+  top:10%;
+  right:5%;
+  overflow-y: auto;
+  width:300px;
+  height: 80vh;
+  border-radius: 10px;
+}
+h1#newly-playlist-title{
+  margin-left: 10%;
+}
 .loading-container{
   display:flex;
   justify-content: center;
@@ -97,9 +132,13 @@
 }
 #close-button {
   border: none;
+  margin-left: 10%;
   outline: none;
   background-color: transparent;
   display: block;
+}
+#close-button:hover{
+  background-color: transparent;
 }
 body.dark-theme {
   background: #222222;
