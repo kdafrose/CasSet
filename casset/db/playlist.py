@@ -12,11 +12,7 @@ def newPlaylist(userPlaylists):
                    "length": plLength, 
                    "Created": date_time,
                    "note": "",
-                   "songs": {
-                       "song": "songInfo",
-                       "song2": "songInfo",
-                       "song3": "songInfo"
-                        }
+                   "songs": []
                     })
 
 def deletePlaylist(userPlaylists):
@@ -41,6 +37,27 @@ def editPlaylistNote(userPlaylists):
     newNote = input("Enter a new note for playlist: ")
     userPlaylists.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
 
+def addSong(userPlaylists):
+    print("*Adding song*")
+    listPlaylist(userPlaylists)
+    searchPlaylist = input("What playlist do you want to add a song too?: ")
+    newSong = input("Enter song name: ")
+
+    update = userPlaylists.find({"name": searchPlaylist})
+    newList = {}
+    for document in update:
+        print("Songs: ", document["songs"])
+        newList = document["songs"]
+    newList.update({"song": newSong})
+    print(newList)
+
+    userPlaylists.update_one(
+        {"name": searchPlaylist},
+        {"$push": {"songs": newList}}
+    )
+
+
+
 if __name__ == '__main__':
     client = MongoClient(CONNECTION_STRING)
 
@@ -50,7 +67,7 @@ if __name__ == '__main__':
 
     loop = True
     while loop == True:
-        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n9. Exit\nInput: ')
+        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n9. Exit\nInput: ')
         if option == "1":
             listPlaylist(pl)
         elif option == "2":
@@ -59,6 +76,8 @@ if __name__ == '__main__':
             deletePlaylist(pl)
         elif option == "4":
             editPlaylistNote(pl)
+        elif option == "5":
+            addSong(pl)
         elif option == "9":
             loop = False
         else:
