@@ -2,13 +2,13 @@ from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 import datetime
 
-def newPlaylist():
+def newPlaylist(userPlaylists):
     print("*Making playlist*")
     plName = input("Name Playlist: ")
     plLength = input("How many songs are you putting into the playlist?: ")
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
 
-    pl.insert_one({"name": plName, 
+    userPlaylists.insert_one({"name": plName, 
                    "length": plLength, 
                    "Created": date_time,
                    "note": "",
@@ -19,26 +19,27 @@ def newPlaylist():
                         }
                     })
 
-def deletePlaylist():
+def deletePlaylist(userPlaylists):
     print("*Deleting playlist*")
 
-    listPlaylist()
+    listPlaylist(userPlaylists)
 
     deleteName = input("Enter the name of the Playlist you want to delete: ")
-
-    pl.delete_one({"name": deleteName})
-
+    userPlaylists.delete_one({"name": deleteName})
     print("Deleting playlist " + deleteName)
 
-def listPlaylist():
-    pllist = pl.find()
-    print(pllist)
+def listPlaylist(userPlaylists):
+    cursor = userPlaylists.find({})
+    print("= = = = = = = = = =")
+    for document in cursor:
+        print("Playlist: ", document["name"])
+    print("= = = = = = = = = =")
 
-def editPlaylistNote():
+def editPlaylistNote(userPlaylists):
     print("*Edit playlist note*")
     searchPlaylist = input("What playlist do you want to edit?: ")
     newNote = input("Enter a new note for playlist: ")
-    pl.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
+    userPlaylists.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
 
 if __name__ == '__main__':
     client = MongoClient(CONNECTION_STRING)
@@ -51,13 +52,13 @@ if __name__ == '__main__':
     while loop == True:
         option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n9. Exit\nInput: ')
         if option == "1":
-            listPlaylist()
+            listPlaylist(pl)
         elif option == "2":
-            newPlaylist()
+            newPlaylist(pl)
         elif option == "3":
-            deletePlaylist()
+            deletePlaylist(pl)
         elif option == "4":
-            editPlaylistNote()
+            editPlaylistNote(pl)
         elif option == "9":
             loop = False
         else:
