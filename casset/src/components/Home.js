@@ -3,6 +3,7 @@ import Googlelogin from './Googlelogin';
 import './Home.css';
 import imageSrc from './Header.png'; // header image
 import rectangleImageSrc from './Rolling.gif'; // home box image
+import logoSrc from './casset.png';
 
 export default function Home() {
   return (
@@ -15,7 +16,8 @@ export default function Home() {
         </div>
       </div>
       <footer>
-        LOGO_HERE © 2024 CasSet 
+        <img src={logoSrc} style={{maxWidth: "50px"}}/>
+        &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
       </footer> 
     </div>
   );
