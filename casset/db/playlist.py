@@ -11,12 +11,12 @@ def newPlaylist():
     pl.insert_one({"name": plName, 
                    "length": plLength, 
                    "Created": date_time,
+                   "note": "",
                    "songs": {
                        "song": "songInfo",
                        "song2": "songInfo",
                        "song3": "songInfo"
-                        },
-                    "note": ""
+                        }
                     })
 
 def deletePlaylist():
@@ -36,6 +36,9 @@ def listPlaylist():
 
 def editPlaylistNote():
     print("*Edit playlist note*")
+    searchPlaylist = input("What playlist do you want to edit?: ")
+    newNote = input("Enter a new note for playlist: ")
+    pl.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
 
 if __name__ == '__main__':
     client = MongoClient(CONNECTION_STRING)
