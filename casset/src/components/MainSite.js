@@ -76,8 +76,6 @@ function MainSite() {
             if(data.error === "invalid_grant"){
               return false;
             }
-            console.log("Below is from the fetch of the token: this is mainsite");
-            console.log(data);
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             clearAll();
@@ -121,7 +119,7 @@ function MainSite() {
         googleLogout();
         clearAll();
         setProfile(null);
-        navigate('/')
+        navigate('/');
     };
 
     const toggleCreatePlaylist = () => {
@@ -147,6 +145,7 @@ function MainSite() {
                     <div id="top-box">
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
                         <button type="button" id="import-button" onClick={toggleCreatePlaylist}>create playlist</button>
+                        <button id="import-button"onClick={toggleUploadPlaylist}>Choose an Existing Spotify Playlist</button>
                         <h1>CasSet</h1>
                     </div>
                     <div id="middle-box">
@@ -168,7 +167,6 @@ function MainSite() {
                                 <div>
                                     <p>{profile.name}</p>
                                     <button onClick={logOut}>Log out</button>
-                                    <button onClick={toggleUploadPlaylist}>Choose an Existing Spotify Playlist</button>
                                 </div>
                             )}
                         </div>

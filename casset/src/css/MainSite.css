@@ -22,16 +22,18 @@
 }
 #import-button {
   margin: 0cap;
+  margin-right:2vh;
   font-weight: bold;
   font-size: xx-large;
   flex: 1;
   align-self: stretch;
   background-color: #edceed;
-  border: none;
+  border: 2px solid black;
   color: black;
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border-radius: 10px;
 }
 #import-button:hover {
   background-color: #edb9e5;
