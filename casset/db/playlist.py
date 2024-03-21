@@ -11,8 +11,13 @@ def newPlaylist(userPlaylists):
     userPlaylists.insert_one({"name": plName, 
                    "length": plLength, 
                    "Created": date_time,
+                   "last_edited": date_time,
                    "note": "",
-                   "songs": []
+                   "songs": {
+                       "song": "songInfo",
+                       "song2": "songInfo",
+                       "song3": "songInfo"
+                        }
                     })
 
 def deletePlaylist(userPlaylists):
@@ -32,10 +37,12 @@ def listPlaylist(userPlaylists):
     print("= = = = = = = = = =")
 
 def editPlaylistNote(userPlaylists):
-    print("*Edit playlist note*")
+    listPlaylist(userPlaylists)
     searchPlaylist = input("What playlist do you want to edit?: ")
     newNote = input("Enter a new note for playlist: ")
     userPlaylists.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
+
+    changeEditDate(userPlaylists, searchPlaylist)
 
 def addSong(userPlaylists):
     print("*Adding song*")
@@ -43,6 +50,7 @@ def addSong(userPlaylists):
     searchPlaylist = input("What playlist do you want to add a song too?: ")
     newSong = input("Enter song name: ")
 
+    
     update = userPlaylists.find({"name": searchPlaylist})
     newList = {}
     for document in update:
@@ -56,7 +64,9 @@ def addSong(userPlaylists):
         {"$push": {"songs": newList}}
     )
 
-
+def changeEditDate(userPlaylists, name):
+    date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+    userPlaylists.update_one({"name": name},{"$set": { "last_edited": date_time} })
 
 if __name__ == '__main__':
     client = MongoClient(CONNECTION_STRING)
