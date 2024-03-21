@@ -135,38 +135,40 @@ function MainSite() {
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
-                        {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="import-button" onClick={toggleCreatePlaylist}>create playlist</button>
                         <h1>CasSet</h1>
+                        {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
+                        <button type="button" id="import-button" onClick={toggleCreatePlaylist}>Logo? create cassette</button>
                     </div>
                     <div id="middle-box">
                         <p>No cassettes yet ;)</p>
                     </div>
                     <div id="bottom-box">
-                        <h2>Groups</h2>
+                        <h2>Shared Cassettes</h2>
                         <div id="groups-box">
-                            <p>groups here</p>
+                            <p>shared cassettes here</p>
                         </div>
                     </div>
                 </div>
                 <div id="right-side">
                     <div id="account-menu">
-                        <p>icon here</p>
-                        <div id="account-menu">
-                            {/* Display profile name and logout button if user is logged in */}
-                            {profile && (
-                                <div>
-                                    <p>{profile.name}</p>
-                                    <button onClick={logOut}>Log out</button>
-                                </div>
-                            )}
-                        </div>
+                        {/* Display pfp, profile name, and logout button if user is logged in */}
+                        
+                        {profile && (
+                            <div>
+                                <p>pfp here</p>
+                                <p>{profile.name}</p>
+                                <button onClick={logOut}>Log out</button>
+                            </div>
+                        )}
                     </div>
                     <div id="friends-box">
                         <p>friends here</p>
                     </div>
                 </div>
             </div>
+            <footer>
+                LOGO_HERE © 2024 CasSet 
+            </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={closeCreatePlaylist} />}
         </body>
