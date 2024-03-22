@@ -3,6 +3,7 @@ import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import SpotifyConnect from './SpotifyConnect';
 import '../App.css';
+import '../css/Home.css';
 
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
@@ -64,33 +65,26 @@ function GoogleSignInAuthorization() {
     }, [signin])
 
     return (
-        <div id ="login-container" style ={{width:"100%", height:"100%",display:"flex"}}>
-
+        <div id ="login-container">
             {profile ? (
                 // div for logout button and SpotifyConnect button
-                <div id ="logout-button" style ={{flex:"1"}}>
-                    <div style={{display:"flex", justifyContent:"flex-end", alignItems:"center", flexDirection:"column"}}>
-                        <p>{profile.name}</p>
-                        <button onClick={logOut} style={{width:"10%", height:"5%"}}>Log out</button>
-                        {showSpotifyConnect && <SpotifyConnect />} {/* Show SpotifyConnect conditionally */}
+                <div>
+                    {showSpotifyConnect && <SpotifyConnect />}
+                    <div id="logout-button-container">
+                        <button id="logout-button" onClick={logOut}><i>rewind</i></button>
                     </div>
                 </div>
             ) : (
                 // div for Google login button
-                <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
-                    <img src="https://bestanimations.com/media/dancers/127847890funny-panda-dancing.gif" alt="gif here"style={{height:"10%"}}></img>
-                    <button id="GoogleButton"onClick={() => login()} style={{width:"23%"}}> 
-                            <div className ="google-logo"></div>
-                            Sign in with Google &nbsp;
-                    </button>
+                <div className="login-auth-button-container">
+                    <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
+                        <button class="login-auth-buttons" id="GoogleButton"onClick={() => login()}> 
+                            &nbsp;&nbsp;&emsp;Login&emsp;&nbsp;&nbsp;
+                        </button>
+                    </div>
                 </div>
             )
             }
-
-            <div id = "gif-div" style={{flex:"1"}}>
-                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/0afde9f2-c206-496e-b9c4-5b251f64729a/dg8oecb-c7d0d497-d086-4471-9c18-221821587f30.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzBhZmRlOWYyLWMyMDYtNDk2ZS1iOWM0LTViMjUxZjY0NzI5YVwvZGc4b2VjYi1jN2QwZDQ5Ny1kMDg2LTQ0NzEtOWMxOC0yMjE4MjE1ODdmMzAuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.aIyOfJLYrZUI5_6XDWkzvGxQyAP-w-oY3AhOpNRnsMo" alt="pls work" style ={{height:"40%"}}></img>
-            </div>
- 
         </div >
     );
 }
