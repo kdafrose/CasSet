@@ -13,7 +13,6 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [accessToken] = useState(() => {
       const storedToken = localStorage.getItem("accessToken");
-      console.log("Access Token: " + storedToken);
       return storedToken ? storedToken : null;
     });
     const [profile, setProfile] = useState(null);

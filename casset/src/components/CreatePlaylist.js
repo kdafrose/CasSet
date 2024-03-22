@@ -1,12 +1,12 @@
 import {useState} from 'react'
-import {Container, InputGroup, FormControl, Button, Card} from 'react-bootstrap'
+import {Container, InputGroup, FormControl, Button, Card, Row} from 'react-bootstrap'
 import AddSong from './AddSong';
 
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
 
 export default function CreatePlaylist({ onClose }) {
-    const [playlistName, setPlaylistName] = useState("Tester Playlist Name");
+    const [playlistName, setPlaylistName] = useState("");
     const [playlistDescription, setPLaylistDescription] = useState("Made with CasSet");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
@@ -16,8 +16,9 @@ export default function CreatePlaylist({ onClose }) {
         const storedSpotifyID = localStorage.getItem("userSpotifyID");
         return storedSpotifyID ? storedSpotifyID : null;
     })
-    const [playlistMade, setPlaylistMade] = useState(true);
-    const [songsToAdd, setSongsToAdd] = useState([])
+    const [playlistMade, setPlaylistMade] = useState(false);
+    const [playlistID, setPlaylistID] = useState("");
+    const [songsToAdd, setSongsToAdd] = useState([]);
 
     async function makePlaylist() {
         if(playlistName.trim() === ""){
@@ -32,7 +33,7 @@ export default function CreatePlaylist({ onClose }) {
                 'Authorization' : 'Bearer ' + accessToken
             },
             body: JSON.stringify({ 
-                "name": playlistName,
+                "name": playlistName, 
                 "description": playlistDescription,
                 "public" : true,
             })
@@ -42,6 +43,7 @@ export default function CreatePlaylist({ onClose }) {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                setPlaylistID(data.id);
             })
 
         setPlaylistMade(true);
@@ -49,14 +51,33 @@ export default function CreatePlaylist({ onClose }) {
     }
 
     function updateSongList(song) {
-        songsToAdd.push(song);
-
+        setSongsToAdd(prevSongs => [...prevSongs, song])
         console.log(songsToAdd);
     }
 
     function removeSong(goodbyeSong) {
         setSongsToAdd(prevList => prevList.filter(song => song.id !== goodbyeSong.id));
-    } 
+    }
+
+    async function handleSongAdd() {
+
+        const songURI = songsToAdd.map(item => (item.uri));
+        console.log(songURI);
+
+        var trackAddParams = {
+          method: 'POST',
+          headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessToken,
+          },
+          body: JSON.stringify({'uris' : songURI}),
+        };
+  
+        await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', trackAddParams)
+            .then(response => response.json())
+
+        handleClose();
+    }
 
     const handleClose = () => {
         setPlaylistName("");
@@ -104,24 +125,31 @@ export default function CreatePlaylist({ onClose }) {
                             <div id="new-playlist-div">
                                 <button className="close-button" onClick={handleClose}>X</button>
                                 <h1 id="newly-playlist-title">{playlistName}</h1>
+                                <Button id="make-playlist" 
+                                onClick={handleSongAdd}>
+                                    Make Playlist
+                                </Button>
                             </div>
                             <AddSong onSongUpdate={updateSongList}/>
                             <div id="songs-added">
+                                <Row className="mx-2 row row-cols-1">
                                 {songsToAdd.map((song) => {
                                     //console.log(song)
                                     return (
-                                        <div className='song-add-display'> 
-                                            <Card key={song.id}>
-                                            <Card.Img src={song.album.images[0].url}/>
-                                            <Card.Body>
-                                                <Card.Title>{song.name}</Card.Title>
-                                                <Card.Subtitle>{song.artists[0].name}</Card.Subtitle>
-                                            </Card.Body>
-                                            <Button onClick={() => {removeSong(song)}}>X</Button>
+                                        <>
+                                            <h4 className='song-name-add'>
+                                                {song.name}
+                                            </h4>
+                                        <div className='song-list-display'>
+                                            <Button className="remove-song-select"onClick={() => {removeSong(song)}}>X</Button> 
+                                            <Card key={song.id} className="song-add-image">
+                                                <Card.Img src={song.album.images[0].url}/>
                                             </Card>
                                         </div>
+                                    </>
                                     )
                                 })}
+                                </Row>
                             </div>
                         </form>
                     </>

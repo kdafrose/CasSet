@@ -64,11 +64,6 @@ export default function AddSong(props){
             <FormControl
               placeholder="Search For a Song"
               type="input"
-              // onKeyDown={event => {            THIS BREAKS THE THING???
-              //   if(event.key === "Enter"){
-              //     searchSong();
-              //   }
-              // }}
               onChange={event => setSearchInput(event.target.value)}
             />
             <Button onClick={searchSong}>

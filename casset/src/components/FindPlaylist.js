@@ -67,7 +67,7 @@ export default function FindPlaylist({onClose}) {
                                             <Card.Title>{playlist.name}</Card.Title>
                                             <Card.Subtitle>{playlist.description}</Card.Subtitle>
                                         </Card.Body>
-                                    <Button 
+                                    <Button  
                                         style={{height:'150px', width: '150px', objectFit:'cover'}} 
                                         onClick={() => {
 

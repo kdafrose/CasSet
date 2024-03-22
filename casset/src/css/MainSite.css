@@ -102,10 +102,20 @@
   display:flex;
 }
 .song-add-display{
-  width:20vh;
-  height:10vh;
+  width:50%;
+  height:50%;
+  padding-left: 3px;
   display:flex;
-  background-color: red; 
+}
+.song-add-image{
+  background-color: transparent;
+  border:none;
+}
+#make-playlist{
+  margin-left:auto;
+  background-color: transparent;
+  border:none;
+  color: black;
 }
 #songs-added{
   display:flex;
@@ -118,6 +128,9 @@
   height: 80vh;
   border-radius: 10px;
 }
+.song-list-display{
+  display:flex;
+}
 h1#newly-playlist-title{
   margin-left: 10%;
 }
@@ -125,6 +138,12 @@ h1#newly-playlist-title{
   display:flex;
   justify-content: center;
   align-items: center;
+}
+.remove-song-select{
+  width:30px;
+  height:110px;
+  background-color: transparent;
+  border:none;
 }
 #spin{
   margin-top: 150px;
