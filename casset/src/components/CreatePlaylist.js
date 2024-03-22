@@ -6,7 +6,7 @@ import AddSong from './AddSong';
 // const code = params.get("code");
 
 export default function CreatePlaylist({ onClose }) {
-    const [playlistName, setPlaylistName] = useState("");
+    const [playlistName, setPlaylistName] = useState("Something Here");
     const [playlistDescription, setPLaylistDescription] = useState("Made with CasSet");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
@@ -91,7 +91,7 @@ export default function CreatePlaylist({ onClose }) {
                 {playlistMade === false ? (
                     <form className="create-playlist-form">
                         <button className="close-button" onClick={handleClose}>X</button>
-                        <Container>
+                        <Container id="create-container">
                             <InputGroup className='mb-3' size='lg'>
                                 <FormControl
                                     placeholder="Playlist Name"

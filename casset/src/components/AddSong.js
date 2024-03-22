@@ -59,7 +59,7 @@ export default function AddSong(props){
   
     return (
       <div className="App">
-        <Container>
+        <Container id="add-song-search">
           <InputGroup className="mb-3" size="lg">
             <FormControl
               placeholder="Search For a Song"

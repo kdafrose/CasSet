@@ -124,7 +124,6 @@ function MainSite() {
                           onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Cassette </button>
                         <button id="import-button"
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Choose an Existing Spotify Playlist</button>
-                        <h1>CasSet</h1>
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
