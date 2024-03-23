@@ -5,7 +5,9 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
-import logoSrc from '../media/casset_title.png';
+import titleSrc from '../media/casset_title_purple.png';
+import placeHold from '../media/empty_image.webp';
+import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 
 function MainSite() {
@@ -15,6 +17,7 @@ function MainSite() {
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
+    const [profileImage, setProfileImage] = useState(placeHold);
 
     const samPlaylist = {
       name: "Example Playlist",
@@ -81,7 +84,7 @@ function MainSite() {
               method: 'GET',
               headers: {
                   'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.token_type
+                  'Authorization' : 'Bearer ' + data.access_token
               },
             };
 
@@ -90,6 +93,7 @@ function MainSite() {
             .then(data => {
               console.log(data);
               localStorage.setItem("userSpotifyID", data.id);
+              setProfileImage(data.images[0].url);
           })
             
             return;
@@ -139,19 +143,18 @@ function MainSite() {
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
-                        <img src={logoSrc} alt="CASSET" id="title" />
+                        <img src={titleSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="import-button" 
-                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Cassette </button>
-                        <button id="import-button"
-                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Choose an Existing Spotify Playlist</button>
+                        <button type="button" className="russo-one-regular" id="import-button" 
+                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Casset </button>
+                        <button className="russo-one-regular" id="import-button"
+                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Import Playlist</button>
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
-                        <button type="submit" id="search-submit">&#x1F50D;&#xFE0E;</button>
-                        <input type="text" placeholder="search cassets" id="search-bar"></input>
+                        <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
-                      <div id="empty-cassette-box">
+                      <div id="empty-cassets-box">
                         {savedPlaylists.map((playlist, i) => {
                           return (
                             <div key= {i} className='cassette-image-div'>
@@ -180,19 +183,31 @@ function MainSite() {
                         
                         {profile && (
                             <div>
-                                <p>pfp here</p>
-                                <p>{profile.name}</p>
-                                <button onClick={logOut}>Log out</button>
+                                <div id="account-top">
+                                  <img src={profileImage} alt="pfp" id="pfp"/>
+                                  <div id="name-centre">
+                                    <p className="russo-one-regular" id="name">{profile.name}</p>
+                                  </div>
+                                </div>
+                                <div id="account-bottom">
+                                  <button className="russo-one-regular" id="logout-main" onClick={logOut}>logout</button>
+                                </div>
                             </div>
                         )}
                     </div>
                     <div id="friends-box">
-                        <p>friends here</p>
+                      <div id="friends-top">
+                        <p className="russo-one-regular" id="friends">friends</p>
+                        <img src={logoSrc} alt="logo" id="logo"/>
+                      </div>
+                      <div id="empty-friends-box">
+                        <p>No friends yet :(</p>
+                      </div>
                     </div>
                 </div>
             </div>
             <footer>
-              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
+              © 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
             </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}

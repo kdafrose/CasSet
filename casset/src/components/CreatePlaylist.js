@@ -6,7 +6,7 @@ import AddSong from './AddSong';
 // const code = params.get("code");
 
 export default function CreatePlaylist({ onClose }) {
-    const [playlistName, setPlaylistName] = useState("Something Here");
+    const [playlistName, setPlaylistName] = useState("Playlist Name");
     const [playlistDescription, setPLaylistDescription] = useState("Made with CasSet");
     const [accessToken, setAccessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");

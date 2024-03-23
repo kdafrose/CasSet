@@ -99,7 +99,7 @@ function GoogleSignInAuthorization() {
                 // div for Google login button
                 <div className="login-auth-button-container">
                     <div ref={googleLoginDivRef} style={{flexDirection:"column",flex:"1"}}>
-                        <button className="login-auth-buttons" id="GoogleButton"onClick={() => login()}> 
+                        <button className="russo-one-regular" id="GoogleButton"onClick={() => login()}> 
                             &nbsp;&nbsp;&emsp;Login&emsp;&nbsp;&nbsp;
                         </button>
                     </div>
