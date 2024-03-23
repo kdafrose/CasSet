@@ -27,8 +27,9 @@ export default function DisplayPlaylist() {
                 const response = await fetch("https://api.spotify.com/v1/playlists/" + playlistID + "/tracks", trackFetchParams);
                 const result = await response.json();
                 setPlaylistTracks(result.items); // song items
-                console.log(result)
-                // console.log(result.items);
+                // console.log(result)
+                console.log(result.items);
+                addingSongsInDB(result.items);
             }
             catch(error) {
                 console.error("Error: ", error);
@@ -37,6 +38,39 @@ export default function DisplayPlaylist() {
 
         tracksFetch();
     }, []);
+
+    async function addingSongsInDB(data){
+        let songItems = [];
+        const playlistID = localStorage.getItem('playlistID');
+
+        for( let i = 0; i < 12; i ++){
+            var songDoc = {
+                "_id": data[i].track.id, //songID (Primary key)
+                "playlistID": playlistID, // playlistID (Foreign key)
+                "name": data[i].track.name,
+                "artist": data[i].track.artists[0].name,
+                "annotation": "fill in later",
+            }
+            songItems.push(songDoc);
+        }
+
+        console.log(songItems);
+
+        fetch('http://localhost:5000/songs/postMultipleSongs', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(songItems) // Use profileData instead of params
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
     const trackLengthToMinutes = (milliValue) => {
         const seconds = Math.floor(milliValue / 1000);

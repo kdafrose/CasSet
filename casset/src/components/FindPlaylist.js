@@ -55,6 +55,7 @@ export default function FindPlaylist({onClose}) {
             "note": "fill in later",
         }
 
+        // posting selected playlist to the database
         fetch('http://localhost:5000/playlist/postNewPlaylist', {
             method: 'POST',
             headers: {
