@@ -31,7 +31,7 @@ const SpotifyConnect = () => {
 
   return (
     <div className="login-auth-button-container">
-      <button class="login-auth-buttons" id="SpotifyButton" onClick={handleLogin}>Authenticate</button>
+      <button className="login-auth-buttons" id="SpotifyButton" onClick={handleLogin}>Authenticate</button>
     </div>
   );
 };

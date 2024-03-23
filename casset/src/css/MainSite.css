@@ -86,7 +86,29 @@
   border-bottom-right-radius: 25px;
 }
 #empty-cassette-box{
-
+  display:flex;
+}
+.cassette-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cassette-img{
+  height:160px;
+  width:240px;
+}
+.cassette-button{
+  background-color: transparent;
+  border: none;
+}
+.cassette-button:hover{
+  background-color: #866487;
+}
+.cassette-under-box{
+  border: 1px solid black;
+  width:240px;
+  border-radius:12px;
+  display:flex;
 }
 #bottom-box {
   
