@@ -179,7 +179,9 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 1rem;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 #friends {
   margin-top: 0.4vw;
