@@ -63,7 +63,6 @@ export default function DisplayPlaylist() {
                 "songID": data[i].track.id, //songID (Primary key)
                 "playlistID": playlistID, // playlistID (Foreign key)
                 "name": data[i].track.name,
-                // "artist": data[i].track.artists[0].name,
                 "artist":artists,
                 "annotation": "fill in later",
             }

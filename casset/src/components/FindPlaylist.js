@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
-
+import fetchPostPlaylist from './fetchPostPlaylist';
 
 export default function FindPlaylist({onClose}) {
     const [accessToken, setAccessToken] = useState(() => {
@@ -45,7 +45,6 @@ export default function FindPlaylist({onClose}) {
 
     async function handlePlaylistChoice(data) {
         const profile = JSON.parse(localStorage.getItem('profile'));
-
         const playlistData = {
             "_id": data['_id'],
             "name": data['playlist_name'],
@@ -55,22 +54,7 @@ export default function FindPlaylist({onClose}) {
             "note": "fill in later",
         }
 
-        // posting selected playlist to the database
-        fetch('http://localhost:5000/playlist/postNewPlaylist', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(playlistData) // Use profileData instead of params
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
+        fetchPostPlaylist(playlistData);
         navigate('/displayplaylist');
     }
 

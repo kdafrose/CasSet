@@ -77,11 +77,9 @@ export default function CreatePlaylist({ onClose }) {
 
         let songsItems = [], songsDocuments = []
         const songURI = songsToAdd.map(item => (item.uri));
-    
+        songsToAdd.map(item => songsItems.push(item));   
+
         // parsing into proper docuemnts
-        songsToAdd.map(item => songsItems.push(item));
-        //const playlistID = JSON.pasrse(localStorage.getItem('playlistID'));
-       
         for(let i =0; i < songsItems.length; i++){
             // case if there is multiple artists
             let artists = []
@@ -100,10 +98,8 @@ export default function CreatePlaylist({ onClose }) {
 
             songsDocuments.push(songDoc);
         }
-
         fetchPostMultiSongs(songsDocuments);
-
-
+        
         var trackAddParams = {
           method: 'POST',
           headers: {
