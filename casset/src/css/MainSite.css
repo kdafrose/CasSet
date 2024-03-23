@@ -259,7 +259,7 @@
 }
 .new-playlist-songs{
   position:absolute;
-  background-color: #fff;
+  background-color: #f4e2f5;
   left: 1%;
   border-radius: 10px;
   width: 980px;
@@ -314,17 +314,19 @@
   background-color: #c9a8cba1; 
   flex-direction: column;
   margin-bottom: 10px;
+  
 }
 #songs-added{
   display:flex;
-  background-color: #f60aa3;
+  background-color: #c693b5;
   position:fixed;
   top:4%;
-  right:-1%;
+  right:5%;
   overflow-y: auto;
-  width:300px;
+  width:210px;
   height: 91.5vh;
   border-radius: 10px;
+  border: #614257 solid 2px;
 }
 .song-list-display{
   display:flex;
@@ -346,6 +348,7 @@ h1#newly-playlist-title{
   height:110px;
   background-color: transparent;
   border:none;
+  
 }
 #spin{
   margin-top: 150px;
@@ -369,6 +372,9 @@ footer {
 
 /* Don't know if we are going to use this? */
 #close-button:hover{
+  background-color: transparent;
+}
+.remove-song-select:hover{
   background-color: transparent;
 }
 body.dark-theme {
