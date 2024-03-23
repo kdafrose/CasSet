@@ -13,31 +13,52 @@ def newPlaylist(userPlaylists):
                    "Created": date_time,
                    "last_edited": date_time,
                    "note": "",
-                   "songs": {
-                       "song": "songInfo",
-                       "song2": "songInfo",
-                       "song3": "songInfo"
+                   "songs": [
+                        {
+                            "songID": "ID1",
+                            "songName": "name1",
+                            "songNote": "sdf"
+                        },
+                        {
+                            "songID": "ID2",
+                            "songName": "name2",
+                            "songNote": "asdf"
+                        },
+                        {
+                            "songID": "ID3",
+                            "songName": "name3",
+                            "songNote": "asdf"
                         }
-                    })
+                    ]})
 
 def deletePlaylist(userPlaylists):
     print("*Deleting playlist*")
 
-    listPlaylist(userPlaylists)
+    showPlaylists(userPlaylists)
 
     deleteName = input("Enter the name of the Playlist you want to delete: ")
     userPlaylists.delete_one({"name": deleteName})
     print("Deleting playlist " + deleteName)
 
-def listPlaylist(userPlaylists):
+def showPlaylists(userPlaylists):
     cursor = userPlaylists.find({})
     print("= = = = = = = = = =")
     for document in cursor:
         print("Playlist: ", document["name"])
     print("= = = = = = = = = =")
 
+def showPlaylistSongs(userPlaylists, playlist):
+    cursor = userPlaylists.find_one({"name": playlist})
+    if playlist == "0":
+        return
+    
+    print("* * * * * * * * * * *")
+    for song in cursor["songs"]:
+        print(song["songName"])
+    print("* * * * * * * * * * *")
+
 def editPlaylistNote(userPlaylists):
-    listPlaylist(userPlaylists)
+    showPlaylists(userPlaylists)
     searchPlaylist = input("What playlist do you want to edit?: ")
     newNote = input("Enter a new note for playlist: ")
     userPlaylists.update_one({"name": searchPlaylist},{"$set": { "note": newNote} })
@@ -46,23 +67,38 @@ def editPlaylistNote(userPlaylists):
 
 def addSong(userPlaylists):
     print("*Adding song*")
-    listPlaylist(userPlaylists)
+    showPlaylists(userPlaylists)
+
     searchPlaylist = input("What playlist do you want to add a song too?: ")
     newSong = input("Enter song name: ")
 
-    
-    update = userPlaylists.find({"name": searchPlaylist})
-    newList = {}
-    for document in update:
-        print("Songs: ", document["songs"])
-        newList = document["songs"]
-    newList.update({"song": newSong})
-    print(newList)
-
-    userPlaylists.update_one(
-        {"name": searchPlaylist},
-        {"$push": {"songs": newList}}
+    userPlaylists.update_one({"name": searchPlaylist}, {"$push": 
+                                            {"songs": 
+                                                {
+                                                    "songID": "ID",
+                                                    "songName": newSong, 
+                                                    "songNote": "asdf"
+                                                }
+                                            }}
     )
+
+    changeEditDate(userPlaylists, searchPlaylist)
+
+def removeSong(userPlaylists):
+    showPlaylists(userPlaylists)
+
+    searchPlaylist = input("What playlist do you want to remove a song from?: ")
+    showPlaylistSongs(userPlaylists, searchPlaylist)
+
+    remove = input("Enter the name of the song you want to remove: ")
+
+    userPlaylists.update_one({"name": searchPlaylist}, {"$pull": {"songs":
+                                                                    {
+                                                                        "songName": remove
+                                                                    }}})
+
+    changeEditDate(userPlaylists, searchPlaylist)
+
 
 def changeEditDate(userPlaylists, name):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
@@ -77,9 +113,11 @@ if __name__ == '__main__':
 
     loop = True
     while loop == True:
-        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n9. Exit\nInput: ')
+        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n6. Remove Song\n\n9. Exit\nInput: ')
         if option == "1":
-            listPlaylist(pl)
+            showPlaylists(pl)
+            search = input("Which playlist do you want to look at? ")
+            showPlaylistSongs(pl, search)
         elif option == "2":
             newPlaylist(pl)
         elif option == "3":
@@ -88,6 +126,8 @@ if __name__ == '__main__':
             editPlaylistNote(pl)
         elif option == "5":
             addSong(pl)
+        elif option == "6":
+            removeSong(pl)
         elif option == "9":
             loop = False
         else:
