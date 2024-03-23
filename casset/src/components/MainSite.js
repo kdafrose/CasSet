@@ -3,35 +3,35 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
+import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import logoSrc from '../media/casset_title.png';
+import cassetteTemp from '../media/Rectangle_4.png';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
-    const SPACE_DELIMITER = "%20";
-    const SCOPES = [
-      "user-read-currently-playing",
-      "user-read-playback-state",
-      "playlist-read-private",
-      "playlist-read-collaborative",
-      "playlist-modify-public",
-      "playlist-modify-private",
-      "streaming",
-      "user-read-private",
-    ];
-    const SCOPES_URL_PARAM = SCOPES.join(SPACE_DELIMITER);
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
-    const [accessToken] = useState(() => {
-      const storedToken = localStorage.getItem("accessToken");
-      console.log("Access Token: " + storedToken);
-      return storedToken ? storedToken : null;
-    });
     const [profile, setProfile] = useState(null);
+
+    const samPlaylist = {
+      name: "Example Playlist",
+    }
+    const anotherPlay = {
+      name: "Example Playlist",
+    }
+    const threePlay = {
+      name: "Example Playlist",
+    }
+
+    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
+    const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
     const navigate = useNavigate();
 
     function clearAll(){
+      // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
       // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
@@ -60,14 +60,6 @@ function MainSite() {
           },
           body: requestBody.toString(),
         };
-
-        const meParams = {
-          method: 'GET',
-          headers: {
-              'Content-Type' : 'application/json',
-              'Authorization' : 'Bearer ' + accessToken
-          },
-        };
       
         var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
@@ -84,6 +76,14 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+
+            const meParams = {
+              method: 'GET',
+              headers: {
+                  'Content-Type' : 'application/json',
+                  'Authorization' : 'Bearer ' + data.token_type
+              },
+            };
 
             await fetch('https://api.spotify.com/v1/me', meParams)
             .then(response => response.json())
@@ -115,6 +115,18 @@ function MainSite() {
         }
     }, []);
 
+    const toggleBoxVisbility = (index) => {
+      setBoxVisibility(prevVisible => {
+        const updatedVisibliity = [...prevVisible];
+        updatedVisibliity[index] = !updatedVisibliity[index];
+        return updatedVisibliity;
+      });
+    };
+
+    function playCassette() {
+      console.log("This is going to be interesting")
+    }
+
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -122,63 +134,69 @@ function MainSite() {
         navigate('/');
     };
 
-    const toggleCreatePlaylist = () => {
-        setShowCreatePlaylist(!showCreatePlaylist);
-    };
-
-    const closeCreatePlaylist = () => {
-        setShowCreatePlaylist(false);
-    };
-
-    const toggleUploadPlaylist = () => {
-      setShowUploadPlaylist(!showUploadPlaylist);
-    };
-
-    const closeUploadPlaylist = () => {
-      setShowUploadPlaylist(false);
-    };
-
     return (
         <body id="main">
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
+                        <img src={logoSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="import-button" onClick={toggleCreatePlaylist}>create playlist</button>
-                        <button id="import-button"onClick={toggleUploadPlaylist}>Choose an Existing Spotify Playlist</button>
-                        <h1>CasSet</h1>
+                        <button type="button" id="import-button" 
+                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Cassette </button>
+                        <button id="import-button"
+                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Choose an Existing Spotify Playlist</button>
                     </div>
                     <div id="middle-box">
-                        <p>No cassettes yet ;)</p>
+                      <div id='search-container'>
+                        <button type="submit" id="search-submit">&#x1F50D;&#xFE0E;</button>
+                        <input type="text" placeholder="search cassets" id="search-bar"></input>
+                      </div>
+                      <div id="empty-cassette-box">
+                        {savedPlaylists.map((playlist, i) => {
+                          return (
+                            <div key= {i} className='cassette-image-div'>
+                              <p className='cassette-title'>{playlist.name}</p>
+                              <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
+                                style={{cursor: 'pointer'}} className='cassette-img'/>
+                              <Collapse in={boxVisibility[i]}>
+                                <div className='cassette-under-box'>
+                                  <Button onClick={() => (console.log("Yeah later"))} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
+                                </div>
+                              </Collapse>
+                            </div>
+                          )
+                        })}
+                      </div>
                     </div>
                     <div id="bottom-box">
-                        <h2>Groups</h2>
-                        <div id="groups-box">
-                            <p>groups here</p>
-                        </div>
+                      {/* used to be for shared cassettes */}
+                      
                     </div>
                 </div>
                 <div id="right-side">
                     <div id="account-menu">
-                        <p>icon here</p>
-                        <div id="account-menu">
-                            {/* Display profile name and logout button if user is logged in */}
-                            {profile && (
-                                <div>
-                                    <p>{profile.name}</p>
-                                    <button onClick={logOut}>Log out</button>
-                                </div>
-                            )}
-                        </div>
+                        {/* Display pfp, profile name, and logout button if user is logged in */}
+                        
+                        {profile && (
+                            <div>
+                                <p>pfp here</p>
+                                <p>{profile.name}</p>
+                                <button onClick={logOut}>Log out</button>
+                            </div>
+                        )}
                     </div>
                     <div id="friends-box">
                         <p>friends here</p>
                     </div>
                 </div>
             </div>
+            <footer>
+              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
+            </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
-            {showCreatePlaylist && <CreatePlaylist onClose={closeCreatePlaylist} />}
-            {showUploadPlaylist && <FindPlaylist onClose={closeUploadPlaylist}/>}
+            {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}
+            {showUploadPlaylist && <FindPlaylist onClose={() => (setShowUploadPlaylist(false))}/>}
         </body>
     )
 }
