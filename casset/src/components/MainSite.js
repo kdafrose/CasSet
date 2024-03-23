@@ -93,7 +93,12 @@ function MainSite() {
             .then(data => {
               console.log(data);
               localStorage.setItem("userSpotifyID", data.id);
-              setProfileImage(data.images[0].url);
+
+              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
+
+              console.log(profileImage);
+
+              setProfileImage(profileImage);
           })
             
             return;
@@ -145,10 +150,10 @@ function MainSite() {
                     <div id="top-box">
                         <img src={titleSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" className="russo-one-regular" id="import-button" 
-                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Casset </button>
+                        <button type="button" className="russo-one-regular" id="create-button" 
+                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>create casset</button>
                         <button className="russo-one-regular" id="import-button"
-                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Import Playlist</button>
+                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
