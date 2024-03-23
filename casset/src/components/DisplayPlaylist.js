@@ -1,5 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
+import fetchPostMultiSongs from './fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
@@ -42,34 +43,35 @@ export default function DisplayPlaylist() {
     async function addingSongsInDB(data){
         let songItems = [];
         const playlistID = localStorage.getItem('playlistID');
+        let dataLength =0;
 
-        for( let i = 0; i < 12; i ++){
+        if( data.length > 0 & data.length <= 12){
+            // playlist should have at least have 1-12 song
+            dataLength = data.length;
+        }
+        else{
+            dataLength = 12;
+        }
+
+        for( let i = 0; i < dataLength; i ++){
+            let artists = []
+            
+            for (let j=0; j < data[i].track.artists.length; j++){
+                artists.push(data[i].track.artists[j].name);
+            }
             var songDoc = {
-                "_id": data[i].track.id, //songID (Primary key)
+                "songID": data[i].track.id, //songID (Primary key)
                 "playlistID": playlistID, // playlistID (Foreign key)
                 "name": data[i].track.name,
-                "artist": data[i].track.artists[0].name,
+                // "artist": data[i].track.artists[0].name,
+                "artist":artists,
                 "annotation": "fill in later",
             }
             songItems.push(songDoc);
         }
 
         console.log(songItems);
-
-        fetch('http://localhost:5000/songs/postMultipleSongs', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(songItems) // Use profileData instead of params
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        fetchPostMultiSongs(songItems);
     }
 
     const trackLengthToMinutes = (milliValue) => {

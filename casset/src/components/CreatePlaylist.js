@@ -1,6 +1,8 @@
 import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button, Card, Row} from 'react-bootstrap'
 import AddSong from './AddSong';
+import fetchPostMultiSongs from './fetchPostMultiSongs';
+import fetchPostPlaylist from './fetchPostPlaylist';
 
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
@@ -44,33 +46,17 @@ export default function CreatePlaylist({ onClose }) {
             .then(data => {
                 console.log(data);
 
-                const date = new Date().toJSON().slice(0, 10);
                 const profileInfo = JSON.parse(localStorage.getItem("profile"))
-                
                 const playlistData = {
                     "_id": data.id, // id of playlist (primary key)
                     "name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
-                    "date_created": date, // date when playlist was created
+                    "date_created": new Date().toJSON().slice(0, 10), // date when playlist was created
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 
                 }
                 console.log(playlistData)
-                fetch('http://localhost:5000/playlist/postNewPlaylist', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(playlistData) // Use profileData instead of params
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                
+                fetchPostPlaylist(playlistData);
                 setPlaylistID(data.id);
                 setPlaylistMade(true);
             })
@@ -80,7 +66,7 @@ export default function CreatePlaylist({ onClose }) {
 
     function updateSongList(song) {
         setSongsToAdd(prevSongs => [...prevSongs, song])
-        console.log(songsToAdd);
+        //console.log(songsToAdd);
     }
 
     function removeSong(goodbyeSong) {
@@ -89,8 +75,34 @@ export default function CreatePlaylist({ onClose }) {
 
     async function handleSongAdd() {
 
+        let songsItems = [], songsDocuments = []
         const songURI = songsToAdd.map(item => (item.uri));
-        console.log(songURI);
+    
+        // parsing into proper docuemnts
+        songsToAdd.map(item => songsItems.push(item));
+        //const playlistID = JSON.pasrse(localStorage.getItem('playlistID'));
+       
+        for(let i =0; i < songsItems.length; i++){
+            // case if there is multiple artists
+            let artists = []
+            console.log(songsItems[i].artists);
+            for (let j=0; j < songsItems[i].artists.length; j++){
+                artists.push(songsItems[i].artists[j].name);
+            }
+
+            var songDoc = {
+                "songId": songsItems[i].id,
+                "playlistID":playlistID,
+                "name":songsItems[i].name,
+                "artist":artists,
+                "annotation":"fill in later",
+            }
+
+            songsDocuments.push(songDoc);
+        }
+
+        fetchPostMultiSongs(songsDocuments);
+
 
         var trackAddParams = {
           method: 'POST',
