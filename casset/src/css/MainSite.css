@@ -260,10 +260,10 @@
 .new-playlist-songs{
   position:absolute;
   background-color: #fff;
-  left: 5%;
+  left: 1%;
   border-radius: 10px;
-  width: 1080px;
-  height: 80vh;
+  width: 980px;
+  height: 80;
   overflow:auto;
 }
 #song-playlist-add{
@@ -282,33 +282,59 @@
   background-color: transparent;
   border:none;
 }
-#make-playlist{
-  margin-left:auto;
-  background-color: transparent;
-  border:none;
-  color: black;
+#make-playlist {
+  margin-left: auto;
+  margin-top: auto;
+  margin-right: 10px;
+  background-color:  #C9A8CB; 
+  border: 2px solid #79637a; 
+  color: #5f5760; 
+  font-family: "Russo One", sans-serif;
+  font-style: italic;
+  padding: 10px 20px;
+  border-radius: 20px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+}
+
+#make-playlist:hover {
+  background-color: #e08695; 
+  color: #fff;
+  border-color: #D6336C; 
 }
 #add-song-search{
   display:flex;
+  border-radius: 20px;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 35%;
+  border-bottom: 10px;
   height: auto;
+  width:600px;
+  padding: 7px; 
+  background-color: #c9a8cba1; 
   flex-direction: column;
+  margin-bottom: 10px;
 }
 #songs-added{
   display:flex;
   background-color: #f60aa3;
   position:fixed;
-  top:10%;
-  right:5%;
+  top:4%;
+  right:-1%;
   overflow-y: auto;
   width:300px;
-  height: 80vh;
+  height: 91.5vh;
   border-radius: 10px;
 }
 .song-list-display{
   display:flex;
 }
 h1#newly-playlist-title{
-  margin-left: 10%;
+  margin-left: 5%;
+  margin-top: 10px;
+  font-size:200%;
+  font-family: "Russo One", sans-serif;
+  color: #927a93;
 }
 .loading-container{
   display:flex;
@@ -328,7 +354,7 @@ h1#newly-playlist-title{
 #close-button {
   border: none;
   margin-left: 10%;
-  outline: none;
+  outline: none;  
   background-color: transparent;
   display: block;
 }
