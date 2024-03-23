@@ -359,3 +359,55 @@ body.dark-theme button {
 body.dark-theme button:hover {
   background-color: #434a5a;
 }
+
+.scrollable {
+  overflow-y: scroll; /* Enable vertical scrollbar */
+  max-height: calc(100% - 20px); /* Set maximum height for the scrollable area, considering scrollbar width */
+}
+
+/* WebKit (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ffd0d6;  /* Set the scrollbar thumb color to pink */
+  border-radius: 5px;
+}
+
+/* Firefox */
+::-moz-scrollbar {
+  width: 10px;
+  border-radius: 5px;
+}
+
+::-moz-scrollbar-thumb {
+  background-color: #ffd0d6; /* Set the scrollbar thumb color to pink */
+}
+
+.cassettes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.cassette-image-div {
+  width: calc(33.33% - 20px); /* Adjust width for 3 cassettes per row */
+  margin-right: 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.cassette-title {
+  /* Your styles for cassette title */
+}
+
+.cassette-img {
+  /* width: 1vw; */
+}
+
+.cassette-under-box {
+  /* Your styles for cassette under box */
+}
+
+

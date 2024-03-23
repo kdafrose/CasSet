@@ -28,8 +28,22 @@ function MainSite() {
     const threePlay = {
       name: "Example Playlist",
     }
-
-    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
+    const fourPlay = {
+      name: "Example Playlist",
+    }
+    const meowPlay = {
+      name: "MEOW",
+    }
+    const sixPlay = {
+      name: "Example Playlist",
+    }
+    const sevPlay = {
+      name: "Example Playlist",
+    }
+    const fivePlay = {
+      name: "Example Playlist",
+    }
+    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay,fourPlay, fivePlay, sixPlay, meowPlay]);
     const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
     const navigate = useNavigate();
 
@@ -157,11 +171,11 @@ function MainSite() {
                         <button className="russo-one-regular" id="import-button"
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
-                    <div id="middle-box">
+                    <div id="middle-box" className="scrollable">
                       <div id='search-container'>
                         <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
-                      <div id="empty-cassets-box">
+                      <div id="empty-cassets-box" className="cassettes-container">
                         {savedPlaylists.map((playlist, i) => {
                           return (
                             <div key= {i} className='cassette-image-div'>
