@@ -188,18 +188,18 @@ function MainSite() {
                                 <div id="account-top">
                                   <img src={profileImage} alt="pfp" id="pfp"/>
                                   <div id="name-centre">
-                                    <p class="russo-one-regular" id="name">{profile.name}</p>
+                                    <p className="russo-one-regular" id="name">{profile.name}</p>
                                   </div>
                                 </div>
                                 <div id="account-bottom">
-                                  <button class="russo-one-regular" id="logout-main" onClick={logOut}>logout</button>
+                                  <button className="russo-one-regular" id="logout-main" onClick={logOut}>logout</button>
                                 </div>
                             </div>
                         )}
                     </div>
                     <div id="friends-box">
                       <div id="friends-top">
-                        <p class="russo-one-regular" id="friends">friends</p>
+                        <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
                       <div id="empty-friends-box">
