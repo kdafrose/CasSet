@@ -95,7 +95,7 @@ function MainSite() {
             .then(data => {
               console.log(data);
               localStorage.setItem("userSpotifyID", data.id);
-              setProfileImage(data.images[0].url);
+              setProfileImage(data.images[0].url !== undefined ? data.images[0].url : placeHold);
           })
             
             return;
