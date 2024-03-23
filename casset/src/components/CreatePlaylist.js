@@ -16,7 +16,7 @@ export default function CreatePlaylist({ onClose }) {
         const storedSpotifyID = localStorage.getItem("userSpotifyID");
         return storedSpotifyID ? storedSpotifyID : null;
     })
-    const [playlistMade, setPlaylistMade] = useState(true);
+    const [playlistMade, setPlaylistMade] = useState(false);
     const [playlistID, setPlaylistID] = useState("");
     const [songsToAdd, setSongsToAdd] = useState([]);
 
