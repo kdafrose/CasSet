@@ -8,7 +8,6 @@ export default function SongSearch(){
     const [searchInput, setSearchInput] = useState("");
     const [accessToken] = useState(() => {
       const storedToken = localStorage.getItem("accessToken");
-      console.log("Access Token: " + storedToken);
       return storedToken ? storedToken : null;
     });
     const [songs, setSongs] = useState([]);
@@ -18,10 +17,6 @@ export default function SongSearch(){
     })
   
     // THIS IS GOING TO CHANGE WHEN WE DO PROPER IMPLEMENTATION
-    const [profile, setProfile] = useState(() => {
-      const storedProfile = localStorage.getItem("profile");
-      return storedProfile ? JSON.parse(storedProfile) : null;
-    });
   
     async function searchSong(){
   
@@ -46,7 +41,7 @@ export default function SongSearch(){
       
     }
 
-    async function handleSongAdd(songURI, playlistID) {
+    async function handleSongAdd(songURI, songName, songArtist, playlistID) {
 
       var trackAddParams = {
         method: 'POST',
@@ -68,11 +63,11 @@ export default function SongSearch(){
             <FormControl
               placeholder="Search For a Song"
               type="input"
-              onKeyDown={event => {
-                if(event.key === "Enter"){
-                  searchSong();
-                }
-              }}
+              // onKeyDown={event => {            THIS BREAKS THE THING???
+              //   if(event.key === "Enter"){
+              //     searchSong();
+              //   }
+              // }}
               onChange={event => setSearchInput(event.target.value)}
             />
             <Button onClick={searchSong}>
@@ -83,7 +78,7 @@ export default function SongSearch(){
         <Container>
           <Row className="mx-2 row row-cols-4">
             {songs.map( (song, i) => {
-              // console.log("-");
+              console.log(song)
               return (
                 <Card key={song.id}>
                 <Card.Img src={song.album.images[0].url}/>
@@ -92,7 +87,7 @@ export default function SongSearch(){
                   <Card.Subtitle>{song.artists[0].name}</Card.Subtitle>
                 </Card.Body>
                 <Button 
-                  onClick={() => {handleSongAdd(song.uri, playlistID)}}>
+                  onClick={() => {handleSongAdd(song.uri, song.name, song.artists[0].name, playlistID)}}>
                   Add to Playlist
                 </Button>
               </Card>

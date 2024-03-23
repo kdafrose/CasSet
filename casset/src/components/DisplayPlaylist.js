@@ -46,7 +46,7 @@ export default function DisplayPlaylist() {
 
     return ( 
         <div>
-            { playlistTracks ? (
+            { playlistTracks.length !== 0 ? (
                 <Container>
                     <Row className="mx-2 row row-cols-2">
                         {playlistTracks.map( (singleTrack, i) => {
@@ -61,11 +61,9 @@ export default function DisplayPlaylist() {
                                     </Card.Body>
                                     <Button 
                                         style={{height:'100px', width: '100px', objectFit:'cover'}} 
-                                        onClick={() => {
-                                            console.log("I can't tell if I should put the ability to play songs here..." + 
-                                            "because if so there's gonna be some WebPlayer SDK things to do")
-                                        }}>
-                                        Play?
+                                        // onClick={()}
+                                        >
+                                        Play
                                     </Button>
                                 </Card>
                                 )
