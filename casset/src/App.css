@@ -39,6 +39,8 @@
   }
 }
 
+::selection { background-color: #6cb4e880; }
+
 #logout-button-container {
   text-align: center;
   position: absolute;
@@ -60,7 +62,6 @@
   font-size: 2.85vw;
 }
 
-/* Change? */
 .login-auth-buttons {
   border-radius: 10px; 
 }

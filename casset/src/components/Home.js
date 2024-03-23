@@ -16,7 +16,7 @@ export default function Home() {
         </div>
       </div>
       <footer>
-        <img src={logoSrc} style={{maxWidth: "50px"}}/>
+        <img src={logoSrc} alt="logo" style={{maxWidth: "50px"}}/>
         &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
       </footer> 
     </div>

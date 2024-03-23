@@ -5,7 +5,9 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
-import logoSrc from '../media/casset_title.png';
+import titleSrc from '../media/casset_title_purple.png';
+import pfpSrc from '../media/pfp.JPG';
+import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 
 function MainSite() {
@@ -141,7 +143,7 @@ function MainSite() {
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
-                        <img src={logoSrc} alt="CASSET" id="title" />
+                        <img src={titleSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
                         <button type="button" id="import-button" 
                           onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Cassette </button>
@@ -150,8 +152,7 @@ function MainSite() {
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
-                        <button type="submit" id="search-submit">&#x1F50D;&#xFE0E;</button>
-                        <input type="text" placeholder="search cassets" id="search-bar"></input>
+                        <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
                       <div id="empty-cassette-box">
                         {savedPlaylists.map((playlist, i) => {
@@ -182,19 +183,31 @@ function MainSite() {
                         
                         {profile && (
                             <div>
-                                <p>pfp here</p>
-                                <p>{profile.name}</p>
-                                <button onClick={logOut}>Log out</button>
+                                <div id="account-top">
+                                  <img src={pfpSrc} alt="pfp" id="pfp"/>
+                                  <div id="name-centre">
+                                    <p id="name">{profile.name}</p>
+                                  </div>
+                                </div>
+                                <div id="account-bottom">
+                                  <button id="logout-main" onClick={logOut}>logout</button>
+                                </div>
                             </div>
                         )}
                     </div>
                     <div id="friends-box">
-                        <p>friends here</p>
+                      <div id="friends-top">
+                        <p id="friends">friends</p>
+                        <img src={logoSrc} alt="logo" id="logo"/>
+                      </div>
+                      <div id="empty-friends-box">
+                        <p>No friends yet :(</p>
+                      </div>
                     </div>
                 </div>
             </div>
             <footer>
-              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
+              © 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
             </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}

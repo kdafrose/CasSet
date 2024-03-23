@@ -7,14 +7,11 @@
 #everything-box {
   height: 100%;
   display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  align-items: stretch
 }
 #left-side {
   display: flex;
   flex-direction: column;
-  flex: 5
+  flex: 4.5
 }
 #top-box {
   display: flex;
@@ -22,71 +19,91 @@
   padding: 10px;
 }
 #title {
-  border-radius: 30px;
+  margin-top: 0.3vw;
+  margin-bottom: 0.3vw;
+  width: 20vw;
+  height: auto;
+  border-radius: 20px;
 }
 #create-button {
-  margin: 0cap;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  margin-left: 1.5vw;
+  width: 25vw;
+  height: 5vw;
   font-weight: bold;
-  font-size: xx-large;
+  font-size: 2.5vw;
   flex: 1;
-  align-self: stretch;
   background-color: #C9A8CB;
   border: none;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-}
-#create-button:hover {
-  background-color: #edb9e5;
+  color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 #import-button {
-  margin: 0cap;
-  margin-right:2vh;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  margin-right: 1vw;
+  width: 25vw;
+  height: 5vw;
   font-weight: bold;
-  font-size: xx-large;
+  font-size: 2.5vw;
   flex: 1;
-  align-self: stretch;
   background-color: #C9A8CB;
   border: none;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 25px;
+  color: white;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
+#create-button:hover,
 #import-button:hover {
-  background-color: #edb9e5;
+  color: #926395;
 }
 #middle-box {
+  margin-left: 0.75vw;
+  margin-right: 0.75vw;
+  margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
   border-radius: 50px;
   flex: 2;
-
+  display: flex;
+  flex-direction: column; /* Change to column direction */
+  justify-content: flex-start; /* Align content to the start (top) */
+  align-items: stretch; /* Stretches search, maybe need to adjust after cassets are added */
+}
+#search-container {
+  margin-top: 3vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 #create-container{
   display:flex;
   flex-direction: column;
 }
-#search-container{
-  flex-direction:row;
-}
-#search-submit {
-  background-color: #FDDFCA;
-  border: none;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-}
 #search-bar {
+  color: #a53171;
+  width: 100%;
+  height: 3vw;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  margin-top: 3vw;
   background-color: #FDDFCA;
   border: none;
-  border-top-right-radius: 25px;
-  border-bottom-right-radius: 25px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 1.5vw;
 }
-#empty-cassette-box{
-  display:flex;
+#search-bar::placeholder {
+  text-align: center; /* Center-align placeholder text */
+}
+#empty-cassets-box {
+  flex: 1; /* Occupy remaining space */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  color: #31343b;
+  font-size: 1.6vw;
 }
 .cassette-title{
   display: flex;
@@ -111,37 +128,111 @@
   display:flex;
 }
 #bottom-box {
-  
   display: flex;
   flex-direction: column
 }
 #groups-box {
   
 }
-footer {
-  color: #443566;
-  text-align: center;
-  padding: 15px;
-  font-size: 15px;
-  min-height:50px;
-}
 #right-side {
   display: flex;
   flex-direction: column;
-  flex: 1
+  flex: 1;
 }
 #account-menu {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.6vw;
+  margin-bottom: 1.6vw;
+  margin-right: 0.75vw;
   background-color: #FDDFCA;
+  border-radius: 25px;
+}
+#account-top {
+  display: flex;
+  flex-direction: row;
+}
+#pfp {
+  margin-top: 0.75vw;
+  margin-left: 0.75vw;
+  width: 4.5vw;
+  height: 100%;
+  border-radius: 100%;
+}
+#name-centre {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#name {
+  margin-top: 1.6vw;
+  margin-left: 1.3vw;
+  color: #31343b;
+  font-weight: bold;
+  font-size: 1.4vw;
+}
+#account-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#logout-main {
+  margin-bottom: 1vw;
+  padding-top: 0.5vw;
+  padding-bottom: 0.5vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  background-color: #C9A8CB;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2vw;
+  border-radius: 10px;
+}
+#logout-main:hover {
+  background-color: #b184b3;
 }
 #friends-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-right: 0.75vw;
+  margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
   border-radius: 50px;
-  flex: 2
+}
+#friends-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+#friends {
+  margin-top: 0.4vw;
+  color: #31343b;
+  font-weight: bold;
+  font-size: 2vw;
+}
+#empty-friends-box {
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  flex: 1; 
+  color: #31343b;
+  font-size: 1.4vw;
+}
+#logo {
+  width: auto;
+  height: 3.7vw;
+  max-width: 5.75vw;
+  border-radius: 3px;
 }
 
 .overlay {
   position: fixed;
-  top: 0;
+  top: 0; 
   left: 0;
   width: 100%;
   height: 100%;
@@ -238,6 +329,16 @@ h1#newly-playlist-title{
   background-color: transparent;
   display: block;
 }
+
+footer {
+  color: #443566;
+  text-align: center;
+  padding: 15px;
+  font-size: 15px;
+  min-height:50px;
+}
+
+/* Don't know if we are going to use this? */
 #close-button:hover{
   background-color: transparent;
 }
@@ -253,21 +354,5 @@ body.dark-theme button {
 }
 
 body.dark-theme button:hover {
-  background-color: #454545;
-}
-
-#placeholder-box {
-  flex:1;
-}
-
-#title-box {
-  flex:2;
-}
-
-#icons-box {
-  flex:1;
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  background-color: #434a5a;
 }
