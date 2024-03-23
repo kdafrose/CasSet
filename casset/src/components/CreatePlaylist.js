@@ -71,10 +71,10 @@ export default function CreatePlaylist({ onClose }) {
                         console.error('Error:', error);
                     });
                 
+                setPlaylistID(data.id);
+                setPlaylistMade(true);
             })
 
-            setPlaylistID(data.id);
-            setPlaylistMade(true);
         
     }
 
