@@ -140,8 +140,8 @@ function MainSite() {
                     <div id="top-box">
                         <img src={titleSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" id="create-button" onClick={toggleCreatePlaylist}>create casset</button>
-                        <button type="button" id="import-button">import playlist</button>
+                        <button type="button" class="russo-one-regular" id="create-button" onClick={toggleCreatePlaylist}>create casset</button>
+                        <button type="button" class="russo-one-regular" id="import-button">import playlist</button>
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
@@ -165,18 +165,18 @@ function MainSite() {
                                 <div id="account-top">
                                   <img src={pfpSrc} alt="pfp" id="pfp"/>
                                   <div id="name-centre">
-                                    <p id="name">{profile.name}</p>
+                                    <p class="russo-one-regular" id="name">{profile.name}</p>
                                   </div>
                                 </div>
                                 <div id="account-bottom">
-                                  <button id="logout-main" onClick={logOut}>logout</button>
+                                  <button class="russo-one-regular" id="logout-main" onClick={logOut}>logout</button>
                                 </div>
                             </div>
                         )}
                     </div>
                     <div id="friends-box">
                       <div id="friends-top">
-                        <p id="friends">friends</p>
+                        <p class="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
                       <div id="empty-friends-box">

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 
 .App {
   text-align: center;
@@ -41,6 +42,12 @@
 
 ::selection { background-color: #6cb4e880; }
 
+.russo-one-regular {
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #logout-button-container {
   text-align: center;
   position: absolute;
@@ -62,17 +69,18 @@
   font-size: 2.85vw;
 }
 
-.login-auth-buttons {
+/* .login-auth-buttons {
   border-radius: 10px; 
-}
+} */
 
 #GoogleButton {
   background-color: #434a5a;
   color: white;
   border: none;
-  padding: 1vh 2.5vh;
+  padding: 1vh 2.58vh;
   font-size: 3vw; 
   font-weight: 750;
+  border-radius: 10px; 
 }
 
 #SpotifyButton {
@@ -82,6 +90,7 @@
   padding: 1.35vh 2.5vh;
   font-size: 2.75vw;
   font-weight: 750;
+  border-radius: 10px; 
 }
 
 #GoogleButton:hover,
