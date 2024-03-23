@@ -72,14 +72,14 @@ def addSong(userPlaylists):
     searchPlaylist = input("What playlist do you want to add a song too?: ")
     newSong = input("Enter song name: ")
 
-    userPlaylists.update_one({"name": searchPlaylist}, {"$push": 
-                                            {"songs": 
-                                                {
-                                                    "songID": "ID",
-                                                    "songName": newSong, 
-                                                    "songNote": "asdf"
-                                                }
-                                            }}
+    userPlaylists.update_one(
+        {"name": searchPlaylist}, 
+        {"$push": {"songs": 
+                   {
+                       "songID": "ID",
+                       "songName": newSong, 
+                       "songNote": "asdf"
+                    }}}
     )
 
     changeEditDate(userPlaylists, searchPlaylist)
@@ -92,13 +92,28 @@ def removeSong(userPlaylists):
 
     remove = input("Enter the name of the song you want to remove: ")
 
-    userPlaylists.update_one({"name": searchPlaylist}, {"$pull": {"songs":
-                                                                    {
-                                                                        "songName": remove
-                                                                    }}})
+    userPlaylists.update_one(
+        {"name": searchPlaylist}, 
+        {"$pull": {"songs":{"songName": remove}}}
+    )
 
     changeEditDate(userPlaylists, searchPlaylist)
 
+def editSongNote(userPlaylists):
+    showPlaylists(userPlaylists)
+
+    search = input("What playlist do you want to remove a song from?: ")
+    showPlaylistSongs(userPlaylists, search)
+
+    editSong = input("Which song do you want to edit?: ")
+    newNote = input("What do you want to write in the note?: ")
+
+    userPlaylists.update_one(
+        {"name": search, f"songs.songName": editSong},
+        {"$set": {f"songs.$.songNote": newNote}}
+    )
+
+    changeEditDate(userPlaylists, search)
 
 def changeEditDate(userPlaylists, name):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
@@ -113,7 +128,7 @@ if __name__ == '__main__':
 
     loop = True
     while loop == True:
-        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n6. Remove Song\n\n9. Exit\nInput: ')
+        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n6. Remove Song\n7. Edit Song Note\n\n9. Exit\nInput: ')
         if option == "1":
             showPlaylists(pl)
             search = input("Which playlist do you want to look at? ")
@@ -128,6 +143,8 @@ if __name__ == '__main__':
             addSong(pl)
         elif option == "6":
             removeSong(pl)
+        elif option == "7":
+            editSongNote(pl)
         elif option == "9":
             loop = False
         else:
