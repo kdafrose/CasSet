@@ -16,17 +16,23 @@ function MainSite() {
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState(() => {
+      const storedProfile = localStorage.getItem("profile");
+      return storedProfile ? storedProfile : null;
+    });
     const [profileImage, setProfileImage] = useState(placeHold);
 
     const samPlaylist = {
-      name: "Example Playlist",
+      name: "Baja Blaster",
+      id:"4DltVzxWv7EbE1SxFSViLX"
     }
     const anotherPlay = {
-      name: "Example Playlist",
+      name: "Header Cannoner",
+      id:"3Jk6WNQK6ikHRVqRQnZfff"
     }
     const threePlay = {
-      name: "Example Playlist",
+      name: "Repeat",
+      id:"37i9dQZF1EpsLgdowUtTZ4"
     }
 
     const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
@@ -43,6 +49,7 @@ function MainSite() {
       localStorage.removeItem("tokenType");
       localStorage.removeItem("expiresIn");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("profileExists");
 
       return;
     }
@@ -68,7 +75,7 @@ function MainSite() {
       
         var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
-          .then(async data => {
+          .then(data => {
       
             if(data.error === "invalid_grant"){
               return false;
@@ -81,27 +88,7 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
-
-            const meParams = {
-              method: 'GET',
-              headers: {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.access_token
-              },
-            };
-
-            await fetch('https://api.spotify.com/v1/me', meParams)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              localStorage.setItem("userSpotifyID", data.id);
-
-              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
-
-              console.log(profileImage);
-
-              setProfileImage(profileImage);
-          })
+            localStorage.setItem("profileExists", "true");
             
             return;
           })
@@ -113,16 +100,43 @@ function MainSite() {
         return waiting;
     }
 
+    async function getMe() {
+
+      const accessTokenMe = localStorage.getItem("accessToken");
+
+      const meParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessTokenMe
+        },
+      };
+
+      await fetch('https://api.spotify.com/v1/me', meParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem("userSpotifyID", data.id);
+
+        const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
+
+        setProfileImage(profileImage);
+    })
+    }
+
     useEffect(() => {
-        if (window.location.search) {
+
+        if (window.location.search && (!localStorage.getItem("profileExists"))) {
           tokenCall(window.location.search);
         }
         // CHANGE localStorage to database later...
 
+        getMe();
+
         // Retrieve profile information from local storage
-        const storedProfile = localStorage.getItem("profile");
-        if (storedProfile) {
-            setProfile(JSON.parse(storedProfile));
+        const profileLocal = localStorage.getItem("profile");
+        if (profileLocal) {
+            setProfile(JSON.parse(profileLocal));
         }
     }, []);
 
@@ -134,8 +148,8 @@ function MainSite() {
       });
     };
 
-    function playCassette() {
-      console.log("This is going to be interesting")
+    function playCassette(selectID) {
+      navigate('/playsong', {state: {playlistItem: selectID}});
     }
 
     const logOut = () => {
@@ -171,7 +185,7 @@ function MainSite() {
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
                                   <Button onClick={() => (console.log("Yeah later"))} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => (playCassette(playlist.id))} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>
