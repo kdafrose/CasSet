@@ -80,6 +80,10 @@
 #create-container{
   display:flex;
   flex-direction: column;
+  background-color: #C9A8CB;
+  border-radius: 20px;
+  border: #b7b1b1 solid 1px ;
+  
 }
 #search-bar {
   padding-right: 2vw;
