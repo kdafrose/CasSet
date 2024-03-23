@@ -47,7 +47,7 @@ export default function FindPlaylist({onClose}) {
         const profile = JSON.parse(localStorage.getItem('profile'));
         const playlistData = {
             "_id": data['_id'],
-            "name": data['playlist_name'],
+            "song_name": data['playlist_name'],
             "owner_name":profile.name,
             "date_created":new Date().toJSON().slice(0, 10),
             "sharing_link":data['sharing_link'],
