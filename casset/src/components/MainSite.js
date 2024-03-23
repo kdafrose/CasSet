@@ -6,7 +6,7 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
 import titleSrc from '../media/casset_title_purple.png';
-import pfpSrc from '../media/pfp.JPG';
+import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 
@@ -17,6 +17,7 @@ function MainSite() {
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
+    const [profileImage, setProfileImage] = useState(placeHold);
 
     const samPlaylist = {
       name: "Example Playlist",
@@ -85,7 +86,7 @@ function MainSite() {
               method: 'GET',
               headers: {
                   'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.token_type
+                  'Authorization' : 'Bearer ' + data.access_token
               },
             };
 
@@ -94,6 +95,7 @@ function MainSite() {
             .then(data => {
               console.log(data);
               localStorage.setItem("userSpotifyID", data.id);
+              setProfileImage(data.images[0].url);
           })
             
             return;
@@ -146,15 +148,15 @@ function MainSite() {
                         <img src={titleSrc} alt="CASSET" id="title" />
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
                         <button type="button" id="import-button" 
-                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Cassette </button>
+                          onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>Create Casset </button>
                         <button id="import-button"
-                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Choose an Existing Spotify Playlist</button>
+                          onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>Import Playlist</button>
                     </div>
                     <div id="middle-box">
                       <div id='search-container'>
                         <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
-                      <div id="empty-cassette-box">
+                      <div id="empty-cassets-box">
                         {savedPlaylists.map((playlist, i) => {
                           return (
                             <div key= {i} className='cassette-image-div'>
@@ -184,7 +186,7 @@ function MainSite() {
                         {profile && (
                             <div>
                                 <div id="account-top">
-                                  <img src={pfpSrc} alt="pfp" id="pfp"/>
+                                  <img src={profileImage} alt="pfp" id="pfp"/>
                                   <div id="name-centre">
                                     <p id="name">{profile.name}</p>
                                   </div>
