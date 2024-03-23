@@ -89,6 +89,8 @@ function MainSite() {
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
             localStorage.setItem("profileExists", "true");
+
+            getMe();
             
             return;
           })
@@ -124,20 +126,24 @@ function MainSite() {
     })
     }
 
-    useEffect(() => {
+    useEffect( () => {
 
+      async function fetchData() {
         if (window.location.search && (!localStorage.getItem("profileExists"))) {
           tokenCall(window.location.search);
         }
+        else {
+          getMe();
+        }
         // CHANGE localStorage to database later...
-
-        getMe();
 
         // Retrieve profile information from local storage
         const profileLocal = localStorage.getItem("profile");
         if (profileLocal) {
             setProfile(JSON.parse(profileLocal));
         }
+      }
+      fetchData();
     }, []);
 
     const toggleBoxVisbility = (index) => {
