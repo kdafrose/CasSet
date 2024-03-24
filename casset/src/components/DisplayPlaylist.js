@@ -1,5 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
+import fetchPostMultiSongs from './fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
@@ -26,7 +27,10 @@ export default function DisplayPlaylist() {
             try {
                 const response = await fetch("https://api.spotify.com/v1/playlists/" + playlistID + "/tracks", trackFetchParams);
                 const result = await response.json();
-                setPlaylistTracks(result.items);
+                setPlaylistTracks(result.items); // song items
+                // console.log(result)
+                console.log(result.items);
+                addingSongsInDB(result.items);
             }
             catch(error) {
                 console.error("Error: ", error);
@@ -35,6 +39,39 @@ export default function DisplayPlaylist() {
 
         tracksFetch();
     }, []);
+
+    async function addingSongsInDB(data){
+        let songItems = [];
+        const playlistID = localStorage.getItem('playlistID');
+        let dataLength =0;
+
+        if( data.length > 0 & data.length <= 12){
+            // playlist should have at least have 1-12 song
+            dataLength = data.length;
+        }
+        else{
+            dataLength = 12;
+        }
+
+        for( let i = 0; i < dataLength; i ++){
+            let artists = []
+            
+            for (let j=0; j < data[i].track.artists.length; j++){
+                artists.push(data[i].track.artists[j].name);
+            }
+            var songDoc = {
+                "songID": data[i].track.id, //songID (Primary key)
+                "playlistID": playlistID, // playlistID (Foreign key)
+                "name": data[i].track.name,
+                "artist":artists,
+                "annotation": "fill in later",
+            }
+            songItems.push(songDoc);
+        }
+
+        console.log(songItems);
+        fetchPostMultiSongs(songItems);
+    }
 
     const trackLengthToMinutes = (milliValue) => {
         const seconds = Math.floor(milliValue / 1000);

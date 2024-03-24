@@ -39,7 +39,28 @@ function GoogleSignInAuthorization() {
                 })
                 .then((res) => {
                     setProfile(res.data);
-                    localStorage.setItem("profile", JSON.stringify(res.data));
+                    localStorage.setItem("profile", JSON.stringify(res.data))
+                    // Data to pass in
+                    const profileData ={
+                        "name": res.data.name,
+                        "email":res.data.email,
+                    };
+                    fetch('http://localhost:5000/users/postUserInfo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(profileData) // Use profileData instead of params
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                    console.log("Profile got set");
+
                 })
                 .catch((err) => console.log(err));
         }
