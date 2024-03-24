@@ -9,6 +9,7 @@ import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
+import iconSrc from '../media/disket.png';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -228,7 +229,8 @@ function MainSite() {
                 </div>
             </div>
             <footer>
-              © 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
+              <img src={iconSrc} alt="icon" style={{maxWidth: "32px"}}/>
+              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
             </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}
