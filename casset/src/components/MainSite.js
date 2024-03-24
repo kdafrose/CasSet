@@ -21,6 +21,7 @@ function MainSite() {
       return storedProfile ? storedProfile : null;
     });
     const [profileImage, setProfileImage] = useState(placeHold);
+    const [editPlaylist, setEditPlaylist] = useState("");
 
     const samPlaylist = {
       name: "Baja Blaster",
@@ -91,7 +92,7 @@ function MainSite() {
             localStorage.setItem("profileExists", "true");
 
             getMe();
-            
+
             return;
           })
       
@@ -158,6 +159,10 @@ function MainSite() {
       navigate('/playsong', {state: {playlistItem: selectID}});
     }
 
+    function editCassette(selectID){
+      setEditPlaylist(selectID);
+    }
+
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -178,26 +183,35 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box">
-                      <div id='search-container'>
-                        <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
-                      </div>
-                      <div id="empty-cassets-box">
-                        {savedPlaylists.map((playlist, i) => {
-                          return (
-                            <div key= {i} className='cassette-image-div'>
-                              <p className='cassette-title'>{playlist.name}</p>
-                              <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                style={{cursor: 'pointer'}} className='cassette-img'/>
-                              <Collapse in={boxVisibility[i]}>
-                                <div className='cassette-under-box'>
-                                  <Button onClick={() => (console.log("Yeah later"))} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => (playCassette(playlist.id))} className="cassette-button">Play Cassette</Button>
+                      { editPlaylist === "" ? (
+                        <>
+                          <div id='search-container'>
+                            <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                          </div>
+                          <div id="empty-cassets-box">
+                            {savedPlaylists.map((playlist, i) => {
+                              return (
+                                <div key= {i} className='cassette-image-div'>
+                                  <p className='cassette-title'>{playlist.name}</p>
+                                  <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
+                                    style={{cursor: 'pointer'}} className='cassette-img'/>
+                                  <Collapse in={boxVisibility[i]}>
+                                    <div className='cassette-under-box'>
+                                      <Button onClick={() => (editCassette(playlist.id))} className="cassette-button">Edit Cassette</Button>
+                                      <Button onClick={() => (playCassette(playlist.id))} className="cassette-button">Play Cassette</Button>
+                                    </div>
+                                  </Collapse>
                                 </div>
-                              </Collapse>
-                            </div>
-                          )
-                        })}
-                      </div>
+                              )
+                            })}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+
+                        </>
+                      )
+                        }
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
