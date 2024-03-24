@@ -9,6 +9,7 @@ import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
+import fetchPlaylists from './fetchUserPlaylists';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -18,20 +19,19 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
+    const [savedPlaylists, setSavedPlaylist] = useState([]);
 
-    const samPlaylist = {
-      name: "Example Playlist",
-    }
-    const anotherPlay = {
-      name: "Example Playlist",
-    }
-    const threePlay = {
-      name: "Example Playlist",
-    }
-
-    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
-    const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
-    const navigate = useNavigate();
+    useEffect(() => {
+      fetchPlaylists().then(data=>{
+        console.log(data);
+        setSavedPlaylist(data);
+      })
+      
+  }, []); // The empty array ensures this effect runs once on mount
+    
+  // const [savedPlaylists] = useState();
+  const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
+  const navigate = useNavigate();
 
     function clearAll(){
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
@@ -163,7 +163,7 @@ function MainSite() {
                         {savedPlaylists.map((playlist, i) => {
                           return (
                             <div key= {i} className='cassette-image-div'>
-                              <p className='cassette-title'>{playlist.name}</p>
+                              <p className='cassette-title'>{playlist.playlist_name}</p>
                               <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
                                 style={{cursor: 'pointer'}} className='cassette-img'/>
                               <Collapse in={boxVisibility[i]}>
