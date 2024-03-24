@@ -176,7 +176,7 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {editCasset ? (
-                            <EditCasset onClose={() => setEditCasset(false)} />
+                          <EditCasset onClose={() => setEditCasset(false)} />
                         ) : (
                           <div>
                             <div id='search-container'>

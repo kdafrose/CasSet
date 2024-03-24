@@ -10,7 +10,11 @@ function EditCasset({ onClose }) {
             <div id="casset-side-box">
                 <img src={spotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
-                <p id="spotify-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p id="spotify-desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec.</p>
+                <div id="date-container">
+                    <p className="russo-one-regular" id="date-created">date created:</p>
+                    <p id="date">Mar 12, 2024</p>
+                </div>
                 <div id="share-button-div">
                     <button type="button" className="russo-one-regular" id="share-button">share</button>
                 </div>
