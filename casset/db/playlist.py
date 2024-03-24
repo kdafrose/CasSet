@@ -16,11 +16,11 @@ def postNewPlaylist():
     try:
         data = request.json
         #Finds userID object in database
-        ownerID = findUserID(data['owner_name'])
+        ownerID = findUserID(data['owner_name'], data['email'])
         exists = checkPlaylistInDB(data['_id'])
 
         if not exists:
-            object_playlist = pl.insert_one({
+            pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
                 "playlist_name": data['playlist_name'], 
@@ -28,7 +28,7 @@ def postNewPlaylist():
                 "sharing_link": data['sharing_link'],
                 "note": data['note'],
             })
-            return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
+            return jsonify({"success": True, "result": "Playlist has been added to the database successfully"}), 200
         else:
             return jsonify({"success":False, "result":"Playlist already in database."}), 409
     except Exception as e:

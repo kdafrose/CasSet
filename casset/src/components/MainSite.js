@@ -22,14 +22,17 @@ function MainSite() {
     const [savedPlaylists, setSavedPlaylist] = useState([]);
 
     useEffect(() => {
-      fetchPlaylists().then(data=>{
-        console.log(data);
-        setSavedPlaylist(data);
-      })
-      
+      fetchPlaylists()
+    .then(data => {
+        if (data) {
+            console.log(data);
+            setSavedPlaylist(data);
+        } else {
+            setSavedPlaylist([]);
+        }
+    })      
   }, []); // The empty array ensures this effect runs once on mount
     
-  // const [savedPlaylists] = useState();
   const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
   const navigate = useNavigate();
 
@@ -159,7 +162,13 @@ function MainSite() {
                       <div id='search-container'>
                         <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
-                      <div id="empty-cassets-box">
+                      <div>
+                        {savedPlaylists.length == 0 ? (
+                          <div>
+                           No Cassets yet ;(
+                          </div>
+                        ) : (
+                          <div id="empty-cassets-box">
                         {savedPlaylists.map((playlist, i) => {
                           return (
                             <div key= {i} className='cassette-image-div'>
@@ -175,6 +184,8 @@ function MainSite() {
                             </div>
                           )
                         })}
+                      </div>
+                        )}
                       </div>
                     </div>
                     <div id="bottom-box">

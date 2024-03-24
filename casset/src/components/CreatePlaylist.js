@@ -49,8 +49,9 @@ export default function CreatePlaylist({ onClose }) {
                 const profileInfo = JSON.parse(localStorage.getItem("profile"))
                 const playlistData = {
                     "_id": data.id, // id of playlist (primary key)
-                    "name": data.name, // playlist name
+                    "playlist_name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
+                    "email": profileInfo.email,
                     "date_created": new Date().toJSON().slice(0, 10), // date when playlist was created
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 

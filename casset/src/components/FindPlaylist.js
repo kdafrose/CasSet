@@ -49,6 +49,7 @@ export default function FindPlaylist({onClose}) {
             "_id": data['_id'],
             "playlist_name": data['playlist_name'],
             "owner_name":profile.name,
+            "email": profile.email,
             "date_created":new Date().toJSON().slice(0, 10),
             "sharing_link":data['sharing_link'],
             "note": "fill in later",
