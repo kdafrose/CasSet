@@ -1,9 +1,10 @@
 import '../css/EditCasset.css';
+import { Button } from 'react-bootstrap';
 import titleSrc from '../media/casset_title_purple.png';
 import spotifyCover from '../media/spotifycover.jpg';
 import tempCover from '../media/goatedmusic.png';
 
-function EditCasset() {
+function EditCasset({ onClose }) {
     return (
         <div id="casset-edit">
             <div id="casset-side-box">
@@ -15,7 +16,10 @@ function EditCasset() {
                 </div>
             </div>
             <div id="casset-songs">
-                <p className="russo-one-regular" id="casset-songs-title">SONGS</p>
+                <div id="casset-songs-top">
+                    <Button id="back-button" onClick={onClose}>go back</Button>
+                    <p className="russo-one-regular" id="casset-songs-title">SONGS</p>
+                </div>
                 <div id="casset-songs-box-col">
                     <div id="casset-songs-row">
                         <img src={tempCover} alt="temp cover" id="casset-cover"/>

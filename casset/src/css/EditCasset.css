@@ -14,10 +14,7 @@
     border-radius: 30px;
 }
 #spotify-cover {
-    margin-top: 3vw;
-    margin-bottom: 2vw;
-    margin-left: 3vw;
-    margin-right: 3vw;
+    margin: 3vw 3vw 2vw 3vw;
     width: 10vw;
     height: auto;
     border-radius: 10px;
@@ -48,13 +45,31 @@
     font-size: 1.6vw;
     border-radius: 15px;
 }
-#share-button:hover {
-    background-color: #b184b3;
-}
 #casset-songs {
     display: flex;
     flex-direction: column;
     flex: 3;
+}
+#casset-songs-top {
+    display: flex;
+    flex-direction: row;
+}
+#back-button {
+    margin: 1.5vw 15.4vw 1.5vw 0;
+    padding: 0.5vw 2vw;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #C9A8CB;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.4vw;
+    border-radius: 15px;
+}
+#share-button:hover,
+#back-button:hover {
+    background-color: #b184b3;
 }
 #casset-songs-title {
     color: #DB5EA2;
@@ -75,7 +90,6 @@
 #casset-songs-row {
     margin: 2.5vw 2vw 0 2.5vw;
     display: flex;
-    align-items: flex-start;
     align-items: center;
 }
 #casset-cover {
