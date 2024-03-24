@@ -25,7 +25,9 @@ body {
   }
 
   #import-button {
-    
+    margin: 0cap;
+    font-weight: bold;
+    font-size: xx-large;
   }
 
   #middle-box {
