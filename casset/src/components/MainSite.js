@@ -5,6 +5,7 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import EditCasset from './EditCasset';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
@@ -15,10 +16,11 @@ function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
-    const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
+    const [editCasset, setEditCasset] = useState(false);
 
     const samPlaylist = {
       name: "Example Playlist",
@@ -173,26 +175,32 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box" className="scrollable">
-                      <div id='search-container'>
-                        <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
-                      </div>
-                      <div id="empty-cassets-box" className="cassettes-container">
-                        {savedPlaylists.map((playlist, i) => {
-                          return (
-                            <div key= {i} className='cassette-image-div'>
-                              <p className='cassette-title'>{playlist.name}</p>
-                              <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                style={{cursor: 'pointer'}} className='cassette-img'/>
-                              <Collapse in={boxVisibility[i]}>
-                                <div className='cassette-under-box'>
-                                  <Button onClick={() => (console.log("Yeah later"))} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
-                                </div>
-                              </Collapse>
+                    {editCasset ? (
+                            <EditCasset onClose={() => setEditCasset(false)} />
+                        ) : (
+                          <div>
+                            <div id='search-container'>
+                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                             </div>
-                          )
-                        })}
-                      </div>
+                            <div id="empty-cassets-box" className="cassettes-container">
+                              {savedPlaylists.map((playlist, i) => {
+                                return (
+                                  <div key= {i} className='cassette-image-div'>
+                                    <p className='cassette-title'>{playlist.name}</p>
+                                    <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
+                                      style={{cursor: 'pointer'}} className='cassette-img'/>
+                                    <Collapse in={boxVisibility[i]}>
+                                      <div className='cassette-under-box'>
+                                        <Button onClick={() => setEditCasset(true)} className="cassette-button">Edit Cassette</Button>
+                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
+                                      </div>
+                                    </Collapse>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        )}
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
