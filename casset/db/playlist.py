@@ -22,7 +22,7 @@ def postNewPlaylist():
             object_playlist = pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
-                "playlist_name": data['name'], 
+                "playlist_name": data['playlist_name'], 
                 "date_created": data['date_created'],
                 "sharing_link": data['sharing_link'],
                 "note": data['note'],
