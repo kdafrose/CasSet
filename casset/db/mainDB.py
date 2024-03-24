@@ -1,0 +1,40 @@
+from pymongo import MongoClient
+from connectDB import CONNECTION_STRING
+
+from song import *
+from playlist import *
+
+if __name__ == '__main__':
+    client = MongoClient(CONNECTION_STRING)
+
+    db = client.usersInfo
+    coll = db.users
+    pl = db.playlists
+
+    loop = True
+    while loop == True:
+        option = input('\nWhat select an option:\n1. List Playlists\n2. Make new playlist\n3. Delete playlist\n4. Edit note\n5. Add Song\n6. Remove Song\n7. Edit Song Note\n\n9. Exit\nInput: ')
+        if option == "1":
+            showPlaylists(pl)
+            search = input("Which playlist do you want to look at? ")
+            showPlaylistSongs(pl, search)
+        elif option == "2":
+            newPlaylist(pl)
+        elif option == "3":
+            deletePlaylist(pl)
+        elif option == "4":
+            editPlaylistNote(pl)
+        elif option == "5":
+            addSong(pl)
+        elif option == "6":
+            removeSong(pl)
+        elif option == "7":
+            editSongNote(pl)
+        elif option == "9":
+            loop = False
+        else:
+            print("### Error Inproper Input ###")
+    
+    print("***Closing Test****")
+
+    client.close()
