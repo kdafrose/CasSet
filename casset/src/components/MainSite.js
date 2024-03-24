@@ -25,15 +25,21 @@ function MainSite() {
 
     const samPlaylist = {
       name: "Baja Blaster",
-      id:"4DltVzxWv7EbE1SxFSViLX"
+      id:"4DltVzxWv7EbE1SxFSViLX",
+      description: "Something about soda or whatever",
+      date: "January 32nd, 19905"
     }
     const anotherPlay = {
       name: "Header Cannoner",
-      id:"3Jk6WNQK6ikHRVqRQnZfff"
+      id:"3Jk6WNQK6ikHRVqRQnZfff",
+      description: "Old AF Man",
+      date: "Aurvier 0th, 0000"
     }
     const threePlay = {
       name: "Repeat",
-      id:"37i9dQZF1EpsLgdowUtTZ4"
+      id:"37i9dQZF1EpsLgdowUtTZ4",
+      description: "Someone has to put something meaningful into these names imo lol",
+      date: "Today the Todayth, at Todayth Year"
     }
 
     const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
@@ -121,7 +127,7 @@ function MainSite() {
         console.log(data);
         localStorage.setItem("userSpotifyID", data.id);
 
-        const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
+        const profileImage = data.images === undefined ? placeHold : data.images[0].url;
 
         setProfileImage(profileImage);
     })
@@ -159,8 +165,8 @@ function MainSite() {
       navigate('/playsong', {state: {playlistItem: selectID}});
     }
 
-    function editCassette(selectID){
-      setEditPlaylist(selectID);
+    function editCassette(playlistChosen){
+      setEditPlaylist(playlistChosen);
     }
 
     const logOut = () => {
@@ -197,7 +203,7 @@ function MainSite() {
                                     style={{cursor: 'pointer'}} className='cassette-img'/>
                                   <Collapse in={boxVisibility[i]}>
                                     <div className='cassette-under-box'>
-                                      <Button onClick={() => (editCassette(playlist.id))} className="cassette-button">Edit Cassette</Button>
+                                      <Button onClick={() => (editCassette(playlist))} className="cassette-button">Edit Cassette</Button>
                                       <Button onClick={() => (playCassette(playlist.id))} className="cassette-button">Play Cassette</Button>
                                     </div>
                                   </Collapse>
@@ -207,9 +213,27 @@ function MainSite() {
                           </div>
                         </>
                       ) : (
-                        <>
-
-                        </>
+                        <div id="edit-playlist-box">
+                          <div id="left-edit-box">
+                            <img src={placeHold} alt = "RIP" style={{ height: '150px', width: '150px', objectFit:'cover'}}/>
+                            <h3>Description: </h3>
+                            <p className="left-edit-text"> {editPlaylist.description}</p>
+                            <p className="left-edit-text">Date Created: {editPlaylist.date}</p>
+                          </div>
+                          <div id="right-edit-box">
+                            <div id="right-top-edit">
+                              <button onClick={() => (setEditPlaylist(""))} className= "russo-one-regular"id="go-back">Go Back</button>
+                              <h3 className="russo-one-regular" style={{flex:7, textAlign:'center'}}>SONGS</h3>
+                            </div>
+                            <div id="right-main-edit">
+                              <div className='cassette-title-edit'>
+                                <img src={cassetteTemp} alt="cassette image here" style={{height:'80px', marginLeft: '10%', marginTop:'5%'}}/>
+                                <h2 className="russo-one-regular" id="cassette-edit-name">goatedmusic.</h2>
+                              </div>
+                              <h3>Songs here</h3>
+                            </div>
+                          </div>
+                        </div>
                       )
                         }
                     </div>

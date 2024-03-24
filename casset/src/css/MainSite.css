@@ -325,6 +325,48 @@ h1#newly-playlist-title{
   margin-top: 150px;
   size: 80vh;
 }
+#edit-playlist-box{
+  display:flex;
+  height:100%;
+}
+#left-edit-box{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: pink;
+  margin: 20px;
+  border-radius: 50px;
+  flex:1;
+}
+p.left-edit-text{
+  margin:5px;
+  text-align: center;
+}
+div.cassette-title-edit{
+  display:flex;
+}
+h2#cassette-edit-name{
+  margin-top:7%;
+  margin-left:5%;
+}
+#right-edit-box{
+  margin: 20px;
+  flex:4;
+  border-radius:50px;
+}
+div#right-top-edit{
+  display: flex;
+}
+div#right-main-edit{
+  background-color: pink;
+  height:90%;
+  border-radius: 50px;
+}
+button#go-back{
+  flex:1;
+  background-color: #C9A8CB;
+  border-radius:20px;
+}
 #close-button {
   border: none;
   margin-left: 10%;
