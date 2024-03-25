@@ -367,22 +367,23 @@ body.dark-theme button:hover {
 
 /* WebKit (Chrome, Safari, etc.) */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #ffd0d6;  /* Set the scrollbar thumb color to pink */
+  background-color: #e0b2cb;  
   border-radius: 5px;
 }
 
 /* Firefox */
 ::-moz-scrollbar {
-  width: 10px;
+  width: 5px;
   border-radius: 5px;
 }
 
 ::-moz-scrollbar-thumb {
-  background-color: #ffd0d6; /* Set the scrollbar thumb color to pink */
+  background-color: #e0b2cb; 
+  border-radius: 5px;
 }
 
 .cassettes-container {

@@ -122,8 +122,67 @@
     word-break: break-all; /* Break long words */
     text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
 }
-#casset-list {
+#casset-list-in-edit {
     display: flex;
     flex-direction: column;
     flex: 1;
+    /* background-color: blue; */
 }
+
+/* . means class name and # means id -- both do same things kinda */
+.song-box-info {
+    display: flex;
+    color: white;
+    background-color: #CD77A5;
+    margin: 1.5vw;
+    height: 4vw;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+#spotify-number {
+    margin: 2vh;
+}
+#spotify-artist-image {
+    margin: 1vw;
+    /* margin-left: 2vw; */
+    width: 3vw;
+    height: 3vw;
+    border-radius: 5px;
+}
+
+#spotify-songname-format{
+    font-size: 1.2vw;
+    white-space: wrap;
+    margin: 0;
+}
+#spotify-artistname-format {
+    font-size: small;
+    white-space: wrap;
+    margin: 0;
+}
+#spotify-albumname-format {
+    font-size: small;
+    margin: 0;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: auto; /* Adjust margin as needed */
+  }
+  
+  .star-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #FDBE61; 
+    border-left: 10px solid transparent;
+    transform: rotate(35deg);
+  }
+  
