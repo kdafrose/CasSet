@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/EditCasset.css';
 import { Button } from 'react-bootstrap';
+import Note from './Note'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awesome!
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
 
@@ -11,6 +12,20 @@ import artistImage from '../media/artistimage.png';
 import artistImage2 from '../media/rina.JPG';
 
 function EditCasset({ onClose }) {
+    // Sample song data
+    const songs = [
+        {
+            title: "True Romance",
+            artist: "PinkPantheress",
+            cover: artistImage
+        },
+        {
+            title: "Cyber Stockholm Syndrome",
+            artist: "Rina Sawayama",
+            cover: artistImage2
+        },
+    ];
+    
     // Functionality for delete button (for now, same as back button)
     const handleDelete = () => {
         onClose(); // Close the edit cassette component
@@ -44,50 +59,47 @@ function EditCasset({ onClose }) {
                     </div>
                     <div id="casset-list-in-edit">
                         {/* Song Box HARD CODED FOR NOW*/}
-                        <div className="song-box-info">
+                        {/* <div className="song-box-info">
                             <p id="spotify-number" className="russo-one-regular">1</p>
                             <img src={artistImage} alt="artist image" id="spotify-artist-image"/>
                             <div>
                                 <p id="spotify-songname-format"><strong>True Romance</strong></p>
                                 <p id="spotify-artistname-format">PinkPantheress</p>
-                                {/* <p id="spotify-albumname-format">Heaven Knows</p> */}
+                                <p id="spotify-albumname-format">Heaven Knows</p>
                             </div>
-                            
-                        </div>
 
+                        </div>
+                        <Note key="note1" noteId={1} />
                         <div className="song-box-info">
                         <p id="spotify-number" className="russo-one-regular">2</p>
                             <img src={artistImage2} alt="artist image" id="spotify-artist-image"/>
                             <div>
                                 <p id="spotify-songname-format"><strong>Cyber Stockholm Syndrome</strong></p>
                                 <p id="spotify-artistname-format">Rina Sawayama</p>
-                                {/* <p id="spotify-albumname-format">Heaven Knows</p> */}
+                                <p id="spotify-albumname-format">Heaven Knows</p>
                             </div>
                             
                         </div>
-                        <div className="song-box-info">
-                            <p>Song 3</p>
-                            
-                        </div>
-                        <div className="song-box-info">
-                            <p>Song 3</p>
-                            
-                        </div>
-                        <div className="song-box-info">
-                            <p>Song 3</p>
-                            
-                        </div>
-                        <div className="song-box-info">
-                            <p>Song 3</p>
-                            
-                        </div>
-                        
-                        
+                        <Note key="note2" noteId={2} /> */}
+                        {songs.map((song, index) => (
+                            <div>
+                                <div key={`song-${index}`} className="song-box-info">
+                                    <p id="spotify-number" className="russo-one-regular">{index + 1}</p>
+                                    <img src={song.cover} alt="artist image" id="spotify-artist-image"/>
+                                    <div>
+                                        <p id="spotify-songname-format"><strong>{song.title}</strong></p>
+                                        <p id="spotify-artistname-format">{song.artist}</p>
+                                    </div>
+                                </div>
+                                {/* corresponding Note component for each song */}
+                                <Note key={`note-${index}`} noteId={index + 1} />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default EditCasset;

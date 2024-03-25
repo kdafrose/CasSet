@@ -97,6 +97,7 @@
     margin-bottom: 0.9vw;
 }
 #casset-songs-box-col {
+    padding-bottom: 1.5vw;
     display: flex;
     flex-direction: column;
     flex: 1;
