@@ -1,0 +1,15 @@
+#big-purple-container {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    background-color: #EFE1EF;
+    margin: 1.5vw;
+    border-radius: 20px;
+}
+#left-play-song {
+    
+}
+#right-show-note {
+    background-color: #F2EAE5;
+    border-color: #CD77A5;
+}
