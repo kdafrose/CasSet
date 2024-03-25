@@ -11,6 +11,7 @@ import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 import iconSrc from '../media/disket.png';
+import fetchPlaylists from '../controller/fetchUserPlaylists';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -23,45 +24,58 @@ function MainSite() {
       return storedProfile ? storedProfile : null;
     });
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [editCasset, setEditCasset] = useState("");
+    const [savedPlaylists, setSavedPlaylist] = useState([]);
 
-    const samPlaylist = {
-      name: "Baja Blaster",
-      id:"4DltVzxWv7EbE1SxFSViLX",
-      description: "Something about soda or whatever",
-      date: "January 32nd, 19905"
-    }
-    const anotherPlay = {
-      name: "Header Cannoner",
-      id:"3Jk6WNQK6ikHRVqRQnZfff",
-      description: "Old AF Man",
-      date: "Aurvier 0th, 0000"
-    }
-    const threePlay = {
-      name: "Repeat",
-      id:"37i9dQZF1EpsLgdowUtTZ4",
-      description: "Someone has to put something meaningful into these names imo lol",
-      date: "Today the Todayth, at Todayth Year"
-    }
-    const fourPlay = {
-      name: "Four Playlist",
-    }
-    const meowPlay = {
-      name: "MEOW",
-    }
-    const sixPlay = {
-      name: "Sixenth Playlist",
-    }
-    const sevPlay = {
-      name: "Severus Seven Playlist",
-    }
-    const fivePlay = {
-      name: "FiftyFifth Playlist",
-    }
+    useEffect(() => {
+      fetchPlaylists()
+    .then(data => {
+        if (data) {
+            console.log(data);
+            setSavedPlaylist(data);
+        } else {
+            setSavedPlaylist([]);
+        }
+    })      
+  }, []); // The empty array ensures this effect runs once on mount
+    
+  const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
+  const navigate = useNavigate();
 
-    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay, fourPlay, meowPlay, sixPlay, sevPlay, fivePlay]);
-    const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
-    const navigate = useNavigate();
+  const [editCasset, setEditCasset] = useState("");
+
+  const samPlaylist = {
+    name: "Baja Blaster",
+    id:"4DltVzxWv7EbE1SxFSViLX",
+    description: "Something about soda or whatever",
+    date: "January 32nd, 19905"
+  }
+  const anotherPlay = {
+    name: "Header Cannoner",
+    id:"3Jk6WNQK6ikHRVqRQnZfff",
+    description: "Old AF Man",
+    date: "Aurvier 0th, 0000"
+  }
+  const threePlay = {
+    name: "Repeat",
+    id:"37i9dQZF1EpsLgdowUtTZ4",
+    description: "Someone has to put something meaningful into these names imo lol",
+    date: "Today the Todayth, at Todayth Year"
+  }
+  const fourPlay = {
+    name: "Four Playlist",
+  }
+  const meowPlay = {
+    name: "MEOW",
+  }
+  const sixPlay = {
+    name: "Sixenth Playlist",
+  }
+  const sevPlay = {
+    name: "Severus Seven Playlist",
+  }
+  const fivePlay = {
+    name: "FiftyFifth Playlist",
+  }
 
     function clearAll(){
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
@@ -211,7 +225,7 @@ function MainSite() {
                               {savedPlaylists.map((playlist, i) => {
                                 return (
                                   <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.name}</p>
+                                    <p className='cassette-title'>{playlist.playlist_name}</p>
                                     <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
                                       style={{cursor: 'pointer'}} className='cassette-img'/>
                                     <Collapse in={boxVisibility[i]}>
