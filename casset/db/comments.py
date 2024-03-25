@@ -1,37 +1,46 @@
 from flask import request, jsonify, Blueprint
+from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
+import datetime
 
 comments_bp = Blueprint('comments_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 db = client.comments
-coll = db.commentsID
+com = db.commentsInfo
+pl = client.playlists.playlistInfo
 
 
 @comments_bp.route('/addComment', methods = ['POST'])
 def addComment():
     try:
         data = request.json
-        commentID = data['_id']
-        playlistID = data['playlist_id']
-        songID = data['song_id']
-        comment = data['comment']
-
-        coll.insert_one({
-            "_id" : commentID,
-            "playlistID" : playlistID,
-            "songID": songID,
-            "comment":comment
+        
+        com.insert_one({
+            "_id" : data['commentsID'],
+            "playlistID" : data['playlistID'],
+            "songID": data['songID'],
+            "comment": data['comment']
         })
 
-        return jsonify({"success":True, "result":comment}), 200
+        #Will update last_edit attribute in playlist db
+        changePlaylistLastDateEdit(data['playlistID'])
+
+        return jsonify({"success":True, "result":"Comment added to database successfully."}), 200
     except Exception as e:
         return jsonify({"error":str(e)}), 400
     
 @comments_bp.route('/addReply', methods = ['POST'])
 def addReply():
-    pass
+    try:
+        data = request.json
+        #data['new_comment'] should be ["comments", "User name"] --> if wanted nested 
+        com.update_one({"_id":data['commentsID']}, {"$push": {"comment": data['new_comment']}})
+        return jsonify({"success":True, "result": "Comment has beed edited successfully"}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 200
 
 @comments_bp.route('/deleteComment', methods = ['DELETE'])
 def deleteComment():
@@ -39,11 +48,27 @@ def deleteComment():
         data = request.json
         commentID = data['commentID']
 
-        coll.delete_one({"_id":commentID})
+        com.delete_one({"_id":commentID})
         return jsonify({"success": True, "status": "Comment has been deleted"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@comments_bp.route('/deleteReply', methods = ['DELETE'])
-def deleteReply():
-    pass
+@comments_bp.route('/getComments', methods = ['POST'])
+def getComments():
+    try:
+        data = request.json
+        commentsDocs = com.find({"playlistID":data['playlistID'], "songID": data['songID']})
+
+        comments_list = list(commentsDocs)
+
+        if not comments_list:
+            return jsonify({"success": False, "result": "Song has no comments"}), 409
+        else:
+            return dumps(comments_list), 200
+
+    except Exception as e:
+        return jsonify(str(e)), 400
+
+def changePlaylistLastDateEdit(playlistID):
+    date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+    pl.update_one({"playlistID": playlistID}, {"$set": {"last_edit": date_time}})

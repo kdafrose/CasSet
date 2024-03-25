@@ -2,6 +2,7 @@ from flask import request, jsonify, Blueprint
 from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
+import datetime
 
 playlist_bp = Blueprint('playlist_bp', __name__)
 
@@ -18,13 +19,15 @@ def postNewPlaylist():
         #Finds userID object in database
         ownerID = findUserID(data['owner_name'], data['email'])
         exists = checkPlaylistInDB(data['_id'])
+        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
 
         if not exists:
             pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
                 "playlist_name": data['playlist_name'], 
-                "date_created": data['date_created'],
+                "date_created": date_time,
+                "last_edited":date_time,
                 "sharing_link": data['sharing_link'],
                 "note": data['note'],
             })
