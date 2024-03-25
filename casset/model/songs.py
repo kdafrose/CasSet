@@ -1,4 +1,5 @@
 from flask import request, jsonify, Blueprint
+from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 
@@ -17,6 +18,7 @@ def postSong():
             "songID": data['songID'],
             "playlistID": data['playlistID'],
             "song_name": data['name'],
+            "song_image":data['song_image'],
             "artist": data['artist'],
             "annotation":data['annotation'],
         })
@@ -58,11 +60,12 @@ def getMultiSongs():
     try:
         data = request.json
         songDocuments = sg.find({"playlistID":data['playlistID']})
+        songs_list = list(songDocuments)
 
-        if not songDocuments:
+        if not songs_list:
             return jsonify({"success": False, "result": "No songs in playlist."}), 409
         else:
-            return jsonify(songDocuments), 200
+            return dumps(songs_list), 200
         
     except Exception as e:
         return jsonify(str(e)), 400
