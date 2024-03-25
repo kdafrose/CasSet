@@ -28,7 +28,10 @@ function EditCasset({ onClose }) {
     
     // Functionality for delete button (for now, same as back button)
     const handleDelete = () => {
-        onClose(); // Close the edit cassette component
+        const isConfirmed = window.confirm('Are you sure you want to delete this casset?');
+        if (isConfirmed) {
+            onClose(); // Close the edit cassette component
+        }
     };
 
     return (
@@ -58,29 +61,6 @@ function EditCasset({ onClose }) {
                             <p className="russo-one-regular" id="casset-title">goatedmusic.</p>
                     </div>
                     <div id="casset-list-in-edit">
-                        {/* Song Box HARD CODED FOR NOW*/}
-                        {/* <div className="song-box-info">
-                            <p id="spotify-number" className="russo-one-regular">1</p>
-                            <img src={artistImage} alt="artist image" id="spotify-artist-image"/>
-                            <div>
-                                <p id="spotify-songname-format"><strong>True Romance</strong></p>
-                                <p id="spotify-artistname-format">PinkPantheress</p>
-                                <p id="spotify-albumname-format">Heaven Knows</p>
-                            </div>
-
-                        </div>
-                        <Note key="note1" noteId={1} />
-                        <div className="song-box-info">
-                        <p id="spotify-number" className="russo-one-regular">2</p>
-                            <img src={artistImage2} alt="artist image" id="spotify-artist-image"/>
-                            <div>
-                                <p id="spotify-songname-format"><strong>Cyber Stockholm Syndrome</strong></p>
-                                <p id="spotify-artistname-format">Rina Sawayama</p>
-                                <p id="spotify-albumname-format">Heaven Knows</p>
-                            </div>
-                            
-                        </div>
-                        <Note key="note2" noteId={2} /> */}
                         {songs.map((song, index) => (
                             <div>
                                 <div key={`song-${index}`} className="song-box-info">
