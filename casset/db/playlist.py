@@ -1,6 +1,7 @@
 from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
+import datetime
 
 playlist_bp = Blueprint('playlist_bp', __name__)
 
@@ -18,14 +19,37 @@ def postNewPlaylist():
         ownerID = findUserID(data['owner_name'])
         exists = checkPlaylistInDB(data['_id'])
 
+        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+
         if not exists:
             object_playlist = pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
-                "playlist_name": data['name'], 
-                "date_created": data['date_created'],
+                "playlist_name": data['name'],
+                "length": data['length'],
+                "date_created": date_time,
+                "last_edited": date_time,
                 "sharing_link": data['sharing_link'],
                 "note": data['note'],
+                "songs": [
+                    #Remove these later
+                        {
+                            "songID": "ID1",
+                            "songName": "name1",
+                            "songNote": "a"
+                        },
+                        {
+                            "songID": "ID2",
+                            "songName": "name2",
+                            "songNote": "as"
+                        },
+                        {
+                            "songID": "ID3",
+                            "songName": "name3",
+                            "songNote": "asd"
+                        }
+                    #
+                    ]
             })
             return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
         else:
@@ -97,5 +121,11 @@ def findUserID(user_name):
     info = us.find_one({"name":user_name})
     return info["_id"]
 
-def listPlaylist():
-    print(pl.find())
+def showPlaylists(userPlaylists):
+    cursor = userPlaylists.find({})
+
+    print("= = = = = = = = = =")
+    for document in cursor:
+        print("Playlist: ", document["name"])
+    print("= = = = = = = = = =")
+
