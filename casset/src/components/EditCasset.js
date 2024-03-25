@@ -12,6 +12,20 @@ import artistImage from '../media/artistimage.png';
 import artistImage2 from '../media/rina.JPG';
 
 function EditCasset({ editCasset, onClose }) {
+
+    const songs = [
+        {
+            title: "True Romance",
+            artist: "PinkPantheress",
+            cover: artistImage
+        },
+        {
+            title: "Cyber Stockholm Syndrome",
+            artist: "Rina Sawayama",
+            cover: artistImage2
+        },
+    ];
+
     // Functionality for delete button (for now, same as back button)
     const handleDelete = () => {
         const isConfirmed = window.confirm('Are you sure you want to delete this casset?');

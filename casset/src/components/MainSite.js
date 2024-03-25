@@ -43,40 +43,6 @@ function MainSite() {
 
   const [editCasset, setEditCasset] = useState("");
 
-  const samPlaylist = {
-    name: "Baja Blaster",
-    id:"4DltVzxWv7EbE1SxFSViLX",
-    description: "Something about soda or whatever",
-    date: "January 32nd, 19905"
-  }
-  const anotherPlay = {
-    name: "Header Cannoner",
-    id:"3Jk6WNQK6ikHRVqRQnZfff",
-    description: "Old AF Man",
-    date: "Aurvier 0th, 0000"
-  }
-  const threePlay = {
-    name: "Repeat",
-    id:"37i9dQZF1EpsLgdowUtTZ4",
-    description: "Someone has to put something meaningful into these names imo lol",
-    date: "Today the Todayth, at Todayth Year"
-  }
-  const fourPlay = {
-    name: "Four Playlist",
-  }
-  const meowPlay = {
-    name: "MEOW",
-  }
-  const sixPlay = {
-    name: "Sixenth Playlist",
-  }
-  const sevPlay = {
-    name: "Severus Seven Playlist",
-  }
-  const fivePlay = {
-    name: "FiftyFifth Playlist",
-  }
-
     function clearAll(){
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
       // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
