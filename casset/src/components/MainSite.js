@@ -5,23 +5,25 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import EditCasset from './EditCasset';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
+import iconSrc from '../media/disket.png';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
     const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
-    const [showCreatePlaylist, setShowCreatePlaylist] = useState(false); // State to toggle showing the create playlist form
+    const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(() => {
       const storedProfile = localStorage.getItem("profile");
       return storedProfile ? storedProfile : null;
     });
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [editPlaylist, setEditPlaylist] = useState("");
+    const [editCasset, setEditCasset] = useState("");
 
     const samPlaylist = {
       name: "Baja Blaster",
@@ -41,8 +43,23 @@ function MainSite() {
       description: "Someone has to put something meaningful into these names imo lol",
       date: "Today the Todayth, at Todayth Year"
     }
+    const fourPlay = {
+      name: "Four Playlist",
+    }
+    const meowPlay = {
+      name: "MEOW",
+    }
+    const sixPlay = {
+      name: "Sixenth Playlist",
+    }
+    const sevPlay = {
+      name: "Severus Seven Playlist",
+    }
+    const fivePlay = {
+      name: "FiftyFifth Playlist",
+    }
 
-    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay]);
+    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay, fourPlay, meowPlay, sixPlay, sevPlay, fivePlay]);
     const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
     const navigate = useNavigate();
 
@@ -163,10 +180,6 @@ function MainSite() {
       navigate('/playsong', {state: {playlistItem: selectID}});
     }
 
-    function editCassette(playlistChosen){
-      setEditPlaylist(playlistChosen);
-    }
-
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -186,54 +199,33 @@ function MainSite() {
                         <button className="russo-one-regular" id="import-button"
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
-                    <div id="middle-box">
-                      { editPlaylist === "" ? (
-                        <>
-                          <div id='search-container'>
-                            <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
-                          </div>
-                          <div id="empty-cassets-box">
-                            {savedPlaylists.map((playlist, i) => {
-                              return (
-                                <div key= {i} className='cassette-image-div'>
-                                  <p className='cassette-title'>{playlist.name}</p>
-                                  <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                    style={{cursor: 'pointer'}} className='cassette-img'/>
-                                  <Collapse in={boxVisibility[i]}>
-                                    <div className='cassette-under-box'>
-                                      <Button onClick={() => (editCassette(playlist))} className="cassette-button">Edit Cassette</Button>
-                                      <Button onClick={() => (playCassette(playlist.id))} className="cassette-button">Play Cassette</Button>
-                                    </div>
-                                  </Collapse>
-                                </div>
-                              )
-                            })}
-                          </div>
-                        </>
-                      ) : (
-                        <div id="edit-playlist-box">
-                          <div id="left-edit-box">
-                            <img src={placeHold} alt = "RIP" style={{ height: '150px', width: '150px', objectFit:'cover'}}/>
-                            <h3>Description: </h3>
-                            <p className="left-edit-text"> {editPlaylist.description}</p>
-                            <p className="left-edit-text">Date Created: {editPlaylist.date}</p>
-                          </div>
-                          <div id="right-edit-box">
-                            <div id="right-top-edit">
-                              <button onClick={() => (setEditPlaylist(""))} className= "russo-one-regular"id="go-back">Go Back</button>
-                              <h3 className="russo-one-regular" style={{flex:7, textAlign:'center'}}>SONGS</h3>
+                    <div id="middle-box" className="scrollable">
+                    {editCasset !== "" ? (
+                          <EditCasset editCasset={editCasset} onClose={() => setEditCasset("")} />
+                        ) : (
+                          <div>
+                            <div id='search-container'>
+                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                             </div>
-                            <div id="right-main-edit">
-                              <div className='cassette-title-edit'>
-                                <img src={cassetteTemp} alt="cassette image here" style={{height:'80px', marginLeft: '10%', marginTop:'5%'}}/>
-                                <h2 className="russo-one-regular" id="cassette-edit-name">goatedmusic.</h2>
-                              </div>
-                              <h3>Songs here</h3>
+                            <div id="empty-cassets-box" className="cassettes-container">
+                              {savedPlaylists.map((playlist, i) => {
+                                return (
+                                  <div key= {i} className='cassette-image-div'>
+                                    <p className='cassette-title'>{playlist.name}</p>
+                                    <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
+                                      style={{cursor: 'pointer'}} className='cassette-img'/>
+                                    <Collapse in={boxVisibility[i]}>
+                                      <div className='cassette-under-box'>
+                                        <Button onClick={() => setEditCasset(playlist)} className="cassette-button">Edit Cassette</Button>
+                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
+                                      </div>
+                                    </Collapse>
+                                  </div>
+                                )
+                              })}
                             </div>
                           </div>
-                        </div>
-                      )
-                        }
+                        )}
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
@@ -270,7 +262,8 @@ function MainSite() {
                 </div>
             </div>
             <footer>
-              © 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
+              <img src={iconSrc} alt="icon" style={{maxWidth: "32px"}}/>
+              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
             </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}
             {showCreatePlaylist && <CreatePlaylist onClose={() => (setShowCreatePlaylist(false))} />}

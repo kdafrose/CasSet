@@ -10,6 +10,7 @@ import AddSong from './components/AddSong';
 import DisplayPlaylist from './components/DisplayPlaylist';
 import PlaySong from './components/PlaySong';
 import MainSite from './components/MainSite';
+import EditCasset from './components/EditCasset';
 
 function App() {
   //const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +28,7 @@ function App() {
         <Route path="/song" element={<SongSearch/>}/>
         <Route path="/addsong" element={<AddSong/>}/> 
         <Route path="/playsong" element={<PlaySong/>}/>
+        <Route path="/editcasset" element={<EditCasset/>}/>
       </Routes>
     </BrowserRouter>
   )
