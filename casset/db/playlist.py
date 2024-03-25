@@ -57,7 +57,46 @@ def postNewPlaylist():
     except Exception as e:
         return jsonify({"error":str(e)}), 400
 
-    
+def newPlaylist(userPlaylists, newData):
+    date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+
+    ownerID = findUserID(data['owner_name'])
+    exists = checkPlaylistInDB(newData['_id'])
+
+    if not exists:
+        result = userPlaylists.insert_one({
+            "_id": newData['_id'] , # PlaylistID (Primary key)
+            "owner": ownerID, # UserID (Foreign key)
+            "playlist_name": newData['name'],
+            "length": newData['length'],
+            "date_created": date_time,
+            "last_edited": date_time,
+            "sharing_link": newData['sharing_link'],
+            "note": newData['note'],
+            "songs": [
+                #Remove these later
+                {
+                    "songID": "ID1",
+                    "songName": "name1",
+                    "songNote": "sdf"
+                },
+                {
+                    "songID": "ID2",
+                    "songName": "name2",
+                    "songNote": "asdf"
+                },
+                {
+                    "songID": "ID3",
+                    "songName": "name3",
+                    "songNote": "asdf"
+                }
+                #
+            ]})
+    else:
+        return None
+
+    return result
+
 ### DELETES A PLAYLIST DOCUMENT IN DATABASE ###
 @playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
 def deletePlaylist():
@@ -110,6 +149,18 @@ def fetchMultiPlaylistDocuments():
         
     except Exception as e:
         return jsonify(str(e)), 400
+    
+@playlist_bp.route('/removeSong', methods = ['DELETE'])
+def removeSong():
+
+    data = request.json
+
+    pl.update_one(
+        {"_id": data['playlistName']}, 
+        {"$pull": {"songs": {"songID": data['songID']}}}
+    )
+
+
 
 ### HELPER FUNCTIONS ###
 def checkPlaylistInDB(playlistID):
@@ -129,3 +180,6 @@ def showPlaylists(userPlaylists):
         print("Playlist: ", document["name"])
     print("= = = = = = = = = =")
 
+def changeEditDate(userPlaylists, name):
+    date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+    userPlaylists.update_one({"name": name},{"$set": { "last_edited": date_time} })

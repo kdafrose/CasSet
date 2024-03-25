@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
 import datetime
 
-def newPlaylist(userPlaylists):
+def newPlaylist(userPlaylists, newPlaylist):
     print("*Making playlist*")
     plName = input("Name Playlist: ")
     plLength = input("How many songs are you putting into the playlist?: ")
@@ -124,7 +124,7 @@ if __name__ == '__main__':
 
     db = client.usersInfo
     coll = db.users
-    pl = db.playlists
+    pl = client.playlists.playlistInfo
 
     loop = True
     while loop == True:

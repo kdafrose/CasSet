@@ -35,8 +35,13 @@ def postMultipleSongs():
     except Exception as e:
         return jsonify(str(e))
 
-@songs_bp.route('/deleteSong', methods = ['DELETE'])
-def deleteSong():
+@songs_bp.route('/removeSong', methods = ['DELETE'])
+def removeSong():
+
+    userPlaylists.update_one(
+        {"name": searchPlaylist}, 
+        {"$pull": {"songs":{"songName": remove}}}
+    )
     pass
 
 @songs_bp.route('/getSong', methods = ['POST'])
