@@ -9,117 +9,48 @@ client = MongoClient(CONNECTION_STRING)
 pl = client.playlists.playlistInfo
 us = client.usersInfo.users
 
-### POST PLAYLIST DOCUMENT IN DATABASE ###
-@playlist_bp.route('/postNewPlaylist', methods = ['POST'])
-def postNewPlaylist():
-
-    try:
-        data = request.json
-        #Finds userID object in database
-        ownerID = findUserID(data['owner_name'])
-        exists = checkPlaylistInDB(data['_id'])
-
-        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
-
-        if not exists:
-            object_playlist = pl.insert_one({
-                "_id": data['_id'] , # PlaylistID (Primary key)
-                "owner": ownerID, # UserID (Foreign key)
-                "playlist_name": data['name'],
-                "length": data['length'],
-                "date_created": date_time,
-                "last_edited": date_time,
-                "sharing_link": data['sharing_link'],
-                "note": data['note'],
-                "songs": [
-                    #Remove these later
-                        {
-                            "songID": "ID1",
-                            "songName": "name1",
-                            "songNote": "a"
-                        },
-                        {
-                            "songID": "ID2",
-                            "songName": "name2",
-                            "songNote": "as"
-                        },
-                        {
-                            "songID": "ID3",
-                            "songName": "name3",
-                            "songNote": "asd"
-                        }
-                    #
-                    ]
-            })
-            return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
-        else:
-            return jsonify({"success":False, "result":"Playlist already in database."}), 409
-    except Exception as e:
-        return jsonify({"error":str(e)}), 400
-
-def newPlaylist(userPlaylists, newData):
+def newPlaylistPL(newData):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
 
-    ownerID = findUserID(data['owner_name'])
-    exists = checkPlaylistInDB(newData['_id'])
+    ownerID = findUserID(newData['owner_name'])
 
-    if not exists:
-        result = userPlaylists.insert_one({
-            "_id": newData['_id'] , # PlaylistID (Primary key)
-            "owner": ownerID, # UserID (Foreign key)
-            "playlist_name": newData['name'],
-            "length": newData['length'],
-            "date_created": date_time,
-            "last_edited": date_time,
-            "sharing_link": newData['sharing_link'],
-            "note": newData['note'],
-            "songs": [
-                #Remove these later
-                {
-                    "songID": "ID1",
-                    "songName": "name1",
-                    "songNote": "sdf"
-                },
-                {
-                    "songID": "ID2",
-                    "songName": "name2",
-                    "songNote": "asdf"
-                },
-                {
-                    "songID": "ID3",
-                    "songName": "name3",
-                    "songNote": "asdf"
-                }
-                #
-            ]})
-    else:
-        return None
-
+    result = pl.insert_one({
+        "_id": newData['_id'] , # PlaylistID (Primary key)
+        "owner": ownerID, # UserID (Foreign key)
+        "playlist_name": newData['name'],
+        "length": newData['length'],
+        "date_created": date_time,
+        "last_edited": date_time,
+        "sharing_link": newData['sharing_link'],
+        "note": newData['note'],
+        "songs": [
+            #Remove these later
+            {
+                "songID": "ID1",
+                "songName": "name1",
+                "songNote": "sdf"
+            },
+            {
+                "songID": "ID2",
+                "songName": "name2",
+                "songNote": "asdf"
+            },
+            {
+                "songID": "ID3",
+                "songName": "name3",
+                "songNote": "asdf"
+            }
+            #
+        ]})
+    
     return result
 
-### DELETES A PLAYLIST DOCUMENT IN DATABASE ###
-@playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
-def deletePlaylist():
+def removePlaylistPL(id, playlistName):
+    pl.delete_one({"name": playlistName, "_id":id})
 
-    try:
-        data = request.json
-        playlistName = data['playlist_name'] # playlist name
-
-        pl.delete_one({"name": playlistName, "_id":data['_id']})
-        return jsonify({"success":True, "staus":"Playlist has been successfully deleted."}), 200
-    except Exception as e:
-        return jsonify({"error":str(e)}), 400
-
-### EDITS PLAYLIST ANNOTATION IN DATABASE ###
-@playlist_bp.route('/changePlaylistNote', methods = ['POST'])
-def changePlaylistNote():
-    try:
-        data = request.json
-        pl.update_one({"name": data['playlist_name'], "_id": data['_id']},{"$set": { "note": data['new_note']} })
-
-        return jsonify({"success":True, "status":"Edited playlist note successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}),400
+def editPlaylistNotePL(id, playlistName, newNote):
+    pl.update_one({"name": playlistName, "_id": id},{"$set": { "note": newNote} })
+    changeEditDate(id)
 
 ### FETCH PLAYLIST DOCUMENT ###
 @playlist_bp.route('/fetchPlaylistDocument', methods = ['POST'])
@@ -136,30 +67,8 @@ def fetchPlaylistDocument():
     except Exception as e:
         return jsonify(str(e)), 400
     
-@playlist_bp.route('/fetchMultiPlaylistDocuments', methods = ['POST'])
-def fetchMultiPlaylistDocuments():
-    try:
-        data = request.json
-        playlistDocs = pl.find({"owner": data['owner']})
-
-        if not playlistDocs:
-            return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
-        else:
-            return jsonify(playlistDocs), 200
-        
-    except Exception as e:
-        return jsonify(str(e)), 400
-    
-@playlist_bp.route('/removeSong', methods = ['DELETE'])
-def removeSong():
-
-    data = request.json
-
-    pl.update_one(
-        {"_id": data['playlistName']}, 
-        {"$pull": {"songs": {"songID": data['songID']}}}
-    )
-
+def getUserPlaylistsPL(name):
+    result = pl.find({"owner": name['owner']})
 
 
 ### HELPER FUNCTIONS ###
@@ -172,14 +81,14 @@ def findUserID(user_name):
     info = us.find_one({"name":user_name})
     return info["_id"]
 
-def showPlaylists(userPlaylists):
-    cursor = userPlaylists.find({})
+def showPlaylists():
+    cursor = pl.find({})
 
     print("= = = = = = = = = =")
     for document in cursor:
         print("Playlist: ", document["name"])
     print("= = = = = = = = = =")
 
-def changeEditDate(userPlaylists, name):
+def changeEditDate(id):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
-    userPlaylists.update_one({"name": name},{"$set": { "last_edited": date_time} })
+    pl.update_one({"_id": id},{"$set": { "last_edited": date_time} })

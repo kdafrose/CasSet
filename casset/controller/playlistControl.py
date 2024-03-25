@@ -1,28 +1,19 @@
-from casset.db.playlist import *
+from casset.db.playlist import checkPlaylistInDB, editPlaylistNotePL, getUserPlaylistsPL, newPlaylistPL, removePlaylistPL
 from flask import request, jsonify, Blueprint
 from pymongo import MongoClient
 from db.connectDB import CONNECTION_STRING
 
 playlist_bp = Blueprint('playlist_bp', __name__)
 
-client = MongoClient(CONNECTION_STRING)
-pl = client.playlists.playlistInfo
-us = client.usersInfo.users
-
 ### POST PLAYLIST DOCUMENT IN DATABASE ###
 @playlist_bp.route('/postNewPlaylist', methods = ['POST'])
 def postNewPlaylist():
-
     try:
         data = request.json
-        #Finds userID object in database
-        ownerID = findUserID(data['owner_name'])
         exists = checkPlaylistInDB(data['_id'])
 
-        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
-
-        object_playlist = newPlaylist(pl, data)
-
+        if not exists:
+            object_playlist = newPlaylistPL(data)
             return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
         else:
             return jsonify({"success":False, "result":"Playlist already in database."}), 409
@@ -33,13 +24,12 @@ def postNewPlaylist():
 ### DELETES A PLAYLIST DOCUMENT IN DATABASE ###
 @playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
 def deletePlaylist():
-
     try:
         data = request.json
-        playlistName = data['playlist_name'] # playlist name
+        removePlaylistPL(data['_id'], data['playlist_name'])
 
-        pl.delete_one({"name": playlistName, "_id":data['_id']})
         return jsonify({"success":True, "staus":"Playlist has been successfully deleted."}), 200
+    
     except Exception as e:
         return jsonify({"error":str(e)}), 400
 
@@ -48,7 +38,7 @@ def deletePlaylist():
 def changePlaylistNote():
     try:
         data = request.json
-        pl.update_one({"name": data['playlist_name'], "_id": data['_id']},{"$set": { "note": data['new_note']} })
+        editPlaylistNotePL(data['_id'], data['playlist_name'], data['new_note'])
 
         return jsonify({"success":True, "status":"Edited playlist note successfully"}), 200
     except Exception as e:
@@ -73,12 +63,12 @@ def fetchPlaylistDocument():
 def fetchMultiPlaylistDocuments():
     try:
         data = request.json
-        playlistDocs = pl.find({"owner": data['owner']})
+        userPlaylists = getUserPlaylistsPL(data)
 
-        if not playlistDocs:
+        if not userPlaylists:
             return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
         else:
-            return jsonify(playlistDocs), 200
+            return jsonify(userPlaylists), 200
         
     except Exception as e:
         return jsonify(str(e)), 400
