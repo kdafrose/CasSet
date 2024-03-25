@@ -168,16 +168,18 @@
 }
 
 .delete-button {
-    color: #651d87; 
+    color: #926395; 
     cursor: pointer; 
     margin-left: auto;
     margin-right: 20px;
     margin-top: 25px;
     width: 2vw;
-    height: 2vw;
-    
+    height: 2vw; 
 }
 
+.delete-button:hover {
+    color: #653a69; 
+}
 
 .star {
     position: relative;
