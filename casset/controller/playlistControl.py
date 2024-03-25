@@ -1,7 +1,6 @@
 from casset.db.playlist import checkPlaylistInDB, editPlaylistNotePL, getUserPlaylistsPL, newPlaylistPL, removePlaylistPL
+from casset.db.song import *
 from flask import request, jsonify, Blueprint
-from pymongo import MongoClient
-from db.connectDB import CONNECTION_STRING
 
 playlist_bp = Blueprint('playlist_bp', __name__)
 
@@ -73,12 +72,41 @@ def fetchMultiPlaylistDocuments():
     except Exception as e:
         return jsonify(str(e)), 400
     
+@playlist_bp.route('/addSong', methods = ['POST'])
+def addSong():
+
+    data = request.json
+    song = data['songID']
+
+    result = addSongSG(data['_id'], data['songID'])
+
+    if not result:
+        return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
+    else:
+        return jsonify({"success": True, "result": "Song f{song} was added."}), 400
+    
 @playlist_bp.route('/removeSong', methods = ['DELETE'])
 def removeSong():
 
     data = request.json
+    song = data['songID']
 
-    pl.update_one(
-        {"_id": data['playlistName']}, 
-        {"$pull": {"songs": {"songID": data['songID']}}}
-    )
+    result = deleteSongSG(data['_id'], data['songID'])
+
+    if not result:
+        return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
+    else:
+        return jsonify({"success": True, "result": "Song f{song} was deleted."}), 400
+    
+@playlist_bp.route('/editSongNote', methods = ['POST'])
+def editSongNote():
+
+    data = request.json
+    song = data['songID']
+
+    result = editSongNoteSG(data['_id'], data['songID'], data['newNote'])
+
+    if not result:
+        return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
+    else:
+        return jsonify({"success": True, "result": "Song f{song} note was edited."}), 400

@@ -1,51 +1,42 @@
 from playlist import * 
 
-def addSong(userPlaylists):
-    print("*Adding song*")
-    showPlaylists(userPlaylists)
+client = MongoClient(CONNECTION_STRING)
+pl = client.playlists.playlistInfo
+us = client.usersInfo.users
 
-    searchPlaylist = input("What playlist do you want to add a song too?: ")
-    newSong = input("Enter song name: ")
+# add a song to the playlist inputted
+def addSongSG(playlistID, songID):
 
-    userPlaylists.update_one(
-        {"name": searchPlaylist}, 
+    pl.update_one(
+        {"_id": playlistID}, 
         {"$push": {"songs": 
                    {
                        "songID": "ID",
-                       "songName": newSong, 
+                       "songName": songID, 
                        "songNote": "asdf"
                     }}}
     )
 
-    changeEditDate(userPlaylists, searchPlaylist)
+    changeEditDate(playlistID)
 
-def removeSong(userPlaylists):
-    showPlaylists(userPlaylists)
+# deletes Song from Playlist inputted
+def deleteSongSG(playlistID, songID):
 
-    searchPlaylist = input("What playlist do you want to remove a song from?: ")
-    showPlaylistSongs(userPlaylists, searchPlaylist)
-
-    remove = input("Enter the name of the song you want to remove: ")
-
-    userPlaylists.update_one(
-        {"name": searchPlaylist}, 
-        {"$pull": {"songs":{"songName": remove}}}
+    result = pl.update_one(
+        {"_id": playlistID}, 
+        {"$pull": {"songs":{"songName": songID}}}
     )
+    changeEditDate(playlistID)
 
-    changeEditDate(userPlaylists, searchPlaylist)
+    return result
 
-def editSongNote(userPlaylists):
-    showPlaylists(userPlaylists)
+# Edits note in a Song
+def editSongNoteSG(playlistID, songID, newNote):
 
-    search = input("What playlist do you want to remove a song from?: ")
-    showPlaylistSongs(userPlaylists, search)
-
-    editSong = input("Which song do you want to edit?: ")
-    newNote = input("What do you want to write in the note?: ")
-
-    userPlaylists.update_one(
-        {"name": search, f"songs.songName": editSong},
+    result = pl.update_one(
+        {"_id": playlistID, f"songs.songID": songID},
         {"$set": {f"songs.$.songNote": newNote}}
     )
+    changeEditDate(playlistID)
 
-    changeEditDate(userPlaylists, search)
+    return result

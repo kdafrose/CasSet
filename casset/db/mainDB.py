@@ -17,9 +17,9 @@ if __name__ == '__main__':
         if option == "1":
             showPlaylists(pl)
             search = input("Which playlist do you want to look at? ")
-            showPlaylistSongs(pl, search)
+            showPlaylistSongs(search)
         elif option == "2":
-            newPlaylist(pl)
+            newPlaylistPL()
         elif option == "3":
             deletePlaylist(pl)
         elif option == "4":

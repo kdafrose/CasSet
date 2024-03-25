@@ -89,6 +89,16 @@ def showPlaylists():
         print("Playlist: ", document["name"])
     print("= = = = = = = = = =")
 
+def showPlaylistSongs(userPlaylists, playlist):
+    cursor = userPlaylists.find_one({"name": playlist})
+    if playlist == "0":
+        return
+    
+    print("* * * * * * * * * * *")
+    for song in cursor["songs"]:
+        print(song["songName"])
+    print("* * * * * * * * * * *")
+
 def changeEditDate(id):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
     pl.update_one({"_id": id},{"$set": { "last_edited": date_time} })

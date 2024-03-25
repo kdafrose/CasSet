@@ -1,6 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
-import fetchPostMultiSongs from './fetchPostMultiSongs';
+import fetchPostMultiSongs from './controller/fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
