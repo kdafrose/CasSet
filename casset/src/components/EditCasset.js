@@ -1,12 +1,21 @@
+import React from 'react';
 import '../css/EditCasset.css';
 import { Button } from 'react-bootstrap';
-// hardcoded images here:
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awesome!
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
+
+// Hardcoded images here
 import spotifyCover from '../media/spotifycover.jpg';
 import tempCover from '../media/goatedmusic.png';
 import artistImage from '../media/artistimage.png';
 import artistImage2 from '../media/rina.JPG';
 
 function EditCasset({ onClose }) {
+    // Functionality for delete button (for now, same as back button)
+    const handleDelete = () => {
+        onClose(); // Close the edit cassette component
+    };
+
     return (
         <div id="casset-edit">
             <div id="casset-side-box">
@@ -25,6 +34,8 @@ function EditCasset({ onClose }) {
                 <div id="casset-songs-top">
                     <Button id="back-button" onClick={onClose}>go back</Button>
                     <p className="russo-one-regular" id="casset-songs-title">SONGS</p>
+                    {/* Delete Button */}
+                    <FontAwesomeIcon icon={faTrashAlt} className="delete-button" onClick={handleDelete} title="Delete Casset"/>
                 </div>
                 <div id="casset-songs-box-col" className="scrollable">
                     <div id="casset-songs-row">
