@@ -98,6 +98,7 @@
     margin-bottom: 0.9vw;
 }
 #casset-songs-box-col {
+    padding-bottom: 1.5vw;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -165,6 +166,20 @@
 #spotify-albumname-format {
     font-size: small;
     margin: 0;
+}
+
+.delete-button {
+    color: #926395; 
+    cursor: pointer; 
+    margin-left: auto;
+    margin-right: 20px;
+    margin-top: 25px;
+    width: 2.5vw;
+    height: 2.5vw; 
+}
+
+.delete-button:hover {
+    color: #653a69; 
 }
 
 .star {
