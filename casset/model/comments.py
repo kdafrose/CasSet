@@ -18,7 +18,7 @@ def addComment():
         data = request.json
         
         com.insert_one({
-            "_id" : data['commentsID'],
+            "commentsID" : data['commentsID'],
             "playlistID" : data['playlistID'],
             "songID": data['songID'],
             "comment": data['comment']

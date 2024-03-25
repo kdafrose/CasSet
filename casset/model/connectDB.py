@@ -1,0 +1,1 @@
+CONNECTION_STRING = "mongodb+srv://noramellik0:nwFjr39WeSfR2eYR@cluster0.sjmnwkz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"

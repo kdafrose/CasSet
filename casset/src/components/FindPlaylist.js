@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
-import fetchPostPlaylist from './fetchPostPlaylist';
+import fetchPostPlaylist from '../controller/fetchPostPlaylist';
 
 export default function FindPlaylist({onClose}) {
     const [accessToken, setAccessToken] = useState(() => {

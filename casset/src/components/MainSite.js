@@ -9,7 +9,7 @@ import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
-import fetchPlaylists from './fetchUserPlaylists';
+import fetchPlaylists from '../controller/fetchUserPlaylists';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -163,9 +163,9 @@ function MainSite() {
                         <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                       </div>
                       <div>
-                        {savedPlaylists.length == 0 ? (
-                          <div>
-                           No Cassets yet ;(
+                        {savedPlaylists.length === 0 ? (
+                          <div id="empty-cassets-box" >
+                           No Cassets yet ;((
                           </div>
                         ) : (
                           <div id="empty-cassets-box">
