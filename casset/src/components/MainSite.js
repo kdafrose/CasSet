@@ -47,10 +47,8 @@ function MainSite() {
     const navigate = useNavigate();
 
     function clearAll(){
-
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
-
-      localStorage.removeItem("profile");
+      // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
       localStorage.removeItem("tokenType");

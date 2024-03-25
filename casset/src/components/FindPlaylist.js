@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
-
+import fetchPostPlaylist from './fetchPostPlaylist';
 
 export default function FindPlaylist({onClose}) {
     const [accessToken, setAccessToken] = useState(() => {
@@ -30,6 +30,7 @@ export default function FindPlaylist({onClose}) {
         .then(response => response.json())
         .then(data => {
             setPlaylists(data.items);
+            console.log(data);
             return data.items;
         })
         .then(playlists =>{
@@ -42,7 +43,18 @@ export default function FindPlaylist({onClose}) {
         searchForPlaylists();
     }, []);
 
-    async function handlePlaylistChoice() {
+    async function handlePlaylistChoice(data) {
+        const profile = JSON.parse(localStorage.getItem('profile'));
+        const playlistData = {
+            "_id": data['_id'],
+            "playlist_name": data['playlist_name'],
+            "owner_name":profile.name,
+            "date_created":new Date().toJSON().slice(0, 10),
+            "sharing_link":data['sharing_link'],
+            "note": "fill in later",
+        }
+
+        fetchPostPlaylist(playlistData);
         navigate('/displayplaylist');
     }
 
@@ -70,19 +82,26 @@ export default function FindPlaylist({onClose}) {
                                     <Button  
                                         style={{height:'150px', width: '150px', objectFit:'cover'}} 
                                         onClick={() => {
+                                        // Change this to hold the selected playlistID with database connection
+                                        localStorage.removeItem("playlistID");
+                                        localStorage.setItem("playlistID", playlist.id);
 
-                                            // Change this to hold the selected playlistID with database connection
-                                            localStorage.removeItem("playlistID");
-                                            localStorage.setItem("playlistID", playlist.id);
-                                            handlePlaylistChoice();
-                                        }}>
-                                        Select playlist
-                                    </Button>
-                                    </Card>
-                                    )
-                                })}
-                            </Row>
-                        </Container>
+                                        const playlistInfo = {
+                                            "_id": playlist.id,
+                                            "playlist_name": playlist.name, 
+                                            "sharing_link":playlist.external_urls.spotify,
+                                        }
+                                    
+                                        handlePlaylistChoice(playlistInfo);
+                                    }}>
+                                    Select playlist
+                                </Button>
+                                </Card>
+                                )
+                            })}
+                        </Row>
+                    </Container>
+
                     ) : (
                         <Container className="loading-container">
                             <Spinner 
