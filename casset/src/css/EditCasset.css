@@ -12,6 +12,7 @@
     margin: 1.5vw 1.5vw 0 1.5vw;
     background-color: #EFE1EF;
     border-radius: 30px;
+    overflow: auto;
 }
 #spotify-cover {
     margin: 3vw 3vw 2vw 3vw;
@@ -31,6 +32,7 @@
 #date-container {
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 #date-container p {
     margin: 1vw 0 0.5vw 0;
