@@ -34,3 +34,18 @@ def addNewSharedCasset():
     except Exception as e:
         return jsonify(str(e)), 400
     
+
+@friends_bp.route('/fetchAllFriends', methods = ['POST'])
+def fetchAllFriends():
+    try:
+        data = request.json
+        friendsDoc = fr.find({"userID":data['userID'], "friends_name":data['friends_name']})
+        friends_list = list(friendsDoc)
+
+        if not friends_list:
+            return jsonify({"success":False, "result": f"User is not friends with {data['friend_name']}"}), 409
+        else:
+            return dumps(friends_list), 200
+        
+    except Exception as e:
+        return jsonify(str(e)), 400
