@@ -137,10 +137,12 @@ export default function PlaySong(props) {
                         </div>
                         <div id="volume">
                             Volume
+                            <div>
+                                <Form.Range id="volume-slider"
+                                    onChange={handleChange}
+                                />
+                            </div>
                         </div>
-                        <Form.Range id="volume-slider"
-                            onChange={handleChange}
-                        />
                     </div>   
                 </div>
             </>

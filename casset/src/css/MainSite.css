@@ -64,6 +64,7 @@
   margin-left: 0.75vw;
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
+  padding-bottom: 1.2vw;
   border: 3px solid #C9A8CB;
   border-radius: 25px;
   flex: 2;
@@ -113,8 +114,8 @@
   justify-content: center;
 }
 .cassette-img{
-  height:160px;
-  width:240px;
+  height: 6vw;
+  width: auto;
 }
 .cassette-button{
   background-color: transparent;

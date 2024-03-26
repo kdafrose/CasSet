@@ -20,7 +20,7 @@ export function NoteContent({ noteId }) {
   }, [noteId]);
 
   return (
-    <div className="note-content" dangerouslySetInnerHTML={{ __html: noteContent }} />
+    <div id="the-note-text" dangerouslySetInnerHTML={{ __html: noteContent }} />
   );
 }
 
@@ -29,7 +29,7 @@ function Note({ noteId }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [noteContent, setNoteContent] = useState('');
 
-    const maxCharacters = 70; // number of characters to show by default
+    const maxCharacters = 100; // number of characters to show by default
 
     // load note content from local storage (for now)
     useEffect(() => {

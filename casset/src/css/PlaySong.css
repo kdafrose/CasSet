@@ -18,6 +18,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 .now-playing__name {
     margin-top: 1vw;
@@ -92,7 +93,7 @@
 #volume-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 100%;
+    width: 25vw;
     height: 8px;
     background: #E8D0CB; /* Background color */
     border-radius: 5px;

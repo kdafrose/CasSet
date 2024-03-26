@@ -32,10 +32,9 @@
     display: flex;
     flex-direction: row;
     flex: 1;
-    min-height: 70vh;
     background-color: #EFE1EF;
-    margin: 0 1.2vw 1.2vw 1.2vw;
-    border-radius: 20px;
+    margin: 0 1.2vw 0 1.2vw;
+    border-radius: 20px;    
 }
 #left-play-song {
     display: flex;
@@ -54,14 +53,29 @@
     background-color: #F2EAE5;
     border: 2px solid #CD77A0;
     box-shadow: 
-    6px 6px 5px rgba(0, 0, 0, 0.25), /* Main shadow with slight blur */
-    6px 6px 10px rgba(0, 0, 0, 0.25), /* Additional shadow for more blur */
-    6px 6px 15px rgba(0, 0, 0, 0.25); /* Additional shadow for more blur */
-    margin: 6vw 6vw 6vw 0;
-    border-radius: 10px 10vw 10px 10px;
+      6px 6px 5px rgba(0, 0, 0, 0.25), /* Main shadow with slight blur */
+      6px 6px 10px rgba(0, 0, 0, 0.25), /* Additional shadow for more blur */
+      6px 6px 15px rgba(0, 0, 0, 0.25); /* Additional shadow for more blur */
+    margin: 6vw 5vw 5vw 2vw;
+    border-radius: 10px 8vw 10px 10px;
     max-height: 55vh;
     overflow-y: auto;
 }
 #the-note {
-    margin: 3vw;
+    margin: 3.7vw 3.5vw;
+}
+#the-note-text {
+    font-family: "Patrick Hand", cursive;
+    font-style: normal;
+    font-size: 1.3vw;
+    text-align: justify;
+}
+#the-note-text > h1 {
+    font-size: 3.1vw;
+}
+#the-note-text > h2 {
+    font-size: 2.5vw;
+}
+#the-note-text > h3 {
+    font-size: 2.2vw;
 }
