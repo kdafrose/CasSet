@@ -126,6 +126,17 @@ def addFriend():
     
     except Exception as e:
         return jsonify(str(e)), 400
+
+@app_bp.route('/addFriend', methods = ['POST'])
+def removeFriend():
+    try:
+        data = request.json
+        removeFriendFR(data['userID'], data['friend_name'], data['playlistID'])
+
+        return jsonify({"success": True, "result": "Friend removed to the database successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400
     
 @app_bp.route('/addNewSharedCasset', methods = ['POST'])
 def addNewSharedCasset():

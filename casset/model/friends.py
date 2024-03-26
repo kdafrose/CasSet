@@ -10,10 +10,17 @@ fr = client.friends.friendsInfo
     
 def addFriendFR(friendID, friendName, friendPlaylist):
     fr.insert_one({
-            "userID": friendID,
-            "friends_name": friendName,
-            "shared_casset": friendPlaylist
-        })
+        "userID": friendID,
+        "friends_name": friendName,
+        "shared_casset": friendPlaylist
+    })
+    
+def removeFriendFR(friendID, friendName, friendPlaylist):
+    fr.delete_one({
+        "userID": friendID,
+        "friends_name": friendName,
+        "shared_casset": friendPlaylist
+    })
     
 def newSharedCassetFR(friendID, sharedPlaylistID):
     fr.update_one(
