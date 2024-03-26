@@ -25,6 +25,8 @@ function MainSite() {
     });
     const [profileImage, setProfileImage] = useState(placeHold);
     const [savedPlaylists, setSavedPlaylist] = useState([]);
+    const [editCasset, setEditCasset] = useState(false);
+    const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
 
     useEffect(() => {
       fetchPlaylists()
@@ -40,8 +42,6 @@ function MainSite() {
     
   const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
   const navigate = useNavigate();
-
-  const [editCasset, setEditCasset] = useState("");
 
     function clearAll(){
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
@@ -174,8 +174,9 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box" className="scrollable">
-                    {editCasset !== "" ? (
-                          <EditCasset editCasset={editCasset} onClose={() => setEditCasset("")} />
+                    {editCasset ? (
+                          <EditCasset onClose={() => setEditCasset(false)}
+                          playlistID = {selectedPlaylistID} />
                         ) : (
                           <div>
                             <div id='search-container'>
@@ -190,7 +191,7 @@ function MainSite() {
                                       style={{cursor: 'pointer'}} className='cassette-img'/>
                                     <Collapse in={boxVisibility[i]}>
                                       <div className='cassette-under-box'>
-                                        <Button onClick={() => setEditCasset(playlist)} className="cassette-button">Edit Cassette</Button>
+                                        <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
                                         <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
                                       </div>
                                     </Collapse>

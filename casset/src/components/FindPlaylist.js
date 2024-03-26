@@ -31,34 +31,18 @@ export default function FindPlaylist({onClose}) {
         })
     }
 
-    async function importPlaylist() {
-        const lastPart = importSpotifyURL.split("/playlist/").pop();
-
-        await fetch('https://api.spotify.com/v1/playlists/' + lastPart, playlistParams)
-            .then(response => response.json())
-            .then(data => {
-                const playlistInfo = {
-                    "_id": data.id,
-                    "playlist_name": data.name, 
-                    "sharing_link": data.external_urls.spotify,
-                };
-
-                handlePlaylistChoice(playlistInfo);
-            })
-    }
-
     useEffect(() => {
 
         searchForPlaylists();
     }, []);
 
     async function handlePlaylistChoice(data) {
-        const profile = JSON.parse(localStorage.getItem('profile'));
+        const profile = JSON.parse(localStorage.getItem('profile'));                    // This might be messing up the "get playlist from other people"
         const playlistData = {
             "_id": data['_id'],
             "playlist_name": data['playlist_name'],
-            "owner_name":profile.name,
-            "email": profile.email,
+            "owner_name":profile.name,                                      // does this matter if it's someone else's playlist?
+            "email": profile.email,                                         // same goes for this
             "sharing_link":data['sharing_link'],
             "note": "fill in later",
         }
@@ -78,26 +62,7 @@ export default function FindPlaylist({onClose}) {
                     <button className="close-button" onClick={handleClose}>X</button>
                     {playlists.length !== 0 ? (
                         <>
-                            <Container id="import-container">
-                                <InputGroup className='mb-3' size='lg'>
-                                    <Form.Control
-                                        placeholder="Enter a Spotify Playlist URL to Import"
-                                        type="input"
-                                        onKeyDown={event => {
-                                            if(event.key === "Enter"){
-                                                importPlaylist();
-                                            }
-                                        }}
-                                        onChange={event => {
-                                            setImportSpotifyURL(event.target.value);
-                                        }}
-                                    />
-                                    <Button onClick={importPlaylist}>
-                                        Import
-                                    </Button>
-                                </InputGroup>
-                            </Container>
-                            <h3 className="russo-one-regular" style={{textAlign: 'center'}}> Or Import One of Your Own: </h3>
+                            <h3 className="russo-one-regular" style={{textAlign: 'center'}}> Import One of Your Own Playlists: </h3>
                             <Container>
                                 <Row className="mx-2 row row-cols-2">
                                     {playlists.map( (playlist, i) => {
