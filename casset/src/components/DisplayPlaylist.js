@@ -65,6 +65,7 @@ export default function DisplayPlaylist() {
                 "name": data[i].track.name,
                 "artist":artists,
                 "annotation": "fill in later",
+                "song_image": data[i].track.album.images[0].url,
             }
             songItems.push(songDoc);
         }
