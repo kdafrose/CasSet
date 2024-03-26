@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 .App {
   text-align: center;
@@ -69,6 +68,10 @@
 #logout-button:hover {
   font-size: 2.85vw;
 }
+
+/* .login-auth-buttons {
+  border-radius: 10px; 
+} */
 
 #GoogleButton {
   background-color: #434a5a;

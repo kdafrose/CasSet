@@ -1,81 +1,15 @@
-#casset-play-top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-#back {
-    margin: 1.5vw 0 1.5vw 1.5vw;
-    padding: 0.5vw 2vw;
-    font-family: "Russo One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-color: #C9A8CB;
-    border: none;
-    color: white;
-    font-weight: bold;
-    font-size: 1.4vw;
-    border-radius: 13px;
-}
-#back:hover {
-    background-color: #b184b3;
-}
-#casset-title-play {
-    margin-right: 1.5vw;
-    color: #31343B;
-    font-size: 2.7vw;
-    white-space: wrap; /* Allow text to wrap */
-    word-break: break-all; /* Break long words */
-    text-overflow: ellipsis; /* Display ellipsis (...) for overflow text */
-    align-self: flex-end;
-}
 #big-purple-container {
     display: flex;
     flex-direction: row;
     flex: 1;
     background-color: #EFE1EF;
-    margin: 0 1.2vw 0 1.2vw;
-    border-radius: 20px;    
+    margin: 1.5vw;
+    border-radius: 20px;
 }
 #left-play-song {
-    display: flex;
-    flex-direction: column;
-    flex: 11;
-    justify-content: center;
-    margin-top: 4vw;
+    
 }
-#right-cassetandnote {
-    display: flex;
-    flex-direction: column;
-    flex: 10;
-}
-#show-note {
-    flex: 1;
+#right-show-note {
     background-color: #F2EAE5;
-    border: 2px solid #CD77A0;
-    box-shadow: 
-      6px 6px 5px rgba(0, 0, 0, 0.25), /* Main shadow with slight blur */
-      6px 6px 10px rgba(0, 0, 0, 0.25), /* Additional shadow for more blur */
-      6px 6px 15px rgba(0, 0, 0, 0.25); /* Additional shadow for more blur */
-    margin: 6vw 5vw 5vw 2vw;
-    border-radius: 10px 8vw 10px 10px;
-    max-height: 55vh;
-    overflow-y: auto;
-}
-#the-note {
-    margin: 3.7vw 3.5vw;
-}
-#the-note-text {
-    font-family: "Patrick Hand", cursive;
-    font-style: normal;
-    font-size: 1.3vw;
-    text-align: justify;
-}
-#the-note-text > h1 {
-    font-size: 3.1vw;
-}
-#the-note-text > h2 {
-    font-size: 2.5vw;
-}
-#the-note-text > h3 {
-    font-size: 2.2vw;
+    border-color: #CD77A5;
 }

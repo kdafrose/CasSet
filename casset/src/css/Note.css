@@ -20,17 +20,7 @@
     border: none; 
     outline: none; 
     font-size: 1.2vw; 
-    font-family: "Patrick Hand", cursive;
-    font-style: normal;
-}
-.note-content > h1 {
-    font-size: 3.1vw;
-}
-.note-content > h2 {
-    font-size: 2.5vw;
-}
-.note-content > h3 {
-    font-size: 2.2vw;
+    font-family: Arial, sans-serif; 
 }
 .default-buttons {
     display: flex;
