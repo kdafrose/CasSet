@@ -18,9 +18,9 @@ const track = {
     ]
 }
 
-export default function PlaySong(props) {
+export default function PlaySong({ onNext, onPrev }) {
 
-    const { songURI, playlistURI} = props;
+    // const { songURI, playlistURI} = props; comment out for now until we can use it
 
     const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);
@@ -96,6 +96,11 @@ export default function PlaySong(props) {
 
             player.connect();
 
+            // Cleanup function
+            return () => {
+                player.disconnect();
+            };
+
         };
     }, []);
 
@@ -122,7 +127,7 @@ export default function PlaySong(props) {
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
                                 <div id=".btn-spotify">
-                                    <button className="btn-spotify-prev" onClick={() => { player.previousTrack() }} >
+                                    <button className="btn-spotify-prev" onClick={() => { player.previousTrack(); onPrev(); }} >
                                         <img id="prev" src={prevImage} alt="&lt;&lt;"/>
                                     </button>
 
@@ -130,7 +135,7 @@ export default function PlaySong(props) {
                                         { is_paused ? <img id="play" src={playImage} alt="&#x25B6;"/> : <img id="pause" src={pauseImage} alt="&#x23f8;"/> }
                                     </button>
 
-                                    <button className="btn-spotify-next" onClick={() => { player.nextTrack() }} >
+                                    <button className="btn-spotify-next" onClick={() => { player.nextTrack(); onNext(); }} >
                                         <img id="next" src={nextImage} alt="&gt;&gt;"/>
                                     </button>
                                 </div>
