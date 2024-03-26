@@ -39,7 +39,7 @@ def addNewSharedCasset():
 def fetchAllFriends():
     try:
         data = request.json
-        friendsDoc = fr.find({"userID":data['userID'], "friends_name":data['friends_name']})
+        friendsDoc = fr.find({"userID":data['userID'], "friendUserID":data['friendUserID']})
         friends_list = list(friendsDoc)
 
         if not friends_list:
