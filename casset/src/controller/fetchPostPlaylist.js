@@ -1,5 +1,5 @@
 
-async function fetchPostPlaylist(playlistData){
+async function fetchPostPlaylist(playlistData, callback){
     fetch('http://localhost:5000/playlist/postNewPlaylist', {
         method: 'POST',
         headers: {
@@ -10,6 +10,9 @@ async function fetchPostPlaylist(playlistData){
     .then(response => response.json())
     .then(data => {
         console.log(data);
+    })
+    .then(() => {
+        window.location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
