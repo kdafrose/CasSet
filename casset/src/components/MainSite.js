@@ -48,6 +48,7 @@ function MainSite() {
       localStorage.removeItem("tokenType");
       localStorage.removeItem("expiresIn");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("profileExists");
 
       return;
     }
@@ -71,13 +72,9 @@ function MainSite() {
           body: requestBody.toString(),
         };
       
-        var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
+        await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
           .then(async data => {
-      
-            if(data.error === "invalid_grant"){
-              return false;
-            }
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             clearAll();
@@ -86,49 +83,56 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+            localStorage.setItem("profileExists", "true");
 
-            const meParams = {
-              method: 'GET',
-              headers: {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.access_token
-              },
-            };
+            getMe();
 
-            await fetch('https://api.spotify.com/v1/me', meParams)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              localStorage.setItem("userSpotifyID", data.id);
-
-              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
-
-              console.log(profileImage);
-
-              setProfileImage(profileImage);
-          })
-            
             return;
           })
-      
-        if (waiting === false){
-          return false;
-        }
-      
-        return waiting;
     }
 
-    useEffect(() => {
-        if (window.location.search) {
+    async function getMe() {
+
+      const accessTokenMe = localStorage.getItem("accessToken");
+
+      const meParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessTokenMe
+        },
+      };
+
+      await fetch('https://api.spotify.com/v1/me', meParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem("userSpotifyID", data.id);
+
+        const profileImage = data.images === undefined ? placeHold : data.images[0].url;
+
+        setProfileImage(profileImage);
+    })
+    }
+
+    useEffect( () => {
+
+      async function fetchData() {
+        if (window.location.search && (!localStorage.getItem("profileExists"))) {
           tokenCall(window.location.search);
+        }
+        else {
+          getMe();
         }
         // CHANGE localStorage to database later...
 
         // Retrieve profile information from local storage
-        const storedProfile = localStorage.getItem("profile");
-        if (storedProfile) {
-            setProfile(JSON.parse(storedProfile));
+        const profileLocal = localStorage.getItem("profile");
+        if (profileLocal) {
+            setProfile(JSON.parse(profileLocal));
         }
+      }
+      fetchData();
     }, []);
 
     const toggleBoxVisbility = (index) => {
