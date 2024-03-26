@@ -12,6 +12,7 @@ import PlaySong from './components/PlaySong';
 import MainSite from './components/MainSite';
 import EditCasset from './components/EditCasset';
 import Note from './components/Note';
+import PlayCasset from './components/PlayCasset';
 
 function App() {
   //const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ function App() {
         <Route path="/playsong" element={<PlaySong/>}/>
         <Route path="/editcasset" element={<EditCasset/>}/>
         <Route path="/note" element={<Note/>}/>
+        <Route path="/playcasset" element={<PlayCasset/>}/>
       </Routes>
     </BrowserRouter>
   )
