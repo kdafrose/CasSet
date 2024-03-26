@@ -25,7 +25,6 @@ function MainSite() {
     });
     const [profileImage, setProfileImage] = useState(placeHold);
     const [savedPlaylists, setSavedPlaylist] = useState([]);
-    const [editCasset, setEditCasset] = useState(false);
 
     useEffect(() => {
       fetchPlaylists()
