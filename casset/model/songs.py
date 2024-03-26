@@ -70,3 +70,15 @@ def getMultiSongs():
     except Exception as e:
         return jsonify(str(e)), 400
     
+
+@songs_bp.route('/editNote', methods = ['POST'])
+def editNote():
+    try:
+        data = request.json
+        sg.update_one({"songID":data['songID'], "playlistID":data['playlistID']}, {"$set": {"annotation": data['new_note']}})
+
+        return jsonify({"success": True, "result":"Note was edited and saved to the database successfully"})
+    
+    except Exception as e:
+        return jsonify(str(e))
+    

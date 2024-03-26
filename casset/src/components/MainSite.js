@@ -173,7 +173,7 @@ function MainSite() {
                               {savedPlaylists.map((playlist, i) => {
                                 return (
                                   <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.name}</p>
+                                    <p className='cassette-title'>{playlist.playlist_name}</p>
                                     <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
                                       style={{cursor: 'pointer'}} className='cassette-img'/>
                                     <Collapse in={boxVisibility[i]}>
