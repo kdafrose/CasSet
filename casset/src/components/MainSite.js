@@ -24,6 +24,8 @@ function MainSite() {
     const [savedPlaylists, setSavedPlaylist] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [filteredPlaylists, setFilteredPlaylists] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
       fetchPlaylists()
@@ -31,12 +33,21 @@ function MainSite() {
         if (data) {
             console.log(data);
             setSavedPlaylist(data);
+            setFilteredPlaylists(data);
         } else {
             setSavedPlaylist([]);
+            setFilteredPlaylists([]);
         }
     })      
   }, []); // The empty array ensures this effect runs once on mount
-    
+  
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = savedPlaylists.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
+    setFilteredPlaylists(filtered);
+};
+
   const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
   const navigate = useNavigate();
 
@@ -169,10 +180,11 @@ function MainSite() {
                         ) : (
                           <div>
                             <div id='search-container'>
-                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' value={searchQuery}
+                    onChange={handleSearch}/>
                             </div>
                             <div id="empty-cassets-box" className="cassettes-container">
-                              {savedPlaylists.map((playlist, i) => {
+                              {filteredPlaylists.map((playlist, i) => {
                                 return (
                                   <div key= {i} className='cassette-image-div'>
                                     <p className='cassette-title'>{playlist.playlist_name}</p>
