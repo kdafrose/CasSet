@@ -229,7 +229,7 @@ function MainSite() {
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
                       <div id="empty-friends-box">
-                        <p>No friends yet :(</p>
+                        <p>No friends yet :,(</p>
                       </div>
                     </div>
                 </div>

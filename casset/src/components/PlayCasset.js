@@ -1,10 +1,12 @@
+import React from 'react';
 import '../css/PlayCasset.css';
+import { Button } from 'react-bootstrap';
 import PlaySong from './PlaySong';
 import titleSrc from '../media/casset_title_purple.png';
 import logoSrc from '../media/casset.png';
 import iconSrc from '../media/disket.png';
 
-function PlayCasset() {
+function PlayCasset({ onClose }) {
     
     return (
         <body id="main">
@@ -19,12 +21,18 @@ function PlayCasset() {
                     <div id="middle-box" className="scrollable">
                         
                         {/* EDIT HERE!!! */}
+                        <div id="casset-play-top">
+                            <Button id="back" onClick={onClose}>go back</Button>
+                            <p className="russo-one-regular" id="casset-title-play">goatedmusic.</p>
+                        </div>
                         <div id="big-purple-container">
                             <div id="left-play-song">
                                 <PlaySong/>
                             </div>
-                            <div id="right-show-note">
-
+                            <div id="right-cassetandnote">
+                                <div id="show-note">
+                                    {/* NOTE HEREEEEEEEEEE */}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -43,7 +51,7 @@ function PlayCasset() {
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
                       <div id="empty-friends-box">
-                        <p>No friends yet :(</p>
+                        <p>No friends yet :,(</p>
                       </div>
                     </div>
                 </div>

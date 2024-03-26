@@ -58,7 +58,7 @@ function EditCasset({ onClose }) {
                 <div id="casset-songs-box-col" className="scrollable">
                     <div id="casset-songs-row">
                         <img src={tempCover} alt="temp cover" id="casset-cover"/>
-                            <p className="russo-one-regular" id="casset-title">goatedmusic.</p>
+                        <p className="russo-one-regular" id="casset-title">goatedmusic.</p>
                     </div>
                     <div id="casset-list-in-edit">
                         {songs.map((song, index) => (
