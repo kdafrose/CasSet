@@ -5,6 +5,7 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import PlayCasset from './PlayCasset';
 import EditCasset from './EditCasset';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
@@ -24,6 +25,7 @@ function MainSite() {
     const [savedPlaylists, setSavedPlaylist] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [playCasset, setPlayCasset] = useState(false);
 
     useEffect(() => {
       fetchPlaylists()
@@ -48,6 +50,7 @@ function MainSite() {
       localStorage.removeItem("tokenType");
       localStorage.removeItem("expiresIn");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("profileExists");
 
       return;
     }
@@ -71,13 +74,9 @@ function MainSite() {
           body: requestBody.toString(),
         };
       
-        var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
+        await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
           .then(async data => {
-      
-            if(data.error === "invalid_grant"){
-              return false;
-            }
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             clearAll();
@@ -86,49 +85,56 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+            localStorage.setItem("profileExists", "true");
 
-            const meParams = {
-              method: 'GET',
-              headers: {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.access_token
-              },
-            };
+            getMe();
 
-            await fetch('https://api.spotify.com/v1/me', meParams)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              localStorage.setItem("userSpotifyID", data.id);
-
-              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
-
-              console.log(profileImage);
-
-              setProfileImage(profileImage);
-          })
-            
             return;
           })
-      
-        if (waiting === false){
-          return false;
-        }
-      
-        return waiting;
     }
 
-    useEffect(() => {
-        if (window.location.search) {
+    async function getMe() {
+
+      const accessTokenMe = localStorage.getItem("accessToken");
+
+      const meParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessTokenMe
+        },
+      };
+
+      await fetch('https://api.spotify.com/v1/me', meParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem("userSpotifyID", data.id);
+
+        const profileImage = data.images === undefined ? placeHold : data.images[0].url;
+
+        setProfileImage(profileImage);
+    })
+    }
+
+    useEffect( () => {
+
+      async function fetchData() {
+        if (window.location.search && (!localStorage.getItem("profileExists"))) {
           tokenCall(window.location.search);
+        }
+        else {
+          getMe();
         }
         // CHANGE localStorage to database later...
 
         // Retrieve profile information from local storage
-        const storedProfile = localStorage.getItem("profile");
-        if (storedProfile) {
-            setProfile(JSON.parse(storedProfile));
+        const profileLocal = localStorage.getItem("profile");
+        if (profileLocal) {
+            setProfile(JSON.parse(profileLocal));
         }
+      }
+      fetchData();
     }, []);
 
     const toggleBoxVisbility = (index) => {
@@ -163,33 +169,41 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box" className="scrollable">
-                    {editCasset ? (
-                          <EditCasset onClose={() => setEditCasset(false)}
-                          playlistID = {selectedPlaylistID} />
-                        ) : (
-                          <div>
-                            <div id='search-container'>
-                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                    {playCasset && (
+                      <PlayCasset onClose={() => setPlayCasset(false)} />
+                    )}
+                    {editCasset && (
+                      <EditCasset onClose={() => setEditCasset(false)}
+                      playlistID = {selectedPlaylistID} />
+                    )}
+                    {!playCasset && !editCasset && (
+                      <div>
+                        <div id='search-container'>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                        </div>
+                        <div id="empty-cassets-box" className="cassettes-container">
+                          {savedPlaylists.map((playlist, i) => (
+                            <div key={i} className='cassette-image-div'>
+                              <p className='cassette-title'>{playlist.playlist_name}</p>
+                              <img
+                                src={cassetteTemp}
+                                alt="PLAYLIST"
+                                onClick={() => toggleBoxVisbility(i)}
+                                style={{ cursor: 'pointer' }}
+                                className='cassette-img'
+                              />
+                              <Collapse in={boxVisibility[i]}>
+                                <div className='cassette-under-box'>
+                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => setPlayCasset(true)} className="cassette-button">Play Cassette</Button>
+                                </div>
+                              </Collapse>
                             </div>
-                            <div id="empty-cassets-box" className="cassettes-container">
-                              {savedPlaylists.map((playlist, i) => {
-                                return (
-                                  <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.playlist_name}</p>
-                                    <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                      style={{cursor: 'pointer'}} className='cassette-img'/>
-                                    <Collapse in={boxVisibility[i]}>
-                                      <div className='cassette-under-box'>
-                                        <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
-                                      </div>
-                                    </Collapse>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          </div>
-                        )}
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                        
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
