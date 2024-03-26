@@ -42,7 +42,7 @@ function EditCasset({ editCasset, onClose }) {
                 <p id="spotify-desc">{editCasset.description}</p>
                 <div id="date-container">
                     <h4 className="russo-one-regular" id="date-created">date created:</h4>
-                    <p id="date">{editCasset.date}</p>
+                    <p id="date">{editCasset.date_created}</p>
                 </div>
                 <div id="share-button-div">
                     <button type="button" className="russo-one-regular" id="share-button">share</button>
@@ -58,12 +58,12 @@ function EditCasset({ editCasset, onClose }) {
                 <div id="casset-songs-box-col" className="scrollable">
                     <div id="casset-songs-row">
                         <img src={tempCover} alt="temp cover" id="casset-cover"/>
-                            <p className="russo-one-regular" id="casset-title">{editCasset.name}</p>
+                            <p className="russo-one-regular" id="casset-title">{editCasset.playlist_name}</p>
                     </div>
                     <div id="casset-list-in-edit">
                         {songs.map((song, index) => (
-                            <div>
-                                <div key={`song-${index}`} className="song-box-info">
+                            <div key={`song-${index}`}>
+                                <div className="song-box-info">
                                     <p id="spotify-number" className="russo-one-regular">{index + 1}</p>
                                     <img src={song.cover} alt="artist image" id="spotify-artist-image"/>
                                     <div>

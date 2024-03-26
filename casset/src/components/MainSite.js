@@ -75,7 +75,7 @@ function MainSite() {
           body: requestBody.toString(),
         };
       
-        var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
+        await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
           .then(data => {
       
@@ -96,12 +96,6 @@ function MainSite() {
 
             return;
           })
-      
-        if (waiting === false){
-          return false;
-        }
-      
-        return waiting;
     }
 
     async function getMe() {

@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
 import fetchPostPlaylist from '../controller/fetchPostPlaylist';
 
@@ -15,8 +14,6 @@ export default function FindPlaylist({onClose}) {
         return storedSpotifyID ? storedSpotifyID : null;
     })
 
-    const navigate = useNavigate();
-
     var playlistParams = {
         method: 'GET',
         headers: {
@@ -30,11 +27,6 @@ export default function FindPlaylist({onClose}) {
         .then(response => response.json())
         .then(data => {
             setPlaylists(data.items);
-            console.log(data);
-            return data.items;
-        })
-        .then(playlists =>{
-            return playlists;
         })
     }
 
@@ -55,11 +47,10 @@ export default function FindPlaylist({onClose}) {
         }
 
         fetchPostPlaylist(playlistData);
-        navigate('/displayplaylist');
+        onClose();
     }
 
     const handleClose = () => {
-        setAccessToken(""); // Reset access token when form is closed
         onClose(); // Notify parent component to close the form
     };
 

@@ -438,6 +438,7 @@ body.dark-theme button:hover {
   width: calc(33.33% - 20px); /* Adjust width for 3 cassettes per row */
   margin-right: 20px;
   margin-bottom: 20px;
+  justify-content: center;
   box-sizing: border-box;
 }
 
@@ -447,10 +448,12 @@ body.dark-theme button:hover {
 
 .cassette-img {
   /* width: 1vw; */
+  margin-left:20%;
 }
 
 .cassette-under-box {
   /* Your styles for cassette under box */
+  margin-left:20%;
 }
 
 
