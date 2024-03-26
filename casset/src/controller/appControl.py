@@ -59,7 +59,7 @@ def fetchPlaylistDocument():
     except Exception as e:
         return jsonify(str(e)), 400
     
-@playlist_bp.route('/fetchMultiPlaylistDocuments', methods = ['POST'])
+@app_bp.route('/fetchMultiPlaylistDocuments', methods = ['POST'])
 def fetchMultiPlaylistDocuments():
     try:
         data = request.json
@@ -75,20 +75,31 @@ def fetchMultiPlaylistDocuments():
     
 # Song Functions
     
-@playlist_bp.route('/addSong', methods = ['POST'])
+@app_bp.route('/addSong', methods = ['POST'])
 def addSong():
 
     data = request.json
     song = data['songID']
 
-    result = addSongSG(data['_id'], data['songID'])
+    result = addSongSG(data)
 
     if not result:
         return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
     else:
         return jsonify({"success": True, "result": "Song f{song} was added."}), 400
     
-@playlist_bp.route('/removeSong', methods = ['DELETE'])
+@app_bp.route('/postMultipleSongs', methods = ['POST'])
+def postMultipleSongs():
+    
+    try:
+        data = request.json
+        sg.insert_many(data)
+
+        return jsonify({"success":True, "result":"Added songs successfully to database."}), 200
+    except Exception as e:
+        return jsonify(str(e))
+    
+@app_bp.route('/removeSong', methods = ['DELETE'])
 def removeSong():
 
     data = request.json
@@ -101,7 +112,7 @@ def removeSong():
     else:
         return jsonify({"success": True, "result": "Song f{song} was deleted."}), 400
     
-@playlist_bp.route('/editSongNote', methods = ['POST'])
+@app_bp.route('/editSongNote', methods = ['POST'])
 def editSongNote():
 
     data = request.json
@@ -114,6 +125,35 @@ def editSongNote():
     else:
         return jsonify({"success": True, "result": "Song f{song} note was edited."}), 400
     
+@app_bp.route('/getSong', methods = ['POST'])
+def getSong():
+    try:
+        data = request.json
+        songDoc = getSongSG(data['songID'], data['playlistID'])
+
+        if not songDoc:
+            return jsonify({"sucess":False, "result": "Song does not exists in playlist or database."}), 409
+        else:
+            return jsonify(songDoc), 200
+        
+    except Exception as e:
+        return jsonify(str(e)), 400
+    
+@app_bp.route('/getMultiSongs', methods = ['POST'])
+def getPlaylistSongs():
+    try:
+        data = request.json
+        songDocuments =  getPlaylistSongsSG(data['playlistID'])
+        songs_list = list(songDocuments)
+
+        if not songs_list:
+            return jsonify({"success": False, "result": "No songs in playlist."}), 409
+        else:
+            return dumps(songs_list), 200
+        
+    except Exception as e:
+        return jsonify(str(e)), 400
+
 # Friend Functions
     
 @app_bp.route('/addFriend', methods = ['POST'])

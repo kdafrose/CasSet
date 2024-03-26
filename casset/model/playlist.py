@@ -8,6 +8,7 @@ playlist_bp = Blueprint('playlist_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 pl = client.playlists.playlistInfo
+us = client.userInfo.users
 
 def newPlaylistPL(newData):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")

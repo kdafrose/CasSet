@@ -3,20 +3,32 @@ from playlist import *
 client = MongoClient(CONNECTION_STRING)
 sg = client.song.songInfo
 
+def getSongSG(songID, playlistID):
+    result = sg.find_one({"songID":songID, "playlistID": playlistID})
+    return result
+
+def getPlaylistSongsSG(playlistID):
+    result = sg.find({"playlistID": playlistID})
+    return result
+
 # add a song to the playlist inputted
-def addSongSG(playlistID, songID):
+def addSongSG(data):
 
-    sg.update_one(
-        {"_id": playlistID}, 
-        {"$push": {"songs": 
-            {
-                "songID": "ID",
-                "songName": songID, 
-                "songNote": "asdf"
-            }}}
-    )
+    song_document = sg.insert_one({
+        "songID": data['songID'],
+        "playlistID": data['playlistID'],
+        "name": data['name'],
+        "song_image":data['song_image'],
+        "artist": data['artist'],
+        "annotation":data['annotation'],
+    })
 
-    changeEditDate(playlistID)
+    changeEditDate(data['playlistID'])
+
+    return song_document
+
+def addMultiSongsSG(songs):
+    sg.insert_many(songs)
 
 # deletes Song from Playlist inputted
 def deleteSongSG(playlistID, songID):
