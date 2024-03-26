@@ -1,6 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
-import fetchGetMultiSongs from '../controller/fetchMultiSongs';
+import fetchGetMultiSongs from '../controller/fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
@@ -70,7 +70,7 @@ export default function DisplayPlaylist() {
         }
 
         console.log(songItems);
-        fetchPostMultiSongs(songItems);
+        fetchGetMultiSongs(songItems);
     }
 
     const trackLengthToMinutes = (milliValue) => {

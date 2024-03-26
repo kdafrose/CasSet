@@ -3,7 +3,7 @@ import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
 import fetchPostPlaylist from '../controller/fetchPostPlaylist';
-import fetchGetMultiSongs from '../controller/fetchMultiSongs';
+import fetchGetMultiSongs from '../controller/fetchPostMultiSongs';
 
 
 export default function FindPlaylist({onClose}) {
