@@ -12,10 +12,7 @@ function Note({ noteId, songsItems, playlistItem }) {
     const [noteContent, setNoteContent] = useState('');
 
     const maxCharacters = 85; // number of characters to show by default
-
-    // noteId --> 1-12
-    // songsDoc --> 0-11
-
+    
     // load note content from local storage (for now)
     useEffect(() => {
         // const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
@@ -35,7 +32,7 @@ function Note({ noteId, songsItems, playlistItem }) {
         // fetching editNotes to put note in db
         const noteStatus = editSongNote(songsItems[noteId-1].songID, songsItems[noteId -1].playlistID, noteContent);
         console.log(noteStatus)
-        
+
     }, [noteContent, noteId]);
 
     const handleEditButtonClick = () => {
