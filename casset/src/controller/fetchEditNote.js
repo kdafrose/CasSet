@@ -8,7 +8,7 @@ async function editSongNote(songID, playlistID, new_note){
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "songID":songID, "playlstID": playlistID, "new_note":new_note }), 
+            body: JSON.stringify({ "songID":songID, "playlistID": playlistID, "new_note":new_note }), 
         });
 
         if (!response.ok) {
