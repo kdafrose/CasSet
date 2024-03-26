@@ -127,7 +127,7 @@ def addFriend():
     except Exception as e:
         return jsonify(str(e)), 400
 
-@app_bp.route('/addFriend', methods = ['POST'])
+@app_bp.route('/removeFriend', methods = ['DELETE'])
 def removeFriend():
     try:
         data = request.json
@@ -160,6 +160,21 @@ def fetchAllFriends():
             return jsonify({"success":False, "result": f"User is not friends with {data['friend_name']}"}), 409
         else:
             return dumps(friends_list), 200
+        
+    except Exception as e:
+        return jsonify(str(e)), 400
+    
+@app_bp.route('/searchFriend', methods = ['POST'])
+def searchFriend():
+    try:
+        data = request.json
+        
+        foundFriend = fetchAllFriendsFR(data['userID'], data['friendUserID'])
+
+        if not foundFriend:
+            return jsonify({"success":False, "result": f"User is not friends with {data['friend_name']}"}), 409
+        else:
+            return dumps(foundFriend), 200
         
     except Exception as e:
         return jsonify(str(e)), 400

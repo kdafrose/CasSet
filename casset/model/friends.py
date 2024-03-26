@@ -27,6 +27,10 @@ def newSharedCassetFR(friendID, sharedPlaylistID):
         {"_id": friendID}, 
         {"$push": {"shared_casset": sharedPlaylistID}}
     )
+
+def searchFriendFR(friendName):
+    result = fr.find_one({'friends_name': friendName})
+    return result
     
 def fetchAllFriendsFR(userID, friendID):
     result = fr.find({"userID": userID, "friendUserID": friendID})
