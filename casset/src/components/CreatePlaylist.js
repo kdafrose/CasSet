@@ -1,8 +1,7 @@
 import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button, Card, Row} from 'react-bootstrap'
 import AddSong from './AddSong';
-import {fetchPostMultiSongs} from '../controller/fetchPostMultiSongs';
-import {fetchPostPlaylist} from '../controller/fetchPostPlaylist';
+import { fetchPostMultiSongs, fetchPostPlaylist } from '../controller';
 
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");

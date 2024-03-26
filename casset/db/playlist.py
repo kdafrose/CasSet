@@ -69,6 +69,7 @@ def fetchPlaylistDocument():
     
 def getUserPlaylistsPL(name):
     result = pl.find({"owner": name['owner']})
+    return result
 
 
 ### HELPER FUNCTIONS ###
@@ -88,16 +89,6 @@ def showPlaylists():
     for document in cursor:
         print("Playlist: ", document["name"])
     print("= = = = = = = = = =")
-
-def showPlaylistSongs(userPlaylists, playlist):
-    cursor = userPlaylists.find_one({"name": playlist})
-    if playlist == "0":
-        return
-    
-    print("* * * * * * * * * * *")
-    for song in cursor["songs"]:
-        print(song["songName"])
-    print("* * * * * * * * * * *")
 
 def changeEditDate(id):
     date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
