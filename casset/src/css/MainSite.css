@@ -80,6 +80,10 @@
 #create-container{
   display:flex;
   flex-direction: column;
+  background-color: #C9A8CB;
+  border-radius: 20px;
+  border: #b7b1b1 solid 1px ;
+  
 }
 #search-bar {
   padding-right: 2vw;
@@ -251,19 +255,19 @@
   height: 80vh;
 }
 .create-playlist-form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: #845986;
+  padding: 10px;
+  border-radius: 20px;
   width: 500px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 .new-playlist-songs{
   position:absolute;
-  background-color: #fff;
-  left: 5%;
+  background-color: #f4e2f5;
+  left: 1%;
   border-radius: 10px;
-  width: 1080px;
-  height: 80vh;
+  width: 980px;
+  height: 80;
   overflow:auto;
 }
 #song-playlist-add{
@@ -282,33 +286,61 @@
   background-color: transparent;
   border:none;
 }
-#make-playlist{
-  margin-left:auto;
-  background-color: transparent;
-  border:none;
-  color: black;
+#make-playlist {
+  margin-left: auto;
+  margin-top: auto;
+  margin-right: 10px;
+  background-color:  #C9A8CB; 
+  border: 2px solid #79637a; 
+  color: #5f5760; 
+  font-family: "Russo One", sans-serif;
+  font-style: italic;
+  padding: 10px 20px;
+  border-radius: 20px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+}
+
+#make-playlist:hover {
+  background-color: #e08695; 
+  color: #fff;
+  border-color: #D6336C; 
 }
 #add-song-search{
   display:flex;
+  border-radius: 20px;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 35%;
+  border-bottom: 10px;
   height: auto;
+  width:600px;
+  padding: 7px; 
+  background-color: #c9a8cba1; 
   flex-direction: column;
+  margin-bottom: 10px;
+  
 }
 #songs-added{
   display:flex;
-  background-color: #f60aa3;
+  background-color: #c693b5;
   position:fixed;
-  top:10%;
+  top:4%;
   right:5%;
   overflow-y: auto;
-  width:300px;
-  height: 80vh;
+  width:210px;
+  height: 91.5vh;
   border-radius: 10px;
+  border: #614257 solid 2px;
 }
 .song-list-display{
   display:flex;
 }
 h1#newly-playlist-title{
-  margin-left: 10%;
+  margin-left: 5%;
+  margin-top: 10px;
+  font-size:200%;
+  font-family: "Russo One", sans-serif;
+  color: #927a93;
 }
 .loading-container{
   display:flex;
@@ -320,6 +352,7 @@ h1#newly-playlist-title{
   height:110px;
   background-color: transparent;
   border:none;
+  
 }
 #spin{
   margin-top: 150px;
@@ -370,7 +403,7 @@ button#go-back{
 #close-button {
   border: none;
   margin-left: 10%;
-  outline: none;
+  outline: none;  
   background-color: transparent;
   display: block;
 }
@@ -385,6 +418,9 @@ footer {
 
 /* Don't know if we are going to use this? */
 #close-button:hover{
+  background-color: transparent;
+}
+.remove-song-select:hover{
   background-color: transparent;
 }
 body.dark-theme {
