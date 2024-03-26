@@ -1,6 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
-import fetchGetMultiSongs from '../controller/fetchPostMultiSongs';
+import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
@@ -64,13 +64,14 @@ export default function DisplayPlaylist() {
                 "playlistID": playlistID, // playlistID (Foreign key)
                 "name": data[i].track.name,
                 "artist":artists,
-                "annotation": "fill in later",
+                "annotation": "Empty Note...",
+                "song_image": data[i].track.album.images[0].url,
             }
             songItems.push(songDoc);
         }
 
         console.log(songItems);
-        fetchGetMultiSongs(songItems);
+        fetchPostMultiSongs(songItems);
     }
 
     const trackLengthToMinutes = (milliValue) => {

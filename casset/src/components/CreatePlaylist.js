@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button, Card, Row} from 'react-bootstrap'
 import AddSong from './AddSong';
-
+import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
+import fetchPostPlaylist from '../controller/fetchPostPlaylist';
 
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
@@ -48,9 +49,9 @@ export default function CreatePlaylist({ onClose }) {
                 const profileInfo = JSON.parse(localStorage.getItem("profile"))
                 const playlistData = {
                     "_id": data.id, // id of playlist (primary key)
-                    "name": data.name, // playlist name
+                    "playlist_name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
-                    "date_created": new Date().toJSON().slice(0, 10), // date when playlist was created
+                    "email": profileInfo.email,
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 
                 }
@@ -86,13 +87,14 @@ export default function CreatePlaylist({ onClose }) {
             for (let j=0; j < songsItems[i].artists.length; j++){
                 artists.push(songsItems[i].artists[j].name);
             }
-
+            console.log(songsItems);
             var songDoc = {
-                "songId": songsItems[i].id,
+                "songID": songsItems[i].id,
                 "playlistID":playlistID,
                 "name":songsItems[i].name,
+                "song_image":songsItems[i].album.images[0].url,
                 "artist":artists,
-                "annotation":"fill in later",
+                "annotation":"Empty Note...",
             }
 
             songsDocuments.push(songDoc);
@@ -167,9 +169,13 @@ export default function CreatePlaylist({ onClose }) {
                             </div>
                             <AddSong onSongUpdate={updateSongList}/>
                             <div id="songs-added">
+                                {songsToAdd.length === 0 ? (
+                                    <h4>No songs yet</h4>
+                                ) : null}
                                 <Row className="mx-2 row row-cols-1">
                                 {songsToAdd.map((song) => {
                                     //console.log(song)
+
                                     return (
                                         <>
                                             <h4 className='song-name-add'>
