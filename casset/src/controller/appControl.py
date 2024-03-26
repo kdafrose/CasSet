@@ -1,11 +1,12 @@
-from casset.db.playlist import checkPlaylistInDB, editPlaylistNotePL, getUserPlaylistsPL, newPlaylistPL, removePlaylistPL
-from casset.db.song import *
+from casset.model.playlist import checkPlaylistInDB, editPlaylistNotePL, getUserPlaylistsPL, newPlaylistPL, removePlaylistPL
+from casset.model.song import *
+from casset.model.friends import *
 from flask import request, jsonify, Blueprint
 
-playlist_bp = Blueprint('playlist_bp', __name__)
+app_bp = Blueprint('app_bp', __name__)
 
 ### POST PLAYLIST DOCUMENT IN DATABASE ###
-@playlist_bp.route('/postNewPlaylist', methods = ['POST'])
+@app_bp.route('/postNewPlaylist', methods = ['POST'])
 def postNewPlaylist():
     try:
         data = request.json
@@ -21,7 +22,7 @@ def postNewPlaylist():
 
     
 ### DELETES A PLAYLIST DOCUMENT IN DATABASE ###
-@playlist_bp.route('/deletePlaylist', methods = ['DELETE'])
+@app_bp.route('/deletePlaylist', methods = ['DELETE'])
 def deletePlaylist():
     try:
         data = request.json
@@ -33,7 +34,7 @@ def deletePlaylist():
         return jsonify({"error":str(e)}), 400
 
 ### EDITS PLAYLIST ANNOTATION IN DATABASE ###
-@playlist_bp.route('/changePlaylistNote', methods = ['POST'])
+@app_bp.route('/changePlaylistNote', methods = ['POST'])
 def changePlaylistNote():
     try:
         data = request.json
@@ -44,7 +45,7 @@ def changePlaylistNote():
         return jsonify({"error": str(e)}),400
 
 ### FETCH PLAYLIST DOCUMENT ###
-@playlist_bp.route('/fetchPlaylistDocument', methods = ['POST'])
+@app_bp.route('/fetchPlaylistDocument', methods = ['POST'])
 def fetchPlaylistDocument():
     try:
 
@@ -71,6 +72,8 @@ def fetchMultiPlaylistDocuments():
         
     except Exception as e:
         return jsonify(str(e)), 400
+    
+# Song Functions
     
 @playlist_bp.route('/addSong', methods = ['POST'])
 def addSong():
@@ -110,3 +113,42 @@ def editSongNote():
         return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
     else:
         return jsonify({"success": True, "result": "Song f{song} note was edited."}), 400
+    
+# Friend Functions
+    
+@app_bp.route('/addFriend', methods = ['POST'])
+def addFriend():
+    try:
+        data = request.json
+        addFriendFR(data['userID'], data['friend_name'], data['playlistID'])
+
+        return jsonify({"success": True, "result": "Friend added to the database successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400
+    
+@app_bp.route('/addNewSharedCasset', methods = ['POST'])
+def addNewSharedCasset():
+    try:
+        data = request.json
+        newSharedCassetFR(data['friendsID'],data['newSharedPlaylistID'])
+
+        return jsonify({"success": True, "result": "Shared casset added to the database successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400
+    
+@app_bp.route('/fetchAllFriends', methods = ['POST'])
+def fetchAllFriends():
+    try:
+        data = request.json
+        
+        friends_list = fetchAllFriendsFR(data['userID'], data['friendUserID'])
+
+        if not friends_list:
+            return jsonify({"success":False, "result": f"User is not friends with {data['friend_name']}"}), 409
+        else:
+            return dumps(friends_list), 200
+        
+    except Exception as e:
+        return jsonify(str(e)), 400

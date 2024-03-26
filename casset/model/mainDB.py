@@ -21,15 +21,15 @@ if __name__ == '__main__':
         elif option == "2":
             newPlaylistPL()
         elif option == "3":
-            deletePlaylist(pl)
+            removePlaylistPL(pl)
         elif option == "4":
-            editPlaylistNote(pl)
+            editPlaylistNotePL(pl)
         elif option == "5":
-            addSong(pl)
+            addSongSG(pl)
         elif option == "6":
-            removeSong(pl)
+            deleteSongSG(pl)
         elif option == "7":
-            editSongNote(pl)
+            editSongNoteSG(pl)
         elif option == "9":
             loop = False
         else:
