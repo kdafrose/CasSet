@@ -17,7 +17,7 @@ def postSong():
         song_document = sg.insert_one({
             "songID": data['songID'],
             "playlistID": data['playlistID'],
-            "song_name": data['name'],
+            "name": data['name'],
             "song_image":data['song_image'],
             "artist": data['artist'],
             "annotation":data['annotation'],
