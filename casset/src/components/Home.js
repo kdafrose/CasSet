@@ -4,6 +4,7 @@ import '../css/Home.css';
 import imageSrc from '../media/Header.png'; // header image
 import rectangleImageSrc from '../media/Rolling.gif'; // home box image
 import logoSrc from '../media/casset.png';
+import { useEffect } from 'react';
 
 export default function Home() {
 

@@ -12,6 +12,7 @@ import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 import fetchPlaylists from '../controller/fetchUserPlaylists';
 import iconSrc from '../media/disket.png';
+import PlayCasset from './PlayCasset';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -26,6 +27,11 @@ function MainSite() {
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [profileExists] = useState(()=> {
+      const storedExists = localStorage.getItem("profileExists");
+      console.log("PROFILE????: " + storedExists);
+      return storedExists ? storedExists : null;
+  });
 
     useEffect(() => {
       fetchPlaylists()
@@ -59,8 +65,35 @@ function MainSite() {
       localStorage.removeItem("tokenType");
       localStorage.removeItem("expiresIn");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("profileExists");
 
       return;
+    }
+
+    async function getMe() {
+
+      const access_token_me = localStorage.getItem("accessToken");
+
+      const meParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + access_token_me
+        },
+      };
+
+      await fetch('https://api.spotify.com/v1/me', meParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem("userSpotifyID", data.id);
+
+        const profileImage = data.images === undefined ? placeHold : data.images[0].url;
+
+        console.log(profileImage);
+
+        setProfileImage(profileImage);
+      })
     }
 
     async function tokenCall(inputString) {
@@ -82,13 +115,9 @@ function MainSite() {
           body: requestBody.toString(),
         };
       
-        var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
+        await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
           .then(async data => {
-      
-            if(data.error === "invalid_grant"){
-              return false;
-            }
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             clearAll();
@@ -97,41 +126,20 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+            localStorage.setItem("profileExists", "true");
 
-            const meParams = {
-              method: 'GET',
-              headers: {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.access_token
-              },
-            };
-
-            await fetch('https://api.spotify.com/v1/me', meParams)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              localStorage.setItem("userSpotifyID", data.id);
-
-              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
-
-              console.log(profileImage);
-
-              setProfileImage(profileImage);
-          })
+            getMe();
             
             return;
           })
-      
-        if (waiting === false){
-          return false;
-        }
-      
-        return waiting;
     }
 
     useEffect(() => {
-        if (window.location.search) {
+        if (window.location.search && (!profileExists)) {
           tokenCall(window.location.search);
+        }
+        else{
+          getMe();
         }
         // CHANGE localStorage to database later...
 
@@ -189,7 +197,7 @@ function MainSite() {
                                     <Collapse in={boxVisibility[i]}>
                                       <div className='cassette-under-box'>
                                         <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
+                                        <Button onClick={PlayCasset} className="cassette-button">Play Cassette</Button>
                                       </div>
                                     </Collapse>
                                   </div>
