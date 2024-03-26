@@ -162,7 +162,8 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset onClose={() => setPlayCasset(false)} />
+                      <PlayCasset onClose={() => setPlayCasset(false)}
+                      playlistID = {selectedPlaylistID} />
                     )}
                     {editCasset && (
                       <EditCasset onClose={() => setEditCasset(false)}
@@ -186,8 +187,8 @@ function MainSite() {
                               />
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
-                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => setPlayCasset(true)} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>

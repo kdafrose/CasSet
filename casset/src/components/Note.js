@@ -6,29 +6,23 @@ import '../css/Note.css';
 // importing db controller function
 import editSongNote from '../controller/fetchEditNote';
 
-function Note({ noteId, songsItems, playlistItem }) {
-// function getNoteContent(noteId) {
-  // Change to database based on the noteId
-  // For now, we are using local storage
-//   const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
-//   return storedNoteContent || '';
-// }
-
-// export function NoteContent({ noteId }) {
-  // const [noteContent, setNoteContent] = useState('');
+export function NoteContent({ noteId, songDocs }) {
+  const [noteContent, setNoteContent] = useState('');
 
   // Load note content based on noteId
-//   useEffect(() => {
-//       const content = getNoteContent(noteId);
-//       setNoteContent(content);
-//   }, [noteId]);
+  useEffect(() => {
+      const content = "" // This should 
+      setNoteContent(content);
+  }, [noteId]);
 
-//   return (
-//     <div id="the-note-text" dangerouslySetInnerHTML={{ __html: noteContent }} />
-//   );
-// }
+  return (
+    <div id="the-note-text" dangerouslySetInnerHTML={{ __html: noteContent }} />
+  );
+}
 
-// function Note({ noteId }) {
+// This is for EditCasset.js
+function Note({ noteId, songsItems, playlistItem }) {
+
     const [isEditing, setIsEditing] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [noteContent, setNoteContent] = useState('');
