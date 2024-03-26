@@ -12,27 +12,13 @@ import fetchCasset from '../controller/fetchSinglePlaylist';
 // Hardcoded images here
 import spotifyCover from '../media/spotifycover.jpg';
 import tempCover from '../media/goatedmusic.png';
-import artistImage from '../media/artistimage.png';
-import artistImage2 from '../media/rina.JPG';
 
 function EditCasset({ onClose, playlistID }) {
     // Sample song data
 
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
-    // const songs = [
-    //     {
-    //         title: "True Romance",
-    //         artist: "PinkPantheress",
-    //         cover: artistImage
-    //     },
-    //     {
-    //         title: "Cyber Stockholm Syndrome",
-    //         artist: "Rina Sawayama",
-    //         cover: artistImage2
-    //     },
-    // ];
-
+    
     // gets songs information
     useEffect(() => {
         const fetchSongsDocs = async () => {

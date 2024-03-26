@@ -169,9 +169,13 @@ export default function CreatePlaylist({ onClose }) {
                             </div>
                             <AddSong onSongUpdate={updateSongList}/>
                             <div id="songs-added">
+                                {songsToAdd.length === 0 ? (
+                                    <h4>No songs yet</h4>
+                                ) : null}
                                 <Row className="mx-2 row row-cols-1">
                                 {songsToAdd.map((song) => {
                                     //console.log(song)
+
                                     return (
                                         <>
                                             <h4 className='song-name-add'>
