@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/PlayCasset.css';
 import { Button } from 'react-bootstrap';
 import PlaySong from './PlaySong';
+import { NoteContent } from './Note';
 
 function PlayCasset({ onClose }) {
     
@@ -16,8 +17,10 @@ function PlayCasset({ onClose }) {
                         <PlaySong/>
                     </div>
                     <div id="right-cassetandnote">
-                        <div id="show-note">
-                            {/* NOTE HEREEEEEEEEEE */}
+                        <div id="show-note" className="scrollable">
+                            <div id="the-note">
+                                <NoteContent noteId={1} /> {/* need to change to show with database */}
+                            </div>
                         </div>
                     </div>
                 </div>

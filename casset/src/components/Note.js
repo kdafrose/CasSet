@@ -3,12 +3,33 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../css/Note.css';
 
+function getNoteContent(noteId) {
+  // Change to database based on the noteId
+  // For now, we are using local storage
+  const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
+  return storedNoteContent || '';
+}
+
+export function NoteContent({ noteId }) {
+  const [noteContent, setNoteContent] = useState('');
+
+  // Load note content based on noteId
+  useEffect(() => {
+      const content = getNoteContent(noteId);
+      setNoteContent(content);
+  }, [noteId]);
+
+  return (
+    <div className="note-content" dangerouslySetInnerHTML={{ __html: noteContent }} />
+  );
+}
+
 function Note({ noteId }) {
     const [isEditing, setIsEditing] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [noteContent, setNoteContent] = useState('');
 
-    const maxCharacters = 85; // number of characters to show by default
+    const maxCharacters = 70; // number of characters to show by default
 
     // load note content from local storage (for now)
     useEffect(() => {

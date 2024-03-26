@@ -22,7 +22,7 @@ export default function PlaySong(props) {
 
     const { songURI, playlistURI} = props;
 
-    const [is_paused, setPaused] = useState(false);
+    const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);
     const [player, setPlayer] = useState(undefined);
     const [current_track, setTrack] = useState(track);
@@ -138,9 +138,6 @@ export default function PlaySong(props) {
                         <div id="volume">
                             Volume
                         </div>
-                        {/* <Form.Range id="volume-slider"
-                            onChange={event => {player.setVolume((event.target.value) /100 )}}
-                        /> */}
                         <Form.Range id="volume-slider"
                             onChange={handleChange}
                         />
