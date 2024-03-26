@@ -23,6 +23,7 @@ function MainSite() {
     const [profileImage, setProfileImage] = useState(placeHold);
     const [savedPlaylists, setSavedPlaylist] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
+    const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
 
     useEffect(() => {
       fetchPlaylists()
@@ -163,7 +164,8 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {editCasset ? (
-                          <EditCasset onClose={() => setEditCasset(false)} />
+                          <EditCasset onClose={() => setEditCasset(false)}
+                          playlistID = {selectedPlaylistID} />
                         ) : (
                           <div>
                             <div id='search-container'>
@@ -178,7 +180,7 @@ function MainSite() {
                                       style={{cursor: 'pointer'}} className='cassette-img'/>
                                     <Collapse in={boxVisibility[i]}>
                                       <div className='cassette-under-box'>
-                                        <Button onClick={() => setEditCasset(true)} className="cassette-button">Edit Cassette</Button>
+                                        <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
                                         <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
                                       </div>
                                     </Collapse>

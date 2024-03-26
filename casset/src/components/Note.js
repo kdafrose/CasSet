@@ -3,24 +3,39 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../css/Note.css';
 
-function Note({ noteId }) {
+// importing db controller function
+import editSongNote from '../controller/fetchEditNote';
+
+function Note({ noteId, songsItems, playlistItem }) {
     const [isEditing, setIsEditing] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [noteContent, setNoteContent] = useState('');
 
     const maxCharacters = 85; // number of characters to show by default
 
+    // noteId --> 1-12
+    // songsDoc --> 0-11
+
     // load note content from local storage (for now)
     useEffect(() => {
-        const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
-        if (storedNoteContent) {
-          setNoteContent(storedNoteContent);
-        }
+        // const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
+        // if (storedNoteContent) {
+        //   setNoteContent(storedNoteContent);
+        // }
+
+        // loads note content from db (default of 'fill in later')
+        setNoteContent(songsItems[noteId -1].annotation);
+        
     }, [noteId]);
 
     // save note content to local storage (for now)
     useEffect(() => {
-        localStorage.setItem(`noteContent${noteId}`, noteContent);
+        //localStorage.setItem(`noteContent${noteId}`, noteContent);
+
+        // fetching editNotes to put note in db
+        const noteStatus = editSongNote(songsItems[noteId-1].songID, songsItems[noteId -1].playlistID, noteContent);
+        console.log(noteStatus)
+        
     }, [noteContent, noteId]);
 
     const handleEditButtonClick = () => {

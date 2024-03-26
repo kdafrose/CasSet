@@ -8,7 +8,7 @@ async function fetchGetMultiSongs(playlistID){
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "profileID": playlistID }), 
+            body: JSON.stringify({ "playlistID": playlistID }), 
         });
 
         if (!response.ok) {

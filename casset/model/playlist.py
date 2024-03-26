@@ -68,12 +68,13 @@ def fetchPlaylistDocument():
     try:
 
         data = request.json
-        playlistID = data['_id']
-        playlistDoc = pl.find_one({"_id":playlistID})
+        playlistDoc = pl.find_one({"_id":data['_id']})
+        playlist_item = list(playlistDoc)
 
-        if not playlistDoc:
+        if not playlist_item:
             return jsonify({"success": False, "status": "Playlist does not exist in database."}), 409
-        return jsonify(playlistDoc), 200
+        return dumps(playlistDoc), 200
+    
     except Exception as e:
         return jsonify(str(e)), 400
     

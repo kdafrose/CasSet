@@ -64,7 +64,7 @@ export default function DisplayPlaylist() {
                 "playlistID": playlistID, // playlistID (Foreign key)
                 "name": data[i].track.name,
                 "artist":artists,
-                "annotation": "fill in later",
+                "annotation": "Empty Note...",
                 "song_image": data[i].track.album.images[0].url,
             }
             songItems.push(songDoc);
