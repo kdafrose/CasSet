@@ -20,18 +20,18 @@ function EditCasset({ onClose, playlistID }) {
 
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
-    const songs = [
-        {
-            title: "True Romance",
-            artist: "PinkPantheress",
-            cover: artistImage
-        },
-        {
-            title: "Cyber Stockholm Syndrome",
-            artist: "Rina Sawayama",
-            cover: artistImage2
-        },
-    ];
+    // const songs = [
+    //     {
+    //         title: "True Romance",
+    //         artist: "PinkPantheress",
+    //         cover: artistImage
+    //     },
+    //     {
+    //         title: "Cyber Stockholm Syndrome",
+    //         artist: "Rina Sawayama",
+    //         cover: artistImage2
+    //     },
+    // ];
 
     // gets songs information
     useEffect(() => {
@@ -109,7 +109,7 @@ function EditCasset({ onClose, playlistID }) {
                                     </div>
                                 </div>
                                 {/* corresponding Note component for each song */}
-                                <Note key={`note-${index}`} noteId={index + 1} />
+                                <Note key={`note-${index}`} noteId={index + 1} songsItems = {songsDocs} playlistItem = {selectedPlaylist} />
                             </div>
                         ))}
                     </div>

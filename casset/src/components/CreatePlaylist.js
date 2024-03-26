@@ -89,12 +89,12 @@ export default function CreatePlaylist({ onClose }) {
             }
             console.log(songsItems);
             var songDoc = {
-                "songId": songsItems[i].id,
+                "songID": songsItems[i].id,
                 "playlistID":playlistID,
                 "name":songsItems[i].name,
                 "song_image":songsItems[i].album.images[0].url,
                 "artist":artists,
-                "annotation":"fill in later",
+                "annotation":"Empty Note...",
             }
 
             songsDocuments.push(songDoc);
