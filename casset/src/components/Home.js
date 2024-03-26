@@ -15,7 +15,6 @@ export default function Home() {
     localStorage.removeItem("expiresIn");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("profileExists");
-    localStorage.removeItem("profile");               // MIGHT BE PROBLEMATIC
   }, []);
 
   return (

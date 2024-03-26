@@ -145,10 +145,6 @@ function MainSite() {
       });
     };
 
-    function playCassette() {
-      console.log("This is going to be interesting")
-    }
-
     const logOut = () => {
         googleLogout();
         clearAll();
