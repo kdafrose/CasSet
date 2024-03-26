@@ -6,6 +6,7 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
 import EditCasset from './EditCasset';
+import PlayCasset from './PlayCasset';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
@@ -21,6 +22,7 @@ function MainSite() {
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
     const [editCasset, setEditCasset] = useState(false);
+    const [playCasset, setPlayCasset] = useState(false);
 
     const samPlaylist = {
       name: "Example Playlist",
@@ -149,10 +151,6 @@ function MainSite() {
       });
     };
 
-    function playCassette() {
-      console.log("This is going to be interesting")
-    }
-
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -173,32 +171,40 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box" className="scrollable">
-                    {editCasset ? (
-                          <EditCasset onClose={() => setEditCasset(false)} />
-                        ) : (
-                          <div>
-                            <div id='search-container'>
-                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                    {playCasset && (
+                      <PlayCasset onClose={() => setPlayCasset(false)} />
+                    )}
+                    {editCasset && (
+                      <EditCasset onClose={() => setEditCasset(false)} />
+                    )}
+                    {!playCasset && !editCasset && (
+                      <div>
+                        <div id='search-container'>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                        </div>
+                        <div id="empty-cassets-box" className="cassettes-container">
+                          {savedPlaylists.map((playlist, i) => (
+                            <div key={i} className='cassette-image-div'>
+                              <p className='cassette-title'>{playlist.name}</p>
+                              <img
+                                src={cassetteTemp}
+                                alt="PLAYLIST"
+                                onClick={() => toggleBoxVisbility(i)}
+                                style={{ cursor: 'pointer' }}
+                                className='cassette-img'
+                              />
+                              <Collapse in={boxVisibility[i]}>
+                                <div className='cassette-under-box'>
+                                  <Button onClick={() => setEditCasset(true)} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => setPlayCasset(true)} className="cassette-button">Play Cassette</Button>
+                                </div>
+                              </Collapse>
                             </div>
-                            <div id="empty-cassets-box" className="cassettes-container">
-                              {savedPlaylists.map((playlist, i) => {
-                                return (
-                                  <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.name}</p>
-                                    <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                      style={{cursor: 'pointer'}} className='cassette-img'/>
-                                    <Collapse in={boxVisibility[i]}>
-                                      <div className='cassette-under-box'>
-                                        <Button onClick={() => setEditCasset(true)} className="cassette-button">Edit Cassette</Button>
-                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
-                                      </div>
-                                    </Collapse>
-                                  </div>
-                                )
-                              })}
-                            </div>
-                          </div>
-                        )}
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                        
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}

@@ -60,6 +60,7 @@
   color: #926395;
 }
 #middle-box {
+  min-height: fit-content;
   margin-left: 0.75vw;
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
