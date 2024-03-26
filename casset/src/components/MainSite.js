@@ -10,6 +10,7 @@ import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
+import fetchPlaylists from '../controller/fetchUserPlaylists';
 import iconSrc from '../media/disket.png';
 
 function MainSite() {
@@ -20,35 +21,23 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
+    const [savedPlaylists, setSavedPlaylist] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
 
-    const samPlaylist = {
-      name: "Example Playlist",
-    }
-    const anotherPlay = {
-      name: "Example Playlist",
-    }
-    const threePlay = {
-      name: "Example Playlist",
-    }
-    const fourPlay = {
-      name: "Example Playlist",
-    }
-    const meowPlay = {
-      name: "MEOW",
-    }
-    const sixPlay = {
-      name: "Example Playlist",
-    }
-    const sevPlay = {
-      name: "Example Playlist",
-    }
-    const fivePlay = {
-      name: "Example Playlist",
-    }
-    const [savedPlaylists] = useState([samPlaylist, anotherPlay, threePlay,fourPlay, fivePlay, sixPlay, meowPlay]);
-    const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
-    const navigate = useNavigate();
+    useEffect(() => {
+      fetchPlaylists()
+    .then(data => {
+        if (data) {
+            console.log(data);
+            setSavedPlaylist(data);
+        } else {
+            setSavedPlaylist([]);
+        }
+    })      
+  }, []); // The empty array ensures this effect runs once on mount
+    
+  const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
+  const navigate = useNavigate();
 
     function clearAll(){
       // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
@@ -184,7 +173,7 @@ function MainSite() {
                               {savedPlaylists.map((playlist, i) => {
                                 return (
                                   <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.name}</p>
+                                    <p className='cassette-title'>{playlist.playlist_name}</p>
                                     <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
                                       style={{cursor: 'pointer'}} className='cassette-img'/>
                                     <Collapse in={boxVisibility[i]}>

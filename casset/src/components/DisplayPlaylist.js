@@ -1,6 +1,6 @@
 import {Container, InputGroup, FormControl, Button, Row, Card} from 'react-bootstrap'
 import {useState, useEffect} from 'react'
-import fetchPostMultiSongs from './fetchPostMultiSongs';
+import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
 
 export default function DisplayPlaylist() {
     const [playlistID, setPlaylistID] = useState(() => {
@@ -65,6 +65,7 @@ export default function DisplayPlaylist() {
                 "name": data[i].track.name,
                 "artist":artists,
                 "annotation": "fill in later",
+                "song_image": data[i].track.album.images[0].url,
             }
             songItems.push(songDoc);
         }

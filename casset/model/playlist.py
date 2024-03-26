@@ -1,6 +1,8 @@
 from flask import request, jsonify, Blueprint
+from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
+import datetime
 
 playlist_bp = Blueprint('playlist_bp', __name__)
 
@@ -15,19 +17,21 @@ def postNewPlaylist():
     try:
         data = request.json
         #Finds userID object in database
-        ownerID = findUserID(data['owner_name'])
+        ownerID = findUserID(data['owner_name'], data['email'])
         exists = checkPlaylistInDB(data['_id'])
+        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
 
         if not exists:
-            object_playlist = pl.insert_one({
+            pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
                 "playlist_name": data['playlist_name'], 
-                "date_created": data['date_created'],
+                "date_created": date_time,
+                "last_edited":date_time,
                 "sharing_link": data['sharing_link'],
                 "note": data['note'],
             })
-            return jsonify({"success": True, "result": str(object_playlist.inserted_id)}), 200
+            return jsonify({"success": True, "result": "Playlist has been added to the database successfully"}), 200
         else:
             return jsonify({"success":False, "result":"Playlist already in database."}), 409
     except Exception as e:
@@ -77,12 +81,15 @@ def fetchPlaylistDocument():
 def fetchMultiPlaylistDocuments():
     try:
         data = request.json
-        playlistDocs = pl.find({"owner": data['owner']})
+        ownerID = findUserID(data['name'], data['email'])
+        playlistDocs = pl.find({"owner": ownerID})
 
-        if not playlistDocs:
+        playlist_list = list(playlistDocs)
+
+        if not playlist_list:
             return jsonify({"success": False, "result": "User has no playlist in the database."}), 409
         else:
-            return jsonify(playlistDocs), 200
+            return dumps(playlist_list), 200
         
     except Exception as e:
         return jsonify(str(e)), 400
@@ -93,8 +100,8 @@ def checkPlaylistInDB(playlistID):
         return True
     return False
 
-def findUserID(user_name):
-    info = us.find_one({"name":user_name})
+def findUserID(user_name, user_email):
+    info = us.find_one({"name":user_name, "email":user_email})
     return info["_id"]
 
 def listPlaylist():
