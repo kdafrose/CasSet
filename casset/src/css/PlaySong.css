@@ -90,7 +90,30 @@
     text-align: center; /* Center text */
 }
 #volume-slider {
-
+-webkit-appearance: none;
+appearance: none;
+width: 100%;
+height: 8px;
+background: #ddd; /* Background color */
+border-radius: 5px;
+outline: none;
+margin-top: 10px; /* Add some space */
+}
+#volume-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 16px;
+height: 16px;
+background: #BC6870; /* Color of the slider thumb */
+border-radius: 50%;
+cursor: pointer;
+}
+#volume-slider::-moz-range-thumb {
+width: 16px;
+height: 16px;
+background: #BC6870; /* Color of the slider thumb */
+border-radius: 50%;
+cursor: pointer;
 }
   
   

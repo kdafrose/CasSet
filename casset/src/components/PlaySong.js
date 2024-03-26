@@ -99,6 +99,10 @@ export default function PlaySong(props) {
         };
     }, []);
 
+    const handleChange = (event) => {
+        player.setVolume(event.target.value / 100);
+    }
+
     if (!is_active) { 
         return (
             <>
@@ -134,8 +138,11 @@ export default function PlaySong(props) {
                         <div id="volume">
                             Volume
                         </div>
-                        <Form.Range id="volume-slider"
+                        {/* <Form.Range id="volume-slider"
                             onChange={event => {player.setVolume((event.target.value) /100 )}}
+                        /> */}
+                        <Form.Range id="volume-slider"
+                            onChange={handleChange}
                         />
                     </div>   
                 </div>
