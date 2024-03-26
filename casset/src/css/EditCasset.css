@@ -29,7 +29,7 @@
     margin: -1vw 1.5vw 0 1.5vw;
 }
 #date-container {
-    text-align: center;
+    display: flex;
     align-items: center;
 }
 #date-container p {
@@ -42,7 +42,6 @@
 #date-created {
     font-size: 1.3vw;
     color: #DB5EA2;
-    margin-top:5px;
 }
 #date {
     font-size: 1.1vw;

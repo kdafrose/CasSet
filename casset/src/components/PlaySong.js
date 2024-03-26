@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 
 const track = {
@@ -14,7 +13,9 @@ const track = {
     ]
 }
 
-export default function PlaySong() {
+export default function PlaySong(props) {
+
+    const { songURI, playlistURI} = props;
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
@@ -22,14 +23,9 @@ export default function PlaySong() {
     const [current_track, setTrack] = useState(track);
     const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
+        console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
-
-    const location = useLocation();
-    const state = location.state;
-
-    const selected_playlist = state.playlistItem;
-    const new_uri = "spotify:playlist:" + selected_playlist;
 
     async function transferAuto(deviceSpecific){
 
@@ -40,13 +36,12 @@ export default function PlaySong() {
                 'Authorization' : 'Bearer ' + accessToken
             },
             body: JSON.stringify({
-                'offset' : {position: 0},
-                'context_uri': new_uri,
-                'position_ms' : 0
+                'device_ids' : [deviceSpecific],
+                'play' : true,
             }),
         }
     
-        await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + deviceSpecific, transferParams);
+        await fetch('https://api.spotify.com/v1/me/player', transferParams);
     
         console.log("Transferred? To: " + deviceSpecific);
     }
