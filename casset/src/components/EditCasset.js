@@ -95,7 +95,6 @@ function EditCasset({ onClose, playlistID, friends }    ) {
         if (isConfirmed) {
             console.log(`Sharing playlist ${selectedPlaylist.playlist_name} with friend:`, friend);
             // Logic to share the playlist with the selected friend...
-
             setShowSharePopup(false);
         }
     };
