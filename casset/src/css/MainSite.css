@@ -225,14 +225,6 @@
   font-weight: bold;
   font-size: 1.8vw;
 }
-#empty-friends-box {
-  display: flex;
-  align-items: center; 
-  justify-content: center; 
-  flex: 1; 
-  color: #31343b;
-  font-size: 1.4vw;
-}
 #logo {
   width: auto;
   height: 3.7vw;

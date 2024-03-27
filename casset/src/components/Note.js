@@ -4,7 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import '../css/Note.css';
 
 // importing db controller function
-import editSongNote from '../controller/fetchEditNote';
+import {editSongNote} from '../controller/songsController';
 
 export function NoteContent({ noteId, songItems }) {
   const [noteContent, setNoteContent] = useState('');

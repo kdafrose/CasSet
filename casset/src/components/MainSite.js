@@ -5,13 +5,15 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import {fetchAddedFriends} from '../controller/friendsController';
 import EditCasset from './EditCasset';
 import PlayCasset from './PlayCasset';
+import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
-import fetchPlaylists from '../controller/fetchUserPlaylists';
+import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
 
 function MainSite() {
@@ -37,18 +39,38 @@ function MainSite() {
       return storedExists ? storedExists : null;
   });
 
+    // array of friends (with database later)
+    // Checks friends database for friends
+    //const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
+    const [friends, setFriends] = useState([]);
+
     useEffect(() => {
-      fetchPlaylists()
-    .then(data => {
-        if (data) {
-            console.log(data);
-            setSavedPlaylist(data);
-            setFilteredPlaylists(data);
-        } else {
-            setSavedPlaylist([]);
-            setFilteredPlaylists([]);
+      // Displays added playlists in db
+      fetchPlaylists() 
+      .then(data => {
+          if (data) {
+              console.log(data);
+              setSavedPlaylist(data);
+              setFilteredPlaylists(data);
+          } else {
+              setSavedPlaylist([]);
+              setFilteredPlaylists([]);
+          }
+      })
+      
+      // Displays added friends users made
+      fetchAddedFriends()
+      .then(data => {
+        if(data){
+          const friendsName = data.map(item => item.friend_name)
+          console.log(friendsName)
+          setFriends(friendsName)
         }
-    })      
+        else{
+          setFriends([]);
+        }
+      })
+    
   }, []); // The empty array ensures this effect runs once on mount
   
   const handleSearch = (e) => {
@@ -188,7 +210,8 @@ function MainSite() {
                     )}
                     {editCasset && (
                       <EditCasset onClose={() => setEditCasset(false)}
-                      playlistID = {selectedPlaylistID} />
+                      playlistID = {selectedPlaylistID}
+                      friends={friends} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
@@ -242,14 +265,12 @@ function MainSite() {
                             </div>
                         )}
                     </div>
-                    <div id="friends-box">
+                    <div id="friends-box" className="scrollable">
                       <div id="friends-top">
                         <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
-                      <div id="empty-friends-box">
-                        <p>No friends yet :,(</p>
-                      </div>
+                      <Friends friends={friends} setFriends={setFriends} />
                     </div>
                 </div>
             </div>

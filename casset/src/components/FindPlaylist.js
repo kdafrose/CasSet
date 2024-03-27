@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
 import '../css/FindPlaylist.css';
-import fetchPostPlaylist from '../controller/fetchPostPlaylist';
-import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
+import {fetchPostPlaylist} from '../controller/playlistController';
+import {fetchPostMultiSongs} from '../controller/songsController';
 
 export default function FindPlaylist({onClose}) {
     const [accessToken] = useState(() => {
