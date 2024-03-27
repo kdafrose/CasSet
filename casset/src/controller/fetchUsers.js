@@ -1,13 +1,13 @@
-const fetchUserFriends = async () => {
+const fetchUsers = async () => {
     try {
         const profileInfo = JSON.parse(localStorage.getItem('profile'));
         console.log(profileInfo);
-        const response = await fetch('http://localhost:5000/friends/findFriend', {
+        const response = await fetch('http://localhost:5000/users/findUsers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ "userID": data['userID'], "friends_name": data['friend_name'] }), 
+            body: JSON.stringify({ "userID": data['userID'] }), 
         });
 
         if (!response.ok) {
@@ -21,4 +21,4 @@ const fetchUserFriends = async () => {
     }
 };
 
-export default fetchUserFriends;
+export default fetchUsers;
