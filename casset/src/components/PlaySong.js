@@ -15,7 +15,7 @@ const track = {
     ]
 }
 
-export default function PlaySong({ onNext, onPrev }) {
+export default function PlaySong({ playingID, onNext, onPrev }) {
 
     // const { songURI, playlistURI} = props; comment out for now until we can use it
 
@@ -25,7 +25,6 @@ export default function PlaySong({ onNext, onPrev }) {
     const [current_track, setTrack] = useState(track);
     const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
-        console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
 
@@ -44,8 +43,29 @@ export default function PlaySong({ onNext, onPrev }) {
         }
     
         await fetch('https://api.spotify.com/v1/me/player', transferParams);
+        playlistTransfer(deviceSpecific);
+    }
+
+    async function playlistTransfer(selectDevice){
+
+        const playlistURIPlay = "spotify:playlist:" + playingID;
+
+        const transferParams = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({
+                'context_uri' : playlistURIPlay,
+                'offset': {
+                    'position':0
+                },
+                "position_ms":0
+            }),
+        };
     
-        console.log("Transferred? To: " + deviceSpecific);
+        await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + selectDevice, transferParams);
     }
 
     useEffect(() => {

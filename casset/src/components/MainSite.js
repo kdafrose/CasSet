@@ -91,8 +91,6 @@ function MainSite() {
 
         const profileImage = data.images === undefined ? placeHold : data.images[0].url;
 
-        console.log(profileImage);
-
         setProfileImage(profileImage);
       })
     }
@@ -180,7 +178,7 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset onClose={() => setPlayCasset(false)} />
+                      <PlayCasset playlistID={selectedPlaylistID} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
                       <EditCasset playlistID={selectedPlaylistID} onClose={() => setEditCasset(false)} />
@@ -205,7 +203,8 @@ function MainSite() {
                                 <div className='cassette-under-box'>
                                   <Button onClick={() => {setEditCasset(true)
                                   setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => setPlayCasset(true)} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => {setPlayCasset(true)
+                                  setSelectedPlaylistID(playlist._id)}} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>

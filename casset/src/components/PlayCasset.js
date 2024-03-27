@@ -4,7 +4,7 @@ import PlaySong from './PlaySong';
 import {Button} from 'react-bootstrap'
 import Note from './Note';
 
-function PlayCasset({ onClose }) {
+function PlayCasset({ playlistID, onClose }) {
     const [noteId, setNoteId] = useState(1);
     const maxNoteId = 12; // this needs to depend on db later!!!
     
@@ -24,12 +24,12 @@ function PlayCasset({ onClose }) {
                 </div>
                 <div id="big-purple-container">
                     <div id="left-play-song">
-                        <PlaySong onNext={handleNextNote} onPrev={handlePrevNote} />
+                        <PlaySong playingID={playlistID}onNext={handleNextNote} onPrev={handlePrevNote} />
                     </div>
                     <div id="right-cassetandnote">
                         <div id="show-note" className="scrollable">
                             <div id="the-note">
-                                <Note noteId={noteId} /> {/* need to change to show with database */}
+                                {/* <Note noteId={noteId} /> need to change to show with database */}
                             </div>
                         </div>
                     </div>
