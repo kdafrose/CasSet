@@ -6,12 +6,12 @@ import '../css/Note.css';
 // importing db controller function
 import editSongNote from '../controller/fetchEditNote';
 
-export function NoteContent({ noteId, songDocs }) {
+export function NoteContent({ noteId, songItems }) {
   const [noteContent, setNoteContent] = useState('');
 
   // Load note content based on noteId
   useEffect(() => {
-      const content = "" // This should 
+      const content = songItems[noteId-1]['annotation']
       setNoteContent(content);
   }, [noteId]);
 

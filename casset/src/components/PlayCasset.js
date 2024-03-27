@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../css/PlayCasset.css';
 import { Button } from 'react-bootstrap';
 import fetchGetMultiSongs from '../controller/fetchMultiSongs';
+import fetchCasset from '../controller/fetchSinglePlaylist';
 import PlaySong from './PlaySong';
 import  Note  from './Note';
 import { NoteContent } from './Note';
@@ -9,26 +10,30 @@ import { NoteContent } from './Note';
 function PlayCasset({ onClose, playlistID }) {
 
     const [songDocs, setSongDocs] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0); // keeps track of the index of the songDocs
-
-        // gets songs information
-        useEffect(() => {
-            const fetchSongsDocs = async () => {
-                try {
-                    const songsItems = await fetchGetMultiSongs(playlistID);
-                    setSongDocs(songsItems);
-                    console.log(songDocs);
-                } catch (error) {
-                    console.error('Error fetching songs:', error);
-                }
-            };
-        
-            fetchSongsDocs();
-        }, [playlistID]);
-
+    const [selectedPlaylist, setSelectedPlaylist] = useState([]);
     const [noteId, setNoteId] = useState(1);
-    const maxNoteId = 12; // this needs to depend on db later!!!
     
+    // gets playlist information
+    useEffect(() => {
+        const fetchSelectedPlaylist = async () => {
+            try {
+                const chosenPlaylist = await fetchCasset(playlistID);
+                const songsItems = await fetchGetMultiSongs(playlistID);
+                setSongDocs(songsItems);
+                setSelectedPlaylist(chosenPlaylist);
+                console.log(songDocs);
+            } catch (error) {
+                console.error('Error fetching playlist:', error);
+            }
+        };
+        
+        if (playlistID) {
+            fetchSelectedPlaylist();
+        }
+    }, [playlistID]);
+    
+    const maxNoteId = songDocs.length; // this needs to depend on db later!!!
+    console.log(maxNoteId)
     const handleNextNote = () => {
         setNoteId(prevId => prevId === maxNoteId ? 1 : prevId + 1); // Increment noteId, but ensure it loops back to 1
     };
@@ -41,7 +46,7 @@ function PlayCasset({ onClose, playlistID }) {
             <div>
                 <div id="casset-play-top">
                     <Button id="back" onClick={onClose}>go back</Button>
-                    <p className="russo-one-regular" id="casset-title-play">goatedmusic.</p>
+                    <p className="russo-one-regular" id="casset-title-play">{selectedPlaylist['playlist_name']}</p>
                 </div>
                 <div id="big-purple-container">
                     <div id="left-play-song">
@@ -50,7 +55,7 @@ function PlayCasset({ onClose, playlistID }) {
                     <div id="right-cassetandnote">
                         <div id="show-note" className="scrollable">
                             <div id="the-note">
-                                <NoteContent noteId={noteId} /> {/* need to change to show with database */}
+                                <NoteContent noteId={noteId} songItems = {songDocs} /> {/* need to change to show with database */}
                             </div>
                         </div>
                     </div>
