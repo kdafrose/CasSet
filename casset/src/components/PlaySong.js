@@ -1,3 +1,4 @@
+import '../css/PlaySong.css';
 import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import prevImage from '../media/previous.png';

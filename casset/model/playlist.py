@@ -44,9 +44,8 @@ def deletePlaylist():
 
     try:
         data = request.json
-        playlistName = data['playlist_name'] # playlist name
+        pl.delete_one({"_id":data['playlistID']})
 
-        pl.delete_one({"name": playlistName, "_id":data['_id']})
         return jsonify({"success":True, "staus":"Playlist has been successfully deleted."}), 200
     except Exception as e:
         return jsonify({"error":str(e)}), 400

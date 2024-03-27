@@ -4,22 +4,21 @@ import { Button } from 'react-bootstrap';
 import Note from './Note'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awesome!
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
-
-// Importing songs from db
-import fetchGetMultiSongs from '../controller/fetchMultiSongs';
-import fetchCasset from '../controller/fetchSinglePlaylist';
+import {deletePlaylist,fetchCasset} from '../controller/playlistController';
+import {deleteSongs,fetchGetMultiSongs} from '../controller/songsController';
 
 // Hardcoded images here
 import defaultspotifyCover from '../media/defaultplaylist.png';
 import tempCover from '../media/goatedmusic.png';
 
-function EditCasset({ onClose, playlistID }) {
-    // Sample song data
+function EditCasset({ onClose, playlistID, friends }    ) {
 
+    // chosen playlist to Edit or Play
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
+    const [playlistDescription, setPlaylistDescription] = useState([]);
     const [playlistImage, setPlaylistImage] = useState(null);
-    
+
     // gets songs information
     useEffect(() => {
         const fetchSongsDocs = async () => {
@@ -45,10 +44,19 @@ function EditCasset({ onClose, playlistID }) {
 
                 // Fetch playlist image if it exists
                 const accessToken = localStorage.getItem("accessToken"); // Retrieve access token from localStorage
+                const playlistResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
                 const playlistImageResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/images`, {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     }
+                });
+                const playlistData = await playlistResponse.json();
+                setPlaylistDescription({
+                    description: playlistData.description, // Get description from playlistData
                 });
                 const imageJson = await playlistImageResponse.json();
                 if (imageJson && imageJson.length > 0) {
@@ -65,11 +73,30 @@ function EditCasset({ onClose, playlistID }) {
         fetchSelectedPlaylist();
     }, [playlistID]);
 
-    // Functionality for delete button (for now, same as back button)
+    const [showSharePopup, setShowSharePopup] = useState(false);
+
+    const toggleSharePopup = () => {
+        setShowSharePopup(!showSharePopup);
+    };
+
+    // Functionality for delete button
     const handleDelete = () => {
         const isConfirmed = window.confirm('Are you sure you want to delete this casset?');
         if (isConfirmed) {
+            deleteSongs(playlistID);
+            deletePlaylist(playlistID);
             onClose(); // Close the edit cassette component
+        }   
+    };
+
+    const handleFriendSelect = (friend) => {
+        // Prompt confirmation before sharing with the selected friend
+        const isConfirmed = window.confirm(`Are you sure you want to share casset "${selectedPlaylist.playlist_name}" with ${friend}?`);
+        if (isConfirmed) {
+            console.log(`Sharing playlist ${selectedPlaylist.playlist_name} with friend:`, friend);
+            // Logic to share the playlist with the selected friend...
+
+            setShowSharePopup(false);
         }
     };
 
@@ -78,13 +105,11 @@ function EditCasset({ onClose, playlistID }) {
             <div id="casset-side-box">
                 <img src={playlistImage ? playlistImage : defaultspotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
-                <p id="spotify-desc">{selectedPlaylist.note}</p>
-                <div id="date-container">
-                    <p className="russo-one-regular" id="date-created">date created:</p>
-                    <p id="date">{selectedPlaylist.date_created}</p>
-                </div>
+                <p id="spotify-desc">{playlistDescription.description ? playlistDescription.description: "No description yet!"}</p>
+                <p className="russo-one-regular" id="date-created">date created:</p>
+                <p id="date">{selectedPlaylist.date_created}</p>
                 <div id="share-button-div">
-                    <button type="button" className="russo-one-regular" id="share-button">share</button>
+                    <button type="button" className="russo-one-regular" id="share-button" onClick={toggleSharePopup}>share</button>
                 </div>
             </div>
             <div id="casset-songs">
@@ -117,6 +142,28 @@ function EditCasset({ onClose, playlistID }) {
                     </div>
                 </div>
             </div>
+            {showSharePopup && (
+            <div id="share-popup-overlay">
+                <div id="share-popup">
+                    {/* Close button */}
+                    <button className="close-button" onClick={toggleSharePopup}>
+                        <b>X</b>
+                    </button>
+                    {/* Share content */}
+                    <div id="share-content" className="scrollable">
+                        <p id="share-prompt" className="russo-one-regular" >Select a friend to share "{selectedPlaylist.playlist_name}" with:</p>
+                        {/* Add your share options here */}
+                            {friends.map((friend, index) => (
+                                <div key={index}>
+                                    <button onClick={() => handleFriendSelect(friend)} className="friend-button">
+                                        {friend}
+                                    </button>
+                                </div>
+                            ))}                                                                                      
+                    </div>
+                </div>
+            </div>
+        )}
         </div>
     );
 }

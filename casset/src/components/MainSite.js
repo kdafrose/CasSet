@@ -5,14 +5,29 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import {fetchAddedFriends} from '../controller/friendsController';
 import EditCasset from './EditCasset';
+import PlayCasset from './PlayCasset';
+import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
-import fetchPlaylists from '../controller/fetchUserPlaylists';
+import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
-import PlayCasset from './PlayCasset';
+
+//casset options 
+import c1 from '../media/casset_options/c1.png';
+import c2 from '../media/casset_options/c2.png';
+import c3 from '../media/casset_options/c3.png';
+import c4 from '../media/casset_options/c4.png';
+import c5 from '../media/casset_options/c5.png';
+import c6 from '../media/casset_options/c6.png';
+import c7 from '../media/casset_options/c7.png';
+import c8 from '../media/casset_options/c8.png';
+import c9 from '../media/casset_options/c9.png';
+import c10 from '../media/casset_options/c10.png';
+
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -29,25 +44,59 @@ function MainSite() {
     const [selectedPlaylistName, setSelectedPlaylistName] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [playCasset, setPlayCasset] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
+
+
+    useEffect(() => {
+      handleRandomImageSelect(); // Initialize with a random image when component mounts
+    }, []);
+
+    const handleRandomImageSelect = () => {
+    const randomIndex = Math.floor(Math.random() * cassetImages.length);
+    const randomImage = cassetImages[randomIndex];
+      setSelectedImage(randomImage);
+    };
+
     const [profileExists] = useState(()=> {
       const storedExists = localStorage.getItem("profileExists");
       console.log("PROFILE????: " + storedExists);
       return storedExists ? storedExists : null;
   });
 
+    // array of friends (with database later)
+    // Checks friends database for friends
+    //const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
+    const [friends, setFriends] = useState([]);
+
     useEffect(() => {
-      fetchPlaylists()
-    .then(data => {
-        if (data) {
-            console.log("The useEffect:");
-            console.log(data);
-            setSavedPlaylists(data);
-            setFilteredPlaylists(data);
-        } else {
-            setSavedPlaylists([]);
-            setFilteredPlaylists([]);
+      // Displays added playlists in db
+      fetchPlaylists() 
+      .then(data => {
+          if (data) {
+              console.log(data);
+              setSavedPlaylist(data);
+              setFilteredPlaylists(data);
+          } else {
+              setSavedPlaylist([]);
+              setFilteredPlaylists([]);
+          }
+      })
+      
+      // Displays added friends users made
+      fetchAddedFriends()
+      .then(data => {
+        if(data){
+          const friendsName = data.map(item => item.friend_name)
+          console.log(friendsName)
+          setFriends(friendsName)
         }
-    })      
+        else{
+          setFriends([]);
+        }
+      })
+    
   }, []); // The empty array ensures this effect runs once on mount
   
   const handleSearch = (e) => {
@@ -91,7 +140,11 @@ function MainSite() {
         console.log(data);
         localStorage.setItem("userSpotifyID", data.id);
 
-        const profileImage = data.images === undefined ? placeHold : data.images[0].url;
+        console.log(data.images)
+
+        const profileImage = data.images === undefined || data.images.length === 0 ? placeHold : data.images[0].url;
+
+        console.log(profileImage);
 
         setProfileImage(profileImage);
       })
@@ -178,7 +231,7 @@ function MainSite() {
     };
 
     return (
-        <body id="main">
+<body id="main">
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
@@ -194,7 +247,7 @@ function MainSite() {
                       <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
-                      <EditCasset playlistID={selectedPlaylistID} onClose={() => setEditCasset(false)} />
+                      <EditCasset playlistID={selectedPlaylistID} friends={friends} onClose={() => setEditCasset(false)} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
@@ -206,7 +259,7 @@ function MainSite() {
                             <div key={i} className='cassette-image-div'>
                               <p className='cassette-title'>{playlist.playlist_name}</p>
                               <img
-                                src={cassetteTemp}
+                                src={selectedImage}
                                 alt="PLAYLIST"
                                 onClick={() => toggleBoxVisbility(i)}
                                 style={{ cursor: 'pointer' }}
@@ -247,14 +300,12 @@ function MainSite() {
                             </div>
                         )}
                     </div>
-                    <div id="friends-box">
+                    <div id="friends-box" className="scrollable">
                       <div id="friends-top">
                         <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
-                      <div id="empty-friends-box">
-                        <p>No friends yet :(</p>
-                      </div>
+                      <Friends friends={friends} setFriends={setFriends} />
                     </div>
                 </div>
             </div>
