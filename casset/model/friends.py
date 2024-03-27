@@ -14,13 +14,18 @@ def addFriend():
     try:
         data = request.json
         userID = findUserID(data['user_name'], data['user_email'])
-        fr.insert_one({
-            "userID": userID,
-            "friend_name": data['friend_name'],
-        })
+        foundFriend = findIfFriends(userID, data['friend_name'])
+       
+        if not foundFriend:
+            fr.insert_one({
+                "userID":userID,
+                "friend_name":data['friend_name']
+            })
+            return jsonify({"success":True, "result":"Friend added to database successfully"}), 200
 
-        return jsonify({"success": True, "result": "Friend added to the database successfully."}), 200
-    
+        else: 
+            return jsonify({"success":True, "result":"Already friends."}), 409
+        
     except Exception as e:
         return jsonify(str(e)), 400
     
@@ -80,3 +85,11 @@ def removeFriend():
     
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+
+def findIfFriends(userID, friend_name):
+    if fr.find_one({"userID": userID, "friend_name":friend_name}):
+        return True
+    return False
+
+    

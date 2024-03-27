@@ -18,7 +18,9 @@ export default function Friends({ friends, setFriends }) {
             .then(data =>{
                 if(data){
                     // shows on UI
-                    setFriends(alreadyFriends => [...alreadyFriends, data['name']])
+                    if(!friends.includes(data['name'])){
+                        setFriends(alreadyFriends => [...alreadyFriends, data['name']])
+                    }
                     // Adds friend to backend
                     addNewFriend(data['name'], profileData['name'], profileData['email'])
                 }
@@ -26,6 +28,7 @@ export default function Friends({ friends, setFriends }) {
         }
 
         // Reset the form after adding friend
+
         setEmail('');
         setShowAddFriendForm(false);
     };
