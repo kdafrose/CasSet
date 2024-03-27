@@ -9,7 +9,16 @@ import {deleteSongs,fetchGetMultiSongs} from '../controller/songsController';
 
 // Hardcoded images here
 import defaultspotifyCover from '../media/defaultplaylist.png';
-import tempCover from '../media/goatedmusic.png';
+import c1 from '../media/casset_options/c1.png';
+import c2 from '../media/casset_options/c2.png';
+import c3 from '../media/casset_options/c3.png';
+import c4 from '../media/casset_options/c4.png';
+import c5 from '../media/casset_options/c5.png';
+import c6 from '../media/casset_options/c6.png';
+import c7 from '../media/casset_options/c7.png';
+import c8 from '../media/casset_options/c8.png';
+import c9 from '../media/casset_options/c9.png';
+import c10 from '../media/casset_options/c10.png';
 
 function EditCasset({ onClose, playlistID, friends }    ) {
 
@@ -18,6 +27,18 @@ function EditCasset({ onClose, playlistID, friends }    ) {
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
     const [playlistDescription, setPlaylistDescription] = useState([]);
     const [playlistImage, setPlaylistImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
+
+    useEffect(() => {
+        handleRandomImageSelect(); // Initialize with a random image when component mounts
+      }, []);
+  
+      const handleRandomImageSelect = () => {
+      const randomIndex = Math.floor(Math.random() * cassetImages.length);
+      const randomImage = cassetImages[randomIndex];
+        setSelectedImage(randomImage);
+      };
 
     // gets songs information
     useEffect(() => {
@@ -121,7 +142,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
                 </div>
                 <div id="casset-songs-box-col" className="scrollable">
                     <div id="casset-songs-row">
-                        <img src={tempCover} alt="temp cover" id="casset-cover"/>
+                        <img src={selectedImage} alt="temp cover" id="casset-cover"/>
                             <p className="russo-one-regular" id="casset-title">{selectedPlaylist.playlist_name}</p>
                     </div>
                     <div id="casset-list-in-edit">

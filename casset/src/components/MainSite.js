@@ -12,7 +12,6 @@ import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
-import cassetteTemp from '../media/Rectangle_4.png';
 import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
 
