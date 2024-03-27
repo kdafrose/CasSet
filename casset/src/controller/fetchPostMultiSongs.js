@@ -12,6 +12,9 @@ async function fetchPostMultiSongs(songsDocs){
     .then(data => {
         console.log(data);
     })
+    .then(() => {
+        window.location.reload();
+    })
     .catch(error => {
         console.error('Error:', error);
     });

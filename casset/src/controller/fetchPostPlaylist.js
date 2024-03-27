@@ -11,9 +11,6 @@ async function fetchPostPlaylist(playlistData, callback){
     .then(data => {
         console.log(data);
     })
-    .then(() => {
-        window.location.reload();
-    })
     .catch(error => {
         console.error('Error:', error);
     });
