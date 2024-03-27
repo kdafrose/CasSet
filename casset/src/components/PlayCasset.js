@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../css/PlayCasset.css';
-import { Button } from 'react-bootstrap';
 import {fetchGetMultiSongs} from '../controller/songsController';
 import {fetchCasset} from '../controller/playlistController';
 import PlaySong from './PlaySong';
-import  Note  from './Note';
 import { NoteContent } from './Note';
 
 function PlayCasset({ playlistID, playlistName, onClose }) {
@@ -16,11 +14,14 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
     useEffect(() => {
         const fetchSelectedPlaylist = async () => {
             try {
-                const chosenPlaylist = await fetchCasset(playlistID);
-                const songsItems = await fetchGetMultiSongs(playlistID);
-                setSongDocs(songsItems);
-                setSelectedPlaylist(chosenPlaylist);
-                console.log(songDocs);
+                await fetchCasset(playlistID)
+                    .then((data) => {
+                        setSelectedPlaylist(data);
+                    })
+                await fetchGetMultiSongs(playlistID)
+                    .then((response) => {
+                        setSongDocs(response);
+                    })
             } catch (error) {
                 console.error('Error fetching playlist:', error);
             }
@@ -32,7 +33,6 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
     }, [playlistID]);
     
     const maxNoteId = songDocs.length; // this needs to depend on db later!!!
-    console.log(maxNoteId)
     const handleNextNote = () => {
         setNoteId(prevId => prevId === maxNoteId ? 1 : prevId + 1); // Increment noteId, but ensure it loops back to 1
     };
@@ -54,7 +54,7 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
                 <div id="right-cassetandnote">
                     <div id="show-note" className="scrollable">
                         <div id="the-note">
-                            <NoteContent noteId={noteId} songItems = {songDocs} /> {/* need to change to show with database */}
+                            {/* <NoteContent noteId={noteId} songItems = {songDocs} /> need to change to show with database */}
                         </div>
                     </div>
                 </div>

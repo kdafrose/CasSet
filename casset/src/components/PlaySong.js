@@ -5,7 +5,6 @@ import prevImage from '../media/previous.png';
 import nextImage from '../media/next.png';
 import playImg from '../media/play.png';
 import pauseImg from '../media/pause.png';
-import '../css/PlaySong.css';
 
 const track = {
     name: "",
@@ -20,8 +19,6 @@ const track = {
 }
 
 export default function PlaySong({ playingData, onNext, onPrev, closer }) {
-
-    // const { songURI, playlistURI} = props; comment out for now until we can use it
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
@@ -47,12 +44,13 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
         }
     
         await fetch('https://api.spotify.com/v1/me/player', transferParams);
-        playlistTransfer(deviceSpecific);
+        turnOffShuffle(deviceSpecific);
     }
 
     async function playlistTransfer(selectDevice){
 
         const playlistURIPlay = "spotify:playlist:" + playingData.playlistID;
+        console.log("New playlistID: " + playingData.playlistID);
 
         const transferParams = {
             method: 'PUT',
@@ -72,12 +70,25 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
         await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + selectDevice, transferParams);
     }
 
+    async function turnOffShuffle(deviceChosen){
+        const shuffleParams = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer ' + accessToken
+            },
+        };
+    
+        await fetch('https://api.spotify.com/v1/me/player/shuffle?state=false&device_id=' + deviceChosen, shuffleParams);
+        playlistTransfer(deviceChosen);
+    }
+
     function disconnectPlayer(){
         player.pause();
-        player.disconnect();
         player.removeListener('ready');
         player.removeListener('not_ready');
         player.removeListener('player_state_changed');
+        player.disconnect();
 
         closer();
     }
@@ -137,7 +148,7 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
             <>
                 <div className="container">
                     <div className="main-wrapper">
-                        <b> Instance not active. Transfer your playback using your Spotify app </b>
+                        <b> Transfering the instance to CasSet... </b>
                     </div>
                 </div>
             </>)

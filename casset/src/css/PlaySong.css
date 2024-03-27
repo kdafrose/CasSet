@@ -1,14 +1,9 @@
 .container {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     overflow: inherit;
 }
 .main-wrapper {
-=======
-}
-.mainwrapper {
->>>>>>> main
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -122,11 +117,3 @@
     border-radius: 50%;
     cursor: pointer;
 }
-<<<<<<< HEAD
-#casset-title-play{
-    overflow: scroll;
-}
-=======
-  
-  
->>>>>>> main
