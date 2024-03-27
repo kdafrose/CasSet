@@ -10,7 +10,7 @@ import fetchGetMultiSongs from '../controller/fetchMultiSongs';
 import fetchCasset from '../controller/fetchSinglePlaylist';
 
 // Hardcoded images here
-import spotifyCover from '../media/spotifycover.jpg';
+import defaultspotifyCover from '../media/defaultplaylist.png';
 import tempCover from '../media/goatedmusic.png';
 
 function EditCasset({ onClose, playlistID }) {
@@ -18,6 +18,7 @@ function EditCasset({ onClose, playlistID }) {
 
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
+    const [playlistImage, setPlaylistImage] = useState(null);
     
     // gets songs information
     useEffect(() => {
@@ -41,6 +42,21 @@ function EditCasset({ onClose, playlistID }) {
                 const chosenPlaylist = await fetchCasset(playlistID);
                 setSelectedPlaylist(chosenPlaylist);
                 console.log(selectedPlaylist);
+
+                // Fetch playlist image if it exists
+                const accessToken = localStorage.getItem("accessToken"); // Retrieve access token from localStorage
+                const playlistImageResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/images`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+                const imageJson = await playlistImageResponse.json();
+                if (imageJson && imageJson.length > 0) {
+                    setPlaylistImage(imageJson[0].url);
+                } else {
+                    // Set a default cover image if no playlist image is available
+                    setPlaylistImage(defaultspotifyCover);
+                }
             } catch (error) {
                 console.error('Error fetching playlist:', error);
             }
@@ -60,7 +76,7 @@ function EditCasset({ onClose, playlistID }) {
     return (
         <div id="casset-edit">
             <div id="casset-side-box">
-                <img src={spotifyCover} alt="spotify cover" id="spotify-cover"/>
+                <img src={playlistImage ? playlistImage : defaultspotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
                 <p id="spotify-desc">{selectedPlaylist.note}</p>
                 <div id="date-container">
