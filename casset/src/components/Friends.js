@@ -8,7 +8,7 @@ export default function Friends({ friends, setFriends }) {
     const [email, setEmail] = useState('');    
     const [selectedFriend, setSelectedFriend] = useState(null);
     const profileData = JSON.parse(localStorage.getItem('profile'))
-    
+
     const handleAddFriend = () => {
         // Check the database for the email and add friend if it's valid 
         // not the users own and exists in users (with database later)
@@ -20,11 +20,21 @@ export default function Friends({ friends, setFriends }) {
                     // shows on UI
                     if(!friends.includes(data['name'])){
                         setFriends(alreadyFriends => [...alreadyFriends, data['name']])
+                        window.alert('Friend added successfully!');
                     }
-                    // Adds friend to backend
+                    else{
+                        window.alert('Already friends!');
+                    }
+                    // Adds friend to backend, takes care of both adding if not in db, and not add if already friends
                     addNewFriend(data['name'], profileData['name'], profileData['email'])
                 }
+                else{
+                    window.alert("Email not found!")
+                }
             })   
+        }
+        else{
+            window.alert("Can't add yourself silly!");
         }
 
         // Reset the form after adding friend
