@@ -80,6 +80,7 @@ export default function CreatePlaylist({ onClose }) {
         songsToAdd.map(item => songsItems.push(item));   
 
         // parsing into proper docuemnts
+        songsItems = songsItems.slice(0,12);
         for(let i =0; i < songsItems.length; i++){
             // case if there is multiple artists
             let artists = []
