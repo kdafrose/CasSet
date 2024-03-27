@@ -131,15 +131,14 @@
     margin: 1.5vw;
     height: 4vw;
     align-items: center;
-    /* justify-content: center; */
 }
 
 #spotify-number {
+    font-size: 1.25vw;
     margin: 2vh;
 }
 #spotify-artist-image {
     margin: 1vw;
-    /* margin-left: 2vw; */
     width: 3vw;
     height: 3vw;
     border-radius: 5px;
@@ -151,7 +150,7 @@
     margin: 0;
 }
 #spotify-artistname-format {
-    font-size: small;
+    font-size: 1vw;
     white-space: wrap;
     margin: 0;
 }
