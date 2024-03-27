@@ -16,7 +16,8 @@
 #spotify-cover {
     margin: 3vw 3vw 2vw 3vw;
     width: 10vw;
-    height: auto;
+    height: 10vw;
+    object-fit: cover;
     border-radius: 10px;
 }
 #spotify-desc-title {
