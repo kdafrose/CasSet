@@ -9,16 +9,24 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the 
 import fetchGetMultiSongs from '../controller/fetchMultiSongs';
 import fetchCasset from '../controller/fetchSinglePlaylist';
 
+// For deleting songs/playlist
+import deletePlaylist from '../controller/fetchDeletePlaylist';
+import deleteSongs from '../controller/fetchDeleteMultiSongs';
+
 // Hardcoded images here
 import defaultspotifyCover from '../media/defaultplaylist.png';
 import tempCover from '../media/goatedmusic.png';
 
 function EditCasset({ onClose, playlistID }) {
-    // Sample song data
 
+    // chosen playlist to Edit or Play
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
     const [playlistImage, setPlaylistImage] = useState(null);
+
+    // Chosen playlist to be deleted (When click Delete)
+    const [deletePlaylistName, setDeletePlaylistName] = useState("");
+    const [deletePlaylistID, setDeletePlaylistID] = useState("");
     
     // gets songs information
     useEffect(() => {
@@ -69,7 +77,8 @@ function EditCasset({ onClose, playlistID }) {
     const handleDelete = () => {
         const isConfirmed = window.confirm('Are you sure you want to delete this casset?');
         if (isConfirmed) {
-            
+            deleteSongs(playlistID);
+            deletePlaylist(playlistID);
             onClose(); // Close the edit cassette component
         }
     };
