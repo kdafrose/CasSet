@@ -26,6 +26,7 @@ function MainSite() {
     const [editCasset, setEditCasset] = useState(false);
     const [playCasset, setPlayCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [selectedPlaylistName, setSelectedPlaylistName] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [profileExists] = useState(()=> {
@@ -163,7 +164,8 @@ function MainSite() {
       setEditCasset(true);
     }
 
-    function handlePlay(playPlaylistID){
+    function handlePlay(playPlaylistID, playPlaylistName){
+      setSelectedPlaylistName(playPlaylistName);
       setSelectedPlaylistID(playPlaylistID);
       setPlayCasset(true);
     }
@@ -189,7 +191,7 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset playlistID={selectedPlaylistID} onClose={() => setPlayCasset(false)} />
+                      <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
                       <EditCasset playlistID={selectedPlaylistID} onClose={() => setEditCasset(false)} />
@@ -213,7 +215,7 @@ function MainSite() {
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
                                   <Button onClick={() => {handleEdit(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => {handlePlay(playlist._id)}} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => {handlePlay(playlist._id, playlist.playlist_name)}} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>

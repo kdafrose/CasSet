@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import prevImage from '../media/previous.png';
 import nextImage from '../media/next.png';
+import playImg from '../media/play.png';
+import pauseImg from '../media/pause.png';
+import '../css/PlaySong.css';
 
 const track = {
     name: "",
@@ -15,7 +18,7 @@ const track = {
     ]
 }
 
-export default function PlaySong({ playingID, onNext, onPrev, closer }) {
+export default function PlaySong({ playingData, onNext, onPrev, closer }) {
 
     // const { songURI, playlistURI} = props; comment out for now until we can use it
 
@@ -48,7 +51,7 @@ export default function PlaySong({ playingID, onNext, onPrev, closer }) {
 
     async function playlistTransfer(selectDevice){
 
-        const playlistURIPlay = "spotify:playlist:" + playingID;
+        const playlistURIPlay = "spotify:playlist:" + playingData.playlistID;
 
         const transferParams = {
             method: 'PUT',
@@ -142,14 +145,12 @@ export default function PlaySong({ playingID, onNext, onPrev, closer }) {
             <>
                 <div id="casset-play-top">
                     <Button id="back" onClick={disconnectPlayer}>go back</Button>
-                    <p className="russo-one-regular" id="casset-title-play">goatedmusic.</p>
+                    <p className="russo-one-regular" id="casset-title-play">{playingData.playlistName}</p>
                 </div>
                 <div className="container">
                     <div className="main-wrapper">
-
-                        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
-
-                        <div className="now-playing__side">
+                        <div className="now-playing">
+                            <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
                                 <div id=".btn-spotify">
@@ -157,9 +158,9 @@ export default function PlaySong({ playingID, onNext, onPrev, closer }) {
                                         <img id="prev" src={prevImage} alt="&lt;&lt;"/>
                                     </button>
 
-                            <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
-                                { is_paused ? "PLAY" : "PAUSE" }
-                            </button>
+                                    <button className="btn-spotify-pp" onClick={() => { player.togglePlay() }} >
+                                        { is_paused ? <img id="play" src={playImg} alt="&#x25B6;"/> : <img id="pause" src={pauseImg} alt="&#x23f8;"/> }
+                                    </button>
 
                                     <button className="btn-spotify-next" onClick={() => { player.nextTrack(); onNext(); }} >
                                         <img id="next" src={nextImage} alt="&gt;&gt;"/>
