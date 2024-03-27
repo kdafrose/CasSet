@@ -5,7 +5,7 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
-import fetchAddedFriends from '../controller/fetchAddedFriends';
+import {fetchAddedFriends} from '../controller/friendsController';
 import EditCasset from './EditCasset';
 import PlayCasset from './PlayCasset';
 import Friends from './Friends';
@@ -13,7 +13,7 @@ import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
-import fetchPlaylists from '../controller/fetchUserPlaylists';
+import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
 
 function MainSite() {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../css/PlayCasset.css';
 import { Button } from 'react-bootstrap';
-import fetchGetMultiSongs from '../controller/fetchMultiSongs';
-import fetchCasset from '../controller/fetchSinglePlaylist';
+import {fetchGetMultiSongs} from '../controller/songsController';
+import {fetchCasset} from '../controller/playlistController';
 import PlaySong from './PlaySong';
 import  Note  from './Note';
 import { NoteContent } from './Note';

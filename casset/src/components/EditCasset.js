@@ -4,14 +4,8 @@ import { Button } from 'react-bootstrap';
 import Note from './Note'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awesome!
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
-
-// Importing songs from db
-import fetchGetMultiSongs from '../controller/fetchMultiSongs';
-import fetchCasset from '../controller/fetchSinglePlaylist';
-
-// For deleting songs/playlist
-import deletePlaylist from '../controller/fetchDeletePlaylist';
-import deleteSongs from '../controller/fetchDeleteMultiSongs';
+import {deletePlaylist,fetchCasset} from '../controller/playlistController';
+import {deleteSongs,fetchGetMultiSongs} from '../controller/songsController';
 
 // Hardcoded images here
 import defaultspotifyCover from '../media/defaultplaylist.png';

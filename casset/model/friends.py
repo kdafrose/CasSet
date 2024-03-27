@@ -28,7 +28,16 @@ def addFriend():
 def addNewSharedCasset():
     try:
         data = request.json
-        fr.update_one({"_id": data['friendsID']}, {"$push": {"shared_casset": data['newSharedPlaylistID']}})
+        user_name = data.get('user_name')
+        user_email = data.get('user_email')
+        friend_name = data.get('friend_name')
+        newCasset = data.get('newSharedPlaylistID')
+
+        if not (user_name and user_email and friend_name and newCasset):
+            return jsonify({"error": "Required fields (userID, friend_name, newSharedPlaylistID) are missing in the request."}), 400
+
+        userID = findUserID(user_name, user_email)
+        fr.update_one({"userID": userID, "friend_name":friend_name}, {"$push": {"shared_casset": newCasset}})
         return jsonify({"success": True, "result": "Shared casset added to the database successfully."}), 200
     
     except Exception as e:
@@ -52,18 +61,6 @@ def findAddedFriends():
     except Exception as e:
         return jsonify(str(e)), 400
     
-
-# @friends_bp.route('/removeFriend', methods = ['DELETE'])
-# def removeFriend():
-#     try:
-#         data = request.json
-#         userID = findUserID(data['user_name'], ['user_email'])
-#         fr.delete_one({"userID":userID, "friend_name": data['friend_name']})
-
-#         return jsonify({"success":True, "result": "Friend has been successfully deleted."}), 200
-    
-#     except Exception as e:
-#         return jsonify(str(e)), 400
     
 @friends_bp.route('/removeFriend', methods = ['DELETE'])
 def removeFriend():

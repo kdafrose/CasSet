@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import '../css/Friends.css';
-import fetchUsers from '../controller/fetchSearchUser';
-import addNewFriend from '../controller/fetchAddNewFriend';
-import removeFriend from '../controller/fetchRemoveFriend';
+import {fetchUsers} from '../controller/usersController';
+import {removeFriend,addNewFriend } from '../controller/friendsController';
 
 export default function Friends({ friends, setFriends }) {
     const [showAddFriendForm, setShowAddFriendForm] = useState(false);

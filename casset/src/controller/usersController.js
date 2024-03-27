@@ -1,4 +1,4 @@
-const fetchUsers = async (requestFriendEmail) => {
+export const fetchUsers = async (requestFriendEmail) => {
     try {
         const response = await fetch('http://localhost:5000/users/searchUsers', {
             method: 'POST',
@@ -18,5 +18,3 @@ const fetchUsers = async (requestFriendEmail) => {
         console.log(error);
     }
 };
-
-export default fetchUsers;
