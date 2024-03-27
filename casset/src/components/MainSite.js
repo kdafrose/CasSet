@@ -7,6 +7,7 @@ import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
 import EditCasset from './EditCasset';
 import PlayCasset from './PlayCasset';
+import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
@@ -36,6 +37,9 @@ function MainSite() {
       console.log("PROFILE????: " + storedExists);
       return storedExists ? storedExists : null;
   });
+
+    // array of friends (with database later)
+   const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
 
     useEffect(() => {
       fetchPlaylists()
@@ -242,14 +246,12 @@ function MainSite() {
                             </div>
                         )}
                     </div>
-                    <div id="friends-box">
+                    <div id="friends-box" className="scrollable">
                       <div id="friends-top">
                         <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
-                      <div id="empty-friends-box">
-                        <p>No friends yet :,(</p>
-                      </div>
+                      <Friends friends={friends} setFriends={setFriends} />
                     </div>
                 </div>
             </div>
