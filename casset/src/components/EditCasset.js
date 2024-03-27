@@ -69,6 +69,7 @@ function EditCasset({ onClose, playlistID }) {
     const handleDelete = () => {
         const isConfirmed = window.confirm('Are you sure you want to delete this casset?');
         if (isConfirmed) {
+            
             onClose(); // Close the edit cassette component
         }
     };

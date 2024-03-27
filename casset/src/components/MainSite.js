@@ -6,13 +6,13 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
 import EditCasset from './EditCasset';
+import PlayCasset from './PlayCasset';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import cassetteTemp from '../media/Rectangle_4.png';
 import fetchPlaylists from '../controller/fetchUserPlaylists';
 import iconSrc from '../media/disket.png';
-import PlayCasset from './PlayCasset';
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -27,6 +27,10 @@ function MainSite() {
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [playCasset, setPlayCasset] = useState(false);
+
+
+
     const [profileExists] = useState(()=> {
       const storedExists = localStorage.getItem("profileExists");
       console.log("PROFILE????: " + storedExists);
@@ -189,10 +193,10 @@ function MainSite() {
                     {!playCasset && !editCasset && (
                       <div>
                         <div id='search-container'>
-                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch}/>
                         </div>
                         <div id="empty-cassets-box" className="cassettes-container">
-                          {savedPlaylists.map((playlist, i) => (
+                          {filteredPlaylists.map((playlist, i) => (
                             <div key={i} className='cassette-image-div'>
                               <p className='cassette-title'>{playlist.playlist_name}</p>
                               <img

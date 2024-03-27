@@ -29,23 +29,14 @@ function Note({ noteId, songsItems, playlistItem }) {
 
     const maxCharacters = 85; // number of characters to show by default
     
-    // load note content from local storage (for now)
+    // load note content 
     useEffect(() => {
-        // const storedNoteContent = localStorage.getItem(`noteContent${noteId}`);
-        // if (storedNoteContent) {
-        //   setNoteContent(storedNoteContent);
-        // }
-
-        // loads note content from db (default of 'fill in later')
         setNoteContent(songsItems[noteId -1].annotation);
         
     }, [noteId]);
 
-    // save note content to local storage (for now)
+    // save note content 
     useEffect(() => {
-        //localStorage.setItem(`noteContent${noteId}`, noteContent);
-
-        // fetching editNotes to put note in db
         const noteStatus = editSongNote(songsItems[noteId-1].songID, songsItems[noteId -1].playlistID, noteContent);
         console.log(noteStatus)
 

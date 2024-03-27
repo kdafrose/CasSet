@@ -1,5 +1,10 @@
+import '../css/PlaySong.css';
 import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
+import playImage from '../media/play.png';
+import pauseImage from '../media/pause.png';
+import prevImage from '../media/previous.png';
+import nextImage from '../media/next.png';
 
 const track = {
     name: "",

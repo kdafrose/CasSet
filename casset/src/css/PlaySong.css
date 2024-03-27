@@ -1,0 +1,120 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+.mainwrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.now-playing__cover {
+    display: flex;
+    width: 20vw;
+    height: auto;
+    border-radius: 20px;
+}
+.now-playing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.now-playing__name {
+    margin-top: 1vw;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5vw;
+    color: #31343B;
+    word-break: break-all; /* Break long words */
+}
+.now-playing__artist {
+    margin: 0.5vw 0;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2vw;
+    color: #31343B;
+}
+.btn-spotify {
+    display: flex;
+    flex-direction: row;
+}
+.btn-spotify-prev {
+    background-color: #F4EDE9;
+    border: 1px solid #31343B;
+    border-radius: 5px;
+    margin-right: 3vw; 
+    width: 4vw;
+    height: 4vw;
+}
+.btn-spotify-pp {
+    margin-top: 0.6vw;      
+    margin-bottom: 0.6vw;                                                        
+    background-color: #F4EDE9;
+    border: 1px solid #31343B;
+    border-radius: 5px;
+    margin-right: 3vw; 
+    width: 4vw;
+    height: 4vw;
+}
+.btn-spotify-next {
+    background-color: #F4EDE9;
+    border: 1px solid #31343B;
+    border-radius: 5px;
+    width: 4vw;
+    height: 4vw;
+}
+#prev {
+    width: 2vw;
+    height: 2vw;
+}
+#play {
+    width: 2vw;
+    height: 2vw;
+}
+#pause {
+    width: 2vw;
+    height: 2vw;
+}
+#next{
+    width: 2vw;
+    height: 2vw;
+}
+#volume {
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.1vw;
+    color: #31343B;
+    text-align: center; /* Center text */
+}
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25vw;
+    height: 8px;
+    background: #E8D0CB; /* Background color */
+    border-radius: 5px;
+    outline: none;
+    margin-top: 10px; /* Add some space */
+}
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #BC6870; /* Color of the slider thumb */
+    border-radius: 50%;
+    cursor: pointer;
+}
+#volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #BC6870; /* Color of the slider thumb */
+    border-radius: 50%;
+    cursor: pointer;
+}
+  
+  
