@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../css/PlayCasset.css';
 import PlaySong from './PlaySong';
-import {Button} from 'react-bootstrap'
 import Note from './Note';
 
 function PlayCasset({ playlistID, onClose }) {
@@ -18,13 +17,9 @@ function PlayCasset({ playlistID, onClose }) {
 
     return (
             <div>
-                <div id="casset-play-top">
-                    <Button id="back" onClick={onClose}>go back</Button>
-                    <p className="russo-one-regular" id="casset-title-play">goatedmusic.</p>
-                </div>
                 <div id="big-purple-container">
                     <div id="left-play-song">
-                        <PlaySong playingID={playlistID}onNext={handleNextNote} onPrev={handlePrevNote} />
+                        <PlaySong playingID={playlistID}onNext={handleNextNote} onPrev={handlePrevNote} closer={onClose}/>
                     </div>
                     <div id="right-cassetandnote">
                         <div id="show-note" className="scrollable">

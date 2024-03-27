@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Form from 'react-bootstrap/Form';
+import {Form, Button} from 'react-bootstrap';
 import prevImage from '../media/previous.png';
 import nextImage from '../media/next.png';
 
@@ -15,7 +15,7 @@ const track = {
     ]
 }
 
-export default function PlaySong({ playingID, onNext, onPrev }) {
+export default function PlaySong({ playingID, onNext, onPrev, closer }) {
 
     // const { songURI, playlistURI} = props; comment out for now until we can use it
 
@@ -68,6 +68,16 @@ export default function PlaySong({ playingID, onNext, onPrev }) {
         await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + selectDevice, transferParams);
     }
 
+    function disconnectPlayer(){
+        player.pause();
+        player.disconnect();
+        player.removeListener('ready');
+        player.removeListener('not_ready');
+        player.removeListener('player_state_changed');
+
+        closer();
+    }
+
     useEffect(() => {
 
         const script = document.createElement("script");
@@ -83,8 +93,6 @@ export default function PlaySong({ playingID, onNext, onPrev }) {
                 getOAuthToken: cb => { cb(accessToken); },
                 volume: 0.5
             });
-
-            setPlayer(player);
 
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
@@ -113,10 +121,9 @@ export default function PlaySong({ playingID, onNext, onPrev }) {
 
             player.connect();
 
+            setPlayer(player);
+
             // Cleanup function
-            return () => {
-                player.disconnect();
-            };
 
         };
     }, []);
@@ -133,6 +140,10 @@ export default function PlaySong({ playingID, onNext, onPrev }) {
     } else {
         return (
             <>
+                <div id="casset-play-top">
+                    <Button id="back" onClick={disconnectPlayer}>go back</Button>
+                    <p className="russo-one-regular" id="casset-title-play">goatedmusic.</p>
+                </div>
                 <div className="container">
                     <div className="main-wrapper">
 

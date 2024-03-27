@@ -22,7 +22,7 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [savedPlaylists, setSavedPlaylist] = useState([]);
+    const [savedPlaylists, setSavedPlaylists] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
     const [playCasset, setPlayCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
@@ -38,11 +38,12 @@ function MainSite() {
       fetchPlaylists()
     .then(data => {
         if (data) {
+            console.log("The useEffect:");
             console.log(data);
-            setSavedPlaylist(data);
+            setSavedPlaylists(data);
             setFilteredPlaylists(data);
         } else {
-            setSavedPlaylist([]);
+            setSavedPlaylists([]);
             setFilteredPlaylists([]);
         }
     })      
@@ -157,6 +158,16 @@ function MainSite() {
       });
     };
 
+    function handleEdit(editPlaylistID){
+      setSelectedPlaylistID(editPlaylistID);
+      setEditCasset(true);
+    }
+
+    function handlePlay(playPlaylistID){
+      setSelectedPlaylistID(playPlaylistID);
+      setPlayCasset(true);
+    }
+
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -201,10 +212,8 @@ function MainSite() {
                               />
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
-                                  <Button onClick={() => {setEditCasset(true)
-                                  setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => {setPlayCasset(true)
-                                  setSelectedPlaylistID(playlist._id)}} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => {handleEdit(playlist._id)}} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => {handlePlay(playlist._id)}} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>
