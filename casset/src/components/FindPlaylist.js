@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react'
 import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
 import '../css/FindPlaylist.css';
 import fetchPostPlaylist from '../controller/fetchPostPlaylist';
+import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
 
 export default function FindPlaylist({onClose}) {
-    const [accessToken, setAccessToken] = useState(() => {
+    const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         return storedToken ? storedToken : null;
     });;
@@ -14,8 +14,6 @@ export default function FindPlaylist({onClose}) {
         const storedSpotifyID = localStorage.getItem("userSpotifyID");
         return storedSpotifyID ? storedSpotifyID : null;
     })
-
-    const navigate = useNavigate();
 
     var playlistParams = {
         method: 'GET',
@@ -31,10 +29,6 @@ export default function FindPlaylist({onClose}) {
         .then(data => {
             setPlaylists(data.items);
             console.log(data);
-            return data.items;
-        })
-        .then(playlists =>{
-            return playlists;
         })
     }
 
@@ -55,11 +49,66 @@ export default function FindPlaylist({onClose}) {
         }
 
         fetchPostPlaylist(playlistData);
-        navigate('/displayplaylist');
+        tracksFetch(data['_id']);
+    }
+
+    var trackFetchParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + accessToken
+        },
+        limit: 50,
+    }
+
+    async function tracksFetch(playlistID){
+        
+        try {
+            const response = await fetch("https://api.spotify.com/v1/playlists/" + playlistID + "/tracks", trackFetchParams);
+            const result = await response.json();
+            console.log(result.items);
+            addingSongsInDB(result.items);
+        }
+        catch(error) {
+            console.error("Error: ", error);
+        }
+    }
+
+    async function addingSongsInDB(data){
+        let songItems = [];
+        const playlistID = localStorage.getItem('playlistID');
+        let dataLength =0;
+
+        if( data.length > 0 & data.length <= 12){
+            // playlist should have at least have 1-12 song
+            dataLength = data.length;
+        }
+        else{
+            dataLength = 12;
+        }
+
+        for( let i = 0; i < dataLength; i ++){
+            let artists = []
+            
+            for (let j=0; j < data[i].track.artists.length; j++){
+                artists.push(data[i].track.artists[j].name);
+            }
+            var songDoc = {
+                "songID": data[i].track.id, //songID (Primary key)
+                "playlistID": playlistID, // playlistID (Foreign key)
+                "name": data[i].track.name,
+                "artist":artists,
+                "annotation": "Empty Note...",
+                "song_image": data[i].track.album.images[0].url,
+            }
+            songItems.push(songDoc);
+        }
+
+        console.log(songItems);
+        fetchPostMultiSongs(songItems);
     }
 
     const handleClose = () => {
-        setAccessToken(""); // Reset access token when form is closed
         onClose(); // Notify parent component to close the form
     };
 
