@@ -16,6 +16,19 @@ import cassetteTemp from '../media/Rectangle_4.png';
 import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
 
+//casset options 
+import c1 from '../media/casset_options/c1.png';
+import c2 from '../media/casset_options/c2.png';
+import c3 from '../media/casset_options/c3.png';
+import c4 from '../media/casset_options/c4.png';
+import c5 from '../media/casset_options/c5.png';
+import c6 from '../media/casset_options/c6.png';
+import c7 from '../media/casset_options/c7.png';
+import c8 from '../media/casset_options/c8.png';
+import c9 from '../media/casset_options/c9.png';
+import c10 from '../media/casset_options/c10.png';
+
+
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
@@ -30,8 +43,19 @@ function MainSite() {
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [playCasset, setPlayCasset] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
 
 
+    useEffect(() => {
+      handleRandomImageSelect(); // Initialize with a random image when component mounts
+    }, []);
+
+    const handleRandomImageSelect = () => {
+    const randomIndex = Math.floor(Math.random() * cassetImages.length);
+    const randomImage = cassetImages[randomIndex];
+      setSelectedImage(randomImage);
+    };
 
     const [profileExists] = useState(()=> {
       const storedExists = localStorage.getItem("profileExists");
@@ -225,7 +249,7 @@ function MainSite() {
                             <div key={i} className='cassette-image-div'>
                               <p className='cassette-title'>{playlist.playlist_name}</p>
                               <img
-                                src={cassetteTemp}
+                                src={selectedImage}
                                 alt="PLAYLIST"
                                 onClick={() => toggleBoxVisbility(i)}
                                 style={{ cursor: 'pointer' }}
