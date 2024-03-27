@@ -43,6 +43,7 @@ function PlayCasset({ onClose, playlistID }) {
     };
 
     return (
+        <>
             <div>
                 <div id="casset-play-top">
                     <Button id="back" onClick={onClose}>go back</Button>
@@ -60,7 +61,11 @@ function PlayCasset({ onClose, playlistID }) {
                         </div>
                     </div>
                 </div>
-            </div>        
+                <div id="right-show-note">
+
+                </div>
+             </div>
+        </>
     )
 }
 

@@ -1,10 +1,5 @@
-import '../css/PlaySong.css';
 import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
-import playImage from '../media/play.png';
-import pauseImage from '../media/pause.png';
-import prevImage from '../media/previous.png';
-import nextImage from '../media/next.png';
 
 const track = {
     name: "",
@@ -22,7 +17,7 @@ export default function PlaySong({ onNext, onPrev }) {
 
     // const { songURI, playlistURI} = props; comment out for now until we can use it
 
-    const [is_paused, setPaused] = useState(true);
+    const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
     const [player, setPlayer] = useState(undefined);
     const [current_track, setTrack] = useState(track);
@@ -104,10 +99,6 @@ export default function PlaySong({ onNext, onPrev }) {
         };
     }, []);
 
-    const handleChange = (event) => {
-        player.setVolume(event.target.value / 100);
-    }
-
     if (!is_active) { 
         return (
             <>
@@ -122,8 +113,10 @@ export default function PlaySong({ onNext, onPrev }) {
             <>
                 <div className="container">
                     <div className="main-wrapper">
-                        <div className="now-playing">
-                            <img src={current_track.album.images[0].url} className="now-playing__cover" alt="Playlist Cover" />
+
+                        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
+
+                        <div className="now-playing__side">
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
                                 <div id=".btn-spotify">
@@ -131,24 +124,22 @@ export default function PlaySong({ onNext, onPrev }) {
                                         <img id="prev" src={prevImage} alt="&lt;&lt;"/>
                                     </button>
 
-                                    <button className="btn-spotify-pp" onClick={() => { player.togglePlay() }} >
-                                        { is_paused ? <img id="play" src={playImage} alt="&#x25B6;"/> : <img id="pause" src={pauseImage} alt="&#x23f8;"/> }
-                                    </button>
+                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
+                                &lt;&lt;
+                            </button>
 
                                     <button className="btn-spotify-next" onClick={() => { player.nextTrack(); onNext(); }} >
                                         <img id="next" src={nextImage} alt="&gt;&gt;"/>
                                     </button>
                                 </div>
                         </div>
-                        <div id="volume">
+                        <Form.Label>
                             Volume
-                            <div>
-                                <Form.Range id="volume-slider"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                    </div>   
+                        </Form.Label>
+                        <Form.Range
+                            onChange={event => {player.setVolume((event.target.value) /100 )}}
+                        />
+                    </div>
                 </div>
             </>
         );

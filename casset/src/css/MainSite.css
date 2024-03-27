@@ -60,11 +60,9 @@
   color: #926395;
 }
 #middle-box {
-  min-height: fit-content;
   margin-left: 0.75vw;
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
-  padding-bottom: 1.2vw;
   border: 3px solid #C9A8CB;
   border-radius: 25px;
   flex: 2;
@@ -116,10 +114,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: scroll;
 }
 .cassette-img{
-  height: 6vw;
-  width: auto;
+  height:160px;
+  width:240px;
+  margin-left: 20%;
 }
 .cassette-button{
   background-color: transparent;
@@ -134,6 +134,7 @@
   width:240px;
   border-radius:12px;
   display:flex;
+  margin-left:20%;
 }
 #bottom-box {
   display: flex;
@@ -436,17 +437,3 @@ body.dark-theme button:hover {
   margin-bottom: 20px;
   box-sizing: border-box;
 }
-
-.cassette-title {
-  /* Your styles for cassette title */
-}
-
-.cassette-img {
-  /* width: 1vw; */
-}
-
-.cassette-under-box {
-  /* Your styles for cassette under box */
-}
-
-

@@ -1,5 +1,5 @@
 
-async function fetchPostPlaylist(playlistData){
+async function fetchPostPlaylist(playlistData, callback){
     fetch('http://localhost:5000/playlist/postNewPlaylist', {
         method: 'POST',
         headers: {

@@ -17,7 +17,7 @@ def postSong():
         song_document = sg.insert_one({
             "songID": data['songID'],
             "playlistID": data['playlistID'],
-            "name": data['name'],
+            "song_name": data['name'],
             "song_image":data['song_image'],
             "artist": data['artist'],
             "annotation":data['annotation'],
@@ -35,7 +35,7 @@ def postMultipleSongs():
 
         return jsonify({"success":True, "result":"Added songs successfully to database."}), 200
     except Exception as e:
-        return jsonify(str(e))
+        return jsonify(str(e)),400
 
 @songs_bp.route('/deleteSong', methods = ['DELETE'])
 def deleteSong():
