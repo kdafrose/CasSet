@@ -103,38 +103,72 @@
   text-align: center; /* Center-align placeholder text */
 }
 #empty-cassets-box {
-  flex: 1; /* Occupy remaining space */
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  flex-direction: column;
+  flex: 1;
   color: #31343b;
   font-size: 1.6vw;
 }
-.cassette-title{
+.all-cassettes {
   display: flex;
+  margin-top: 5vw;
+}
+.cassette-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 7vw;
+  max-width: calc(100% - 12vw);
+}
+#cassette-title-and-img {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   align-items: center;
-  justify-content: center;
-  overflow: scroll;
+  margin: 0 1.2vw 5vw 2vw;
+
 }
-.cassette-img{
-  height:160px;
-  width:240px;
-  margin-left: 20%;
+#cassette-title {
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5vw;
+  overflow-x: auto;
+  white-space: nowrap;
+  color:#31343b;
+  width: 18vw;
+  height: 3vw;
 }
-.cassette-button{
+#cassette-image-div {
+  width: calc(33.33% - 11vw);
+  min-width: 12vw; /* Set a minimum width for the image container */
+}
+#cassette-img{
+  width: 12vw;
+  height: auto;
+}
+/* .cassette-dropdown-box {
+  width: 13vw;
+  border-radius: 0.1vw 0.1vw 0.5vw 0.5vw;
+} */
+.cassette-dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #EFE1EF;
+  width: 13vw;
+  border-radius: 0.1vw 0.1vw 0.5vw 0.5vw;
+}
+#cassette-button{
   background-color: transparent;
   border: none;
-  color: black;
+  color: #D27AAB;
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.2vw;
 }
-.cassette-button:hover{
-  background-color: #866487;
-}
-.cassette-under-box{
-  border: 1px solid black;
-  width:240px;
-  border-radius:12px;
-  display:flex;
-  margin-left:20%;
+#cassette-button:hover{
+  color: #866487;
 }
 #bottom-box {
   display: flex;
@@ -415,17 +449,4 @@ body.dark-theme button:hover {
 ::-moz-scrollbar-thumb {
   background-color: #e0b2cb; 
   border-radius: 5px;
-}
-
-.cassettes-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.cassette-image-div {
-  width: calc(33.33% - 20px); /* Adjust width for 3 cassettes per row */
-  margin-right: 20px;
-  margin-bottom: 20px;
-  box-sizing: border-box;
 }

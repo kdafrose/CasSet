@@ -220,25 +220,31 @@ function MainSite() {
                         <div id='search-container'>
                           <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch}/>
                         </div>
-                        <div id="empty-cassets-box" className="cassettes-container">
-                          {filteredPlaylists.map((playlist, i) => (
-                            <div key={i} className='cassette-image-div'>
-                              <p className='cassette-title'>{playlist.playlist_name}</p>
-                              <img
-                                src={cassetteTemp}
-                                alt="PLAYLIST"
-                                onClick={() => toggleBoxVisbility(i)}
-                                style={{ cursor: 'pointer' }}
-                                className='cassette-img'
-                              />
-                              <Collapse in={boxVisibility[i]}>
-                                <div className='cassette-under-box'>
-                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Play Cassette</Button>
+                        <div id="empty-cassets-box">
+                          <div className="all-cassettes">
+                            <div className="cassette-container">
+                              {filteredPlaylists.map((playlist, i) => (
+                                <div id='cassette-title-and-img'>
+                                  <p id='cassette-title'>{playlist.playlist_name}</p>
+                                  <div key={i} id='cassette-image-div'>
+                                    <img
+                                      src={cassetteTemp}
+                                      alt="PLAYLIST"
+                                      onClick={() => toggleBoxVisbility(i)}
+                                      style={{ cursor: 'pointer' }}
+                                      id='cassette-img'
+                                    />
+                                  </div>
+                                  <Collapse in={boxVisibility[i]}>
+                                    <div className='cassette-dropdown'>
+                                      <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
+                                      <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                    </div>
+                                  </Collapse>
                                 </div>
-                              </Collapse>
+                              ))}
                             </div>
-                          ))}
+                          </div>
                         </div>
                       </div>
                     )}
