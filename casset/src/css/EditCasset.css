@@ -29,23 +29,15 @@
     text-align: justify;
     margin: -1vw 1.5vw 0 1.5vw;
 }
-#date-container {
-    display: flex;
-    align-items: center;
-}
-#date-container p {
-    margin: 1vw 0 0.5vw 0;
-    display: inline-block;
-}
-#date-container p:first-child {
-    margin-right: 5px; /* Add a small margin between the two <p> elements */
-}
-#date-created {
+
+#date-created { /*title*/
+    margin-top: 1vw;
     font-size: 1.3vw;
     color: #DB5EA2;
 }
 #date {
-    font-size: 1.1vw;
+    font-size: 0.95vw;
+    margin: -1vw 1.5vw 0 1.5vw;
 }
 #share-button-div {
     display: flex;
