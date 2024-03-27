@@ -16,6 +16,7 @@ def addFriend():
         fr.insert_one({
             "userID": data['userID'],
             "friends_name": data['friend_name'],
+            "friends_email": data['friend_email'],
             "shared_casset": data['playlistID']
         })
 
@@ -23,6 +24,21 @@ def addFriend():
     
     except Exception as e:
         return jsonify(str(e)), 400
+    
+@friends_bp.route('/removeFriend', methods = ['POST'])
+def removeFriend():
+    try:
+        data = request.json
+
+        fr.delete_one({
+            "userID": data['userID'],
+            "friends_name": data['friend_name']
+        })
+
+        return jsonify({"success": True, "result": "Friend removed to the database successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400   
     
 @friends_bp.route('/addNewSharedCasset', methods = ['POST'])
 def addNewSharedCasset():
@@ -33,4 +49,19 @@ def addNewSharedCasset():
     
     except Exception as e:
         return jsonify(str(e)), 400
+
+@friends_bp.route('/findFriend', methods = ['POST'])
+def findFriend():
+    try:
+        data = request.json
+        result = fr.find({"userID": data['userID']})
+        found_friend = list(result)
+
+        if not found_friend:
+            return jsonify({"success": False, "result": "No songs in playlist."}), 409
+        else:
+            return dumps(found_friend), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400 
     
