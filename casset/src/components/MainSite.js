@@ -31,7 +31,9 @@ function MainSite() {
     const [searchQuery, setSearchQuery] = useState('');
     const [playCasset, setPlayCasset] = useState(false);
 
-
+    const [activeNav, setActiveNav] = useState('MyCassets'); // Define activeNav state variable
+    const [myCassets, setMyCassets] = useState([]); // Define myCassets state variable
+    const [sharedCassets, setSharedCassets] = useState([]); // Define sharedCassets state variable
 
     const [profileExists] = useState(()=> {
       const storedExists = localStorage.getItem("profileExists");
@@ -84,8 +86,6 @@ function MainSite() {
   const navigate = useNavigate();
 
     function clearAll(){
-      // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
-      // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
       localStorage.removeItem("tokenType");
@@ -217,12 +217,22 @@ function MainSite() {
                     )}
                     {!playCasset && !editCasset && (
                       <div>
+                        <div id='navigation'>
+                          <button id='my-cassets-nav' onClick={() => setActiveNav('MyCassets')} className={activeNav === 'MyCassets' ? 'active' : ''}>My Cassets</button>
+                          <button id='shared-cassets-nav' onClick={() => setActiveNav('SharedCassets')} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
+                        </div>
                         <div id='search-container'>
                           <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch}/>
                         </div>
                         <div id="empty-cassets-box">
                           <div className="all-cassettes">
                             <div className="cassette-container">
+                              {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
+                              {activeNav === 'SharedCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
                               {filteredPlaylists.map((playlist, i) => (
                                 <div id='cassette-title-and-img'>
                                   <p id='cassette-title'>{playlist.playlist_name}</p>
@@ -248,7 +258,6 @@ function MainSite() {
                         </div>
                       </div>
                     )}
-                        
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
