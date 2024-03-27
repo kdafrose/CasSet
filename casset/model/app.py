@@ -6,6 +6,7 @@ from users import users_bp
 from playlist import playlist_bp
 from comments import comments_bp
 from songs import songs_bp
+from friends import friends_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +16,7 @@ app.register_blueprint(users_bp, url_prefix='/users')
 app.register_blueprint(playlist_bp, url_prefix='/playlist')
 app.register_blueprint(comments_bp, url_prefix='/comments')
 app.register_blueprint(songs_bp, url_prefix = '/songs')
+app.register_blueprint(friends_bp, url_prefix = '/friends')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

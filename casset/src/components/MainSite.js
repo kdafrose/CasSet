@@ -5,6 +5,7 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import fetchAddedFriends from '../controller/fetchAddedFriends';
 import EditCasset from './EditCasset';
 import PlayCasset from './PlayCasset';
 import Friends from './Friends';
@@ -39,20 +40,37 @@ function MainSite() {
   });
 
     // array of friends (with database later)
-   const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
+    // Checks friends database for friends
+    //const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
+    const [friends, setFriends] = useState([]);
 
     useEffect(() => {
-      fetchPlaylists()
-    .then(data => {
-        if (data) {
-            console.log(data);
-            setSavedPlaylist(data);
-            setFilteredPlaylists(data);
-        } else {
-            setSavedPlaylist([]);
-            setFilteredPlaylists([]);
+      // Displays added playlists in db
+      fetchPlaylists() 
+      .then(data => {
+          if (data) {
+              console.log(data);
+              setSavedPlaylist(data);
+              setFilteredPlaylists(data);
+          } else {
+              setSavedPlaylist([]);
+              setFilteredPlaylists([]);
+          }
+      })
+      
+      // Displays added friends users made
+      fetchAddedFriends()
+      .then(data => {
+        if(data){
+          const friendsName = data.map(item => item.friend_name)
+          console.log(friendsName)
+          setFriends(friendsName)
         }
-    })      
+        else{
+          setFriends([]);
+        }
+      })
+    
   }, []); // The empty array ensures this effect runs once on mount
   
   const handleSearch = (e) => {
