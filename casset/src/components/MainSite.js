@@ -37,12 +37,13 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [savedPlaylists, setSavedPlaylist] = useState([]);
+    const [savedPlaylists, setSavedPlaylists] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
+    const [playCasset, setPlayCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [selectedPlaylistName, setSelectedPlaylistName] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [playCasset, setPlayCasset] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
     const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
 
@@ -74,10 +75,10 @@ function MainSite() {
       .then(data => {
           if (data) {
               console.log(data);
-              setSavedPlaylist(data);
+              setSavedPlaylists(data);
               setFilteredPlaylists(data);
           } else {
-              setSavedPlaylist([]);
+              setSavedPlaylists([]);
               setFilteredPlaylists([]);
           }
       })
@@ -210,6 +211,17 @@ function MainSite() {
       });
     };
 
+    function handleEdit(editPlaylistID){
+      setSelectedPlaylistID(editPlaylistID);
+      setEditCasset(true);
+    }
+
+    function handlePlay(playPlaylistID, playPlaylistName){
+      setSelectedPlaylistName(playPlaylistName);
+      setSelectedPlaylistID(playPlaylistID);
+      setPlayCasset(true);
+    }
+
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -231,21 +243,18 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset onClose={() => setPlayCasset(false)}
-                      playlistID = {selectedPlaylistID} />
+                      <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
-                      <EditCasset onClose={() => setEditCasset(false)}
-                      playlistID = {selectedPlaylistID}
-                      friends={friends} />
+                      <EditCasset playlistID={selectedPlaylistID} friends={friends} onClose={() => setEditCasset(false)} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
                         <div id='search-container'>
-                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch}/>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                         </div>
                         <div id="empty-cassets-box" className="cassettes-container">
-                          {filteredPlaylists.map((playlist, i) => (
+                          {savedPlaylists.map((playlist, i) => (
                             <div key={i} className='cassette-image-div'>
                               <p className='cassette-title'>{playlist.playlist_name}</p>
                               <img
@@ -257,8 +266,8 @@ function MainSite() {
                               />
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
-                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} className="cassette-button">Play Cassette</Button>
+                                  <Button onClick={() => {handleEdit(playlist._id)}} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => {handlePlay(playlist._id, playlist.playlist_name)}} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
                             </div>
@@ -266,7 +275,6 @@ function MainSite() {
                         </div>
                       </div>
                     )}
-                        
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
