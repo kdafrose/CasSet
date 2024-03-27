@@ -8,7 +8,7 @@ import '../css/Home.css';
 function GoogleSignInAuthorization() {
     const [user, setUser] = useState(null);
     const [profile, setProfile] = useState(() => {
-        const storedProfile = localStorage.getItem("profile");
+        const storedProfile = localStorage.getItem("profileExists");
         return storedProfile ? JSON.parse(storedProfile) : null;
     });
     const [signin, setSignin] = useState(() => {
@@ -69,6 +69,7 @@ function GoogleSignInAuthorization() {
     const logOut = () => {
         googleLogout();
         localStorage.removeItem("profile");
+        localStorage.removeItem("profileExists");
         localStorage.removeItem("accessToken");
         setUser(null);
         setProfile(null);

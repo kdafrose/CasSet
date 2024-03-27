@@ -183,7 +183,7 @@ function MainSite() {
                       <PlayCasset onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
-                      <EditCasset onClose={() => setEditCasset(false)} />
+                      <EditCasset playlistID={selectedPlaylistID} onClose={() => setEditCasset(false)} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
@@ -203,7 +203,8 @@ function MainSite() {
                               />
                               <Collapse in={boxVisibility[i]}>
                                 <div className='cassette-under-box'>
-                                  <Button onClick={() => setEditCasset(true)} className="cassette-button">Edit Cassette</Button>
+                                  <Button onClick={() => {setEditCasset(true)
+                                  setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
                                   <Button onClick={() => setPlayCasset(true)} className="cassette-button">Play Cassette</Button>
                                 </div>
                               </Collapse>
