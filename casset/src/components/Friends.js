@@ -14,16 +14,17 @@ export default function Friends({ friends, setFriends }) {
         // Check the database for the email and add friend if it's valid 
         // not the users own and exists in users (with database later)
         console.log("Checking database for email:", email);
-        fetchUsers(email)
-        .then(data =>{
-            if(data){
-                // shows on UI
-                setFriends(alreadyFriends => [...alreadyFriends, data['name']])
-                // Adds friend to backend
-                addNewFriend(data['name'], profileData['name'], profileData['email'])
-
-            }
-        })
+        if(email !== profileData['email']){
+            fetchUsers(email)
+            .then(data =>{
+                if(data){
+                    // shows on UI
+                    setFriends(alreadyFriends => [...alreadyFriends, data['name']])
+                    // Adds friend to backend
+                    addNewFriend(data['name'], profileData['name'], profileData['email'])
+                }
+            })   
+        }
 
         // Reset the form after adding friend
         setEmail('');
@@ -44,7 +45,6 @@ export default function Friends({ friends, setFriends }) {
             removeFriend(friend, profileData['name'], profileData['email']);
 
             // Filter out the friend to be removed from the friends list
-            // will probably have to do by email in database later?
             const updatedFriends = friends.filter(f => f !== friend);
             setFriends(updatedFriends);
             setSelectedFriend(null);
