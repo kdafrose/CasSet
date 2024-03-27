@@ -13,9 +13,9 @@ const track = {
     ]
 }
 
-export default function PlaySong(props) {
+export default function PlaySong({ onNext, onPrev }) {
 
-    const { songURI, playlistURI} = props;
+    // const { songURI, playlistURI} = props; comment out for now until we can use it
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
@@ -91,6 +91,11 @@ export default function PlaySong(props) {
 
             player.connect();
 
+            // Cleanup function
+            return () => {
+                player.disconnect();
+            };
+
         };
     }, []);
 
@@ -114,18 +119,19 @@ export default function PlaySong(props) {
                         <div className="now-playing__side">
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
-
-                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
-                                &lt;&lt;
-                            </button>
+                                <div id=".btn-spotify">
+                                    <button className="btn-spotify-prev" onClick={() => { player.previousTrack(); onPrev(); }} >
+                                        <img id="prev" src={prevImage} alt="&lt;&lt;"/>
+                                    </button>
 
                             <button className="btn-spotify" onClick={() => { player.togglePlay() }} >
                                 { is_paused ? "PLAY" : "PAUSE" }
                             </button>
 
-                            <button className="btn-spotify" onClick={() => { player.nextTrack() }} >
-                                &gt;&gt;
-                            </button>
+                                    <button className="btn-spotify-next" onClick={() => { player.nextTrack(); onNext(); }} >
+                                        <img id="next" src={nextImage} alt="&gt;&gt;"/>
+                                    </button>
+                                </div>
                         </div>
                         <Form.Label>
                             Volume
