@@ -210,7 +210,8 @@ function MainSite() {
                     )}
                     {editCasset && (
                       <EditCasset onClose={() => setEditCasset(false)}
-                      playlistID = {selectedPlaylistID} />
+                      playlistID = {selectedPlaylistID}
+                      friends={friends} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
