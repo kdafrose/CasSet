@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import '../css/PlayCasset.css';
 import PlaySong from './PlaySong';
+import {Button} from 'react-bootstrap'
+import Note from './Note';
 
 function PlayCasset({ onClose }) {
     const [noteId, setNoteId] = useState(1);
@@ -27,13 +29,12 @@ function PlayCasset({ onClose }) {
                     <div id="right-cassetandnote">
                         <div id="show-note" className="scrollable">
                             <div id="the-note">
-                                <NoteContent noteId={noteId} /> {/* need to change to show with database */}
+                                <Note noteId={noteId} /> {/* need to change to show with database */}
                             </div>
                         </div>
                     </div>
                 </div>
              </div>
-        </>
     )
 }
 

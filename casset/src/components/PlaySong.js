@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Form from 'react-bootstrap/Form';
+import prevImage from '../media/previous.png';
+import nextImage from '../media/next.png';
 
 const track = {
     name: "",
