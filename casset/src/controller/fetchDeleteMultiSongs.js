@@ -1,7 +1,7 @@
 // async function to delete multiple songs in a playlist
 
 async function deleteSongs(playlistID){
-    fetch('http://localhost:5000/songs/deleteMulitpleSongs', {
+    fetch('http://localhost:5000/songs/deleteMultipleSongs', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
