@@ -6,11 +6,8 @@ import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist comp
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
 import EditCasset from './EditCasset';
-<<<<<<< HEAD
 import PlayCasset from './PlayCasset';
-=======
 import Friends from './Friends';
->>>>>>> friends-layout
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
@@ -195,7 +192,8 @@ function MainSite() {
                     )}
                     {editCasset && (
                       <EditCasset onClose={() => setEditCasset(false)}
-                      playlistID = {selectedPlaylistID} />
+                      playlistID = {selectedPlaylistID}
+                      friends={friends} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
@@ -254,13 +252,7 @@ function MainSite() {
                         <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
-<<<<<<< HEAD
-                      <div id="empty-friends-box">
-                        <p>No friends yet :,(</p>
-                      </div>
-=======
                       <Friends friends={friends} setFriends={setFriends} />
->>>>>>> friends-layout
                     </div>
                 </div>
             </div>
