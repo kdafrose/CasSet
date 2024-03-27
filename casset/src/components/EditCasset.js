@@ -22,12 +22,9 @@ function EditCasset({ onClose, playlistID }) {
     // chosen playlist to Edit or Play
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
+    const [playlistDescription, setPlaylistDescription] = useState([]);
     const [playlistImage, setPlaylistImage] = useState(null);
 
-    // Chosen playlist to be deleted (When click Delete)
-    const [deletePlaylistName, setDeletePlaylistName] = useState("");
-    const [deletePlaylistID, setDeletePlaylistID] = useState("");
-    
     // gets songs information
     useEffect(() => {
         const fetchSongsDocs = async () => {
@@ -53,10 +50,19 @@ function EditCasset({ onClose, playlistID }) {
 
                 // Fetch playlist image if it exists
                 const accessToken = localStorage.getItem("accessToken"); // Retrieve access token from localStorage
+                const playlistResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
                 const playlistImageResponse = await fetch(`https://api.spotify.com/v1/playlists/${playlistID}/images`, {
                     headers: {
                         'Authorization': `Bearer ${accessToken}`
                     }
+                });
+                const playlistData = await playlistResponse.json();
+                setPlaylistDescription({
+                    description: playlistData.description, // Get description from playlistData
                 });
                 const imageJson = await playlistImageResponse.json();
                 if (imageJson && imageJson.length > 0) {
@@ -88,11 +94,9 @@ function EditCasset({ onClose, playlistID }) {
             <div id="casset-side-box">
                 <img src={playlistImage ? playlistImage : defaultspotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
-                <p id="spotify-desc">{selectedPlaylist.note}</p>
-                <div id="date-container">
-                    <p className="russo-one-regular" id="date-created">date created:</p>
-                    <p id="date">{selectedPlaylist.date_created}</p>
-                </div>
+                <p id="spotify-desc">{playlistDescription.description ? playlistDescription.description: "No description yet!"}</p>
+                <p className="russo-one-regular" id="date-created">date created:</p>
+                <p id="date">{selectedPlaylist.date_created}</p>
                 <div id="share-button-div">
                     <button type="button" className="russo-one-regular" id="share-button">share</button>
                 </div>
