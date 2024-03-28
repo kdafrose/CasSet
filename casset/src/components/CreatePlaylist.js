@@ -52,6 +52,7 @@ export default function CreatePlaylist({ onClose }) {
                     "playlist_name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
                     "email": profileInfo.email,
+                    "shared_casset": false,
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 
                 }

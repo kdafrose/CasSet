@@ -8,7 +8,11 @@ export async function addSharedCasset(user_name, user_email, friend_name, shared
         },
         body: JSON.stringify({"user_name":user_name, "user_email":user_email, "friend_name":friend_name, "newSharedPlaylistID":sharedPlaylistID}) // Use profileData instead of params
     })
-    .then(response => response.json())
+    .then(response => {
+        if(response.ok){
+            return response.json()
+        }
+    })
     .then(data => {
         console.log(data);
     })
