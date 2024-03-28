@@ -1,10 +1,10 @@
 import '../css/PlaySong.css';
 import React, {useState, useEffect} from 'react';
-import Form from 'react-bootstrap/Form';
-import playImage from '../media/play.png';
-import pauseImage from '../media/pause.png';
+import {Form, Button} from 'react-bootstrap';
 import prevImage from '../media/previous.png';
 import nextImage from '../media/next.png';
+import playImg from '../media/play.png';
+import pauseImg from '../media/pause.png';
 
 const track = {
     name: "",
@@ -18,9 +18,7 @@ const track = {
     ]
 }
 
-export default function PlaySong({ onNext, onPrev }) {
-
-    // const { songURI, playlistURI} = props; comment out for now until we can use it
+export default function PlaySong({ playingData, onNext, onPrev, closer }) {
 
     const [is_paused, setPaused] = useState(false);
     const [is_active, setActive] = useState(false);
@@ -28,7 +26,6 @@ export default function PlaySong({ onNext, onPrev }) {
     const [current_track, setTrack] = useState(track);
     const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
-        console.log("Access Token: " + storedToken);
         return storedToken ? storedToken : null;
     });;
 
@@ -47,8 +44,53 @@ export default function PlaySong({ onNext, onPrev }) {
         }
     
         await fetch('https://api.spotify.com/v1/me/player', transferParams);
+        turnOffShuffle(deviceSpecific);
+    }
+
+    async function playlistTransfer(selectDevice){
+
+        const playlistURIPlay = "spotify:playlist:" + playingData.playlistID;
+        console.log("New playlistID: " + playingData.playlistID);
+
+        const transferParams = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({
+                'context_uri' : playlistURIPlay,
+                'offset': {
+                    'position':0
+                },
+                "position_ms":0
+            }),
+        };
     
-        console.log("Transferred? To: " + deviceSpecific);
+        await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + selectDevice, transferParams);
+    }
+
+    async function turnOffShuffle(deviceChosen){
+        const shuffleParams = {
+            method: 'PUT',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Authorization' : 'Bearer ' + accessToken
+            },
+        };
+    
+        await fetch('https://api.spotify.com/v1/me/player/shuffle?state=false&device_id=' + deviceChosen, shuffleParams);
+        playlistTransfer(deviceChosen);
+    }
+
+    function disconnectPlayer(){
+        player.pause();
+        player.removeListener('ready');
+        player.removeListener('not_ready');
+        player.removeListener('player_state_changed');
+        player.disconnect();
+
+        closer();
     }
 
     useEffect(() => {
@@ -66,8 +108,6 @@ export default function PlaySong({ onNext, onPrev }) {
                 getOAuthToken: cb => { cb(accessToken); },
                 volume: 0.5
             });
-
-            setPlayer(player);
 
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
@@ -96,10 +136,9 @@ export default function PlaySong({ onNext, onPrev }) {
 
             player.connect();
 
+            setPlayer(player);
+
             // Cleanup function
-            return () => {
-                player.disconnect();
-            };
 
         };
     }, []);
@@ -109,19 +148,21 @@ export default function PlaySong({ onNext, onPrev }) {
             <>
                 <div className="container">
                     <div className="main-wrapper">
-                        <b> Instance not active. Transfer your playback using your Spotify app </b>
+                        <b> Transfering the instance to CasSet... </b>
                     </div>
                 </div>
             </>)
     } else {
         return (
             <>
+                <div id="casset-play-top">
+                    <Button id="back" onClick={disconnectPlayer}>go back</Button>
+                    <p className="russo-one-regular" id="casset-title-play">{playingData.playlistName}</p>
+                </div>
                 <div className="container">
                     <div className="main-wrapper">
-
-                        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
-
-                        <div className="now-playing__side">
+                        <div className="now-playing">
+                            <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
                             <div className="now-playing__name">{current_track.name}</div>
                             <div className="now-playing__artist">{current_track.artists[0].name}</div>
                                 <div id=".btn-spotify">
@@ -129,9 +170,9 @@ export default function PlaySong({ onNext, onPrev }) {
                                         <img id="prev" src={prevImage} alt="&lt;&lt;"/>
                                     </button>
 
-                            <button className="btn-spotify" onClick={() => { player.previousTrack() }} >
-                                &lt;&lt;
-                            </button>
+                                    <button className="btn-spotify-pp" onClick={() => { player.togglePlay() }} >
+                                        { is_paused ? <img id="play" src={playImg} alt="&#x25B6;"/> : <img id="pause" src={pauseImg} alt="&#x23f8;"/> }
+                                    </button>
 
                                     <button className="btn-spotify-next" onClick={() => { player.nextTrack(); onNext(); }} >
                                         <img id="next" src={nextImage} alt="&gt;&gt;"/>

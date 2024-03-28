@@ -1,8 +1,9 @@
 .container {
     display: flex;
     justify-content: center;
+    overflow: inherit;
 }
-.mainwrapper {
+.main-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -116,5 +117,3 @@
     border-radius: 50%;
     cursor: pointer;
 }
-  
-  

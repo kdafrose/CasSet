@@ -69,6 +69,7 @@ function GoogleSignInAuthorization() {
     const logOut = () => {
         googleLogout();
         localStorage.removeItem("profile");
+        localStorage.removeItem("profileExists");
         localStorage.removeItem("accessToken");
         setUser(null);
         setProfile(null);

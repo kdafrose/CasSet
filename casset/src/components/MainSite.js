@@ -12,9 +12,21 @@ import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
-import cassetteTemp from '../media/Rectangle_4.png';
 import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
+
+//casset options 
+import c1 from '../media/casset_options/c1.png';
+import c2 from '../media/casset_options/c2.png';
+import c3 from '../media/casset_options/c3.png';
+import c4 from '../media/casset_options/c4.png';
+import c5 from '../media/casset_options/c5.png';
+import c6 from '../media/casset_options/c6.png';
+import c7 from '../media/casset_options/c7.png';
+import c8 from '../media/casset_options/c8.png';
+import c9 from '../media/casset_options/c9.png';
+import c10 from '../media/casset_options/c10.png';
+
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
@@ -24,16 +36,29 @@ function MainSite() {
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [savedPlaylists, setSavedPlaylist] = useState([]);
+    const [savedPlaylists, setSavedPlaylists] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
+    const [playCasset, setPlayCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [selectedPlaylistName, setSelectedPlaylistName] = useState("");
     const [filteredPlaylists, setFilteredPlaylists] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [playCasset, setPlayCasset] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
 
     const [activeNav, setActiveNav] = useState('MyCassets'); // Define activeNav state variable
     const [myCassets, setMyCassets] = useState([]); // Define myCassets state variable
     const [sharedCassets, setSharedCassets] = useState([]); // Define sharedCassets state variable
+
+    useEffect(() => {
+      handleRandomImageSelect(); // Initialize with a random image when component mounts
+    }, []);
+
+    const handleRandomImageSelect = () => {
+    const randomIndex = Math.floor(Math.random() * cassetImages.length);
+    const randomImage = cassetImages[randomIndex];
+      setSelectedImage(randomImage);
+    };
 
     const [profileExists] = useState(()=> {
       const storedExists = localStorage.getItem("profileExists");
@@ -52,10 +77,10 @@ function MainSite() {
       .then(data => {
           if (data) {
               console.log(data);
-              setSavedPlaylist(data);
+              setSavedPlaylists(data);
               setFilteredPlaylists(data);
           } else {
-              setSavedPlaylist([]);
+              setSavedPlaylists([]);
               setFilteredPlaylists([]);
           }
       })
@@ -186,6 +211,17 @@ function MainSite() {
       });
     };
 
+    function handleEdit(editPlaylistID){
+      setSelectedPlaylistID(editPlaylistID);
+      setEditCasset(true);
+    }
+
+    function handlePlay(playPlaylistID, playPlaylistName){
+      setSelectedPlaylistName(playPlaylistName);
+      setSelectedPlaylistID(playPlaylistID);
+      setPlayCasset(true);
+    }
+
     const logOut = () => {
         googleLogout();
         clearAll();
@@ -207,13 +243,10 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset onClose={() => setPlayCasset(false)}
-                      playlistID = {selectedPlaylistID} />
+                      <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
-                      <EditCasset onClose={() => setEditCasset(false)}
-                      playlistID = {selectedPlaylistID}
-                      friends={friends} />
+                      <EditCasset playlistID={selectedPlaylistID} friends={friends} onClose={() => setEditCasset(false)} />
                     )}
                     {!playCasset && !editCasset && (
                       <div>
@@ -222,7 +255,7 @@ function MainSite() {
                           <button id='shared-cassets-nav' onClick={() => setActiveNav('SharedCassets')} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
                         </div>
                         <div id='search-container'>
-                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch}/>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
                         </div>
                         <div id="empty-cassets-box">
                           <div className="all-cassettes">
