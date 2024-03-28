@@ -3,7 +3,7 @@ import '../css/Home.css';
 
 const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
-const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
+const REDIRECT_URL_AFTER_LOGIN = "https://casset.vercel.app/casset";
 const SPACE_DELIMITER = "%20"; 
 const SCOPES = [
   "user-read-currently-playing",

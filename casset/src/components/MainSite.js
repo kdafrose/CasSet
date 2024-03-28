@@ -32,7 +32,7 @@ import c10 from '../media/casset_options/c10.png';
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
-    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
+    const REDIRECT_URL_AFTER_LOGIN = "https://casset.vercel.app/casset";
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
