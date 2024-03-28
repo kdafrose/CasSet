@@ -16,6 +16,9 @@ export async function addSharedCasset(user_name, user_email, friend_name, shared
     .then(data => {
         console.log(data);
     })
+    .then(() => {
+        window.location.reload();
+    })
     .catch(error => {
         console.error('Error:', error);
     });

@@ -82,14 +82,16 @@ export const fetchPlaylists = async () => {
     }
 };
 
-export const fetchSharedPlaylists = async (user_name, user_email) => {
+export const fetchSharedPlaylists = async () => {
     try {
+        const profileInfo = JSON.parse(localStorage.getItem('profile'));
+        console.log(profileInfo);
         const response = await fetch('http://localhost:5000/playlist/getSharedPlaylists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"user_name":user_name, "user_email":user_email}), 
+            body: JSON.stringify({"user_name":profileInfo['name'], "user_email":profileInfo['email']}), 
         });
 
         if (!response.ok) {

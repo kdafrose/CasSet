@@ -99,8 +99,8 @@ def fetchMultiPlaylistDocuments():
 def getSharedPlaylists():
     try:
         data = request.json
-        user_name = data.get('user_name')
-        user_email = data.get('user_email')
+        user_name = data['user_name']
+        user_email = data['user_email']
         ownerID = findUserID(user_name, user_email)
         sharedCassets = pl.find({"owner": ownerID, "shared_casset":True})
         sharedCasset_list = list(sharedCassets)
@@ -108,7 +108,7 @@ def getSharedPlaylists():
         if not sharedCasset_list:
             return jsonify({"success":False, "result": "User has no sent/received cassettes."}), 409
         else:
-            dumps(sharedCasset_list), 200
+            return dumps(sharedCasset_list), 200
 
     except Exception as e:
         return jsonify(str(e)), 400
