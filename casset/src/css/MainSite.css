@@ -166,6 +166,7 @@
   font-style: normal;
   font-size: 1.5vw;
   overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
   color:#31343b;
   width: 18vw;
