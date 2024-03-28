@@ -1,58 +1,67 @@
+import React, { useState, useEffect } from 'react';
 import '../css/PlayCasset.css';
+import {fetchGetMultiSongs} from '../controller/songsController';
+import {fetchCasset} from '../controller/playlistController';
 import PlaySong from './PlaySong';
-import titleSrc from '../media/casset_title_purple.png';
-import logoSrc from '../media/casset.png';
-import iconSrc from '../media/disket.png';
+import { NoteContent } from './Note';
 
-function PlayCasset() {
+function PlayCasset({ playlistID, playlistName, onClose }) {
+    const [songDocs, setSongDocs] = useState([]);
+    const [selectedPlaylist, setSelectedPlaylist] = useState([]);
+    const [noteId, setNoteId] = useState(1);
     
-    return (
-        <body id="main">
-            <div id="everything-box">
-                <div id="left-side">
-                    <div id="top-box">
-                        <img src={titleSrc} alt="CASSET" id="title" />
-                        {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
-                        <button type="button" className="russo-one-regular" id="create-button">create casset</button>
-                        <button className="russo-one-regular" id="import-button">import playlist</button>
-                    </div>
-                    <div id="middle-box" className="scrollable">
-                        
-                        {/* EDIT HERE!!! */}
-                        <div id="big-purple-container">
-                            <div id="left-play-song">
-                                <PlaySong/>
-                            </div>
-                            <div id="right-show-note">
+    // gets playlist information
+    useEffect(() => {
+        const fetchSelectedPlaylist = async () => {
+            try {
+                await fetchCasset(playlistID)
+                    .then((data) => {
+                        setSelectedPlaylist(data);
+                    })
+                await fetchGetMultiSongs(playlistID)
+                    .then((response) => {
+                        setSongDocs(response);
+                    })
+            } catch (error) {
+                console.error('Error fetching playlist:', error);
+            }
+        };
+        
+        if (playlistID) {
+            fetchSelectedPlaylist();
+        }
+    }, [playlistID]);
+    
+    const maxNoteId = songDocs.length; // this needs to depend on db later!!!
+    const handleNextNote = () => {
+        setNoteId(prevId => prevId === maxNoteId ? 1 : prevId + 1); // Increment noteId, but ensure it loops back to 1
+    };
 
-                            </div>
+    const handlePrevNote = () => {
+        setNoteId(prevId => prevId === 1 ? maxNoteId : prevId - 1); // Decrement noteId, but ensure it loops back to maxNoteId
+    };
+
+    const playlistInfo = {
+        "playlistID" : playlistID,
+        "playlistName" : playlistName
+    }
+
+    return (
+            <div id="big-purple-container">
+                <div id="left-play-song">
+                    <PlaySong playingData={playlistInfo}onNext={handleNextNote} onPrev={handlePrevNote} closer={onClose} />
+                </div>
+                <div id="right-cassetandnote">
+                    <div id="show-note" className="scrollable">
+                        <div id="the-note">
+                            {/* <NoteContent noteId={noteId} songItems = {songDocs} /> need to change to show with database */}
                         </div>
                     </div>
-                    <div id="bottom-box">
-                      {/* used to be for shared cassettes */}
-                      
-                    </div>
                 </div>
-                <div id="right-side">
-                    <div id="account-menu">
-                    
-                    </div>
-                    <div id="friends-box">
-                      <div id="friends-top">
-                        <p className="russo-one-regular" id="friends">friends</p>
-                        <img src={logoSrc} alt="logo" id="logo"/>
-                      </div>
-                      <div id="empty-friends-box">
-                        <p>No friends yet :(</p>
-                      </div>
-                    </div>
+                <div id="right-show-note">
+
                 </div>
             </div>
-            <footer>
-              <img src={iconSrc} alt="icon" style={{maxWidth: "32px"}}/>
-              &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
-            </footer> 
-        </body>
     )
 }
 

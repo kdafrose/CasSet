@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import {Container, InputGroup, FormControl, Button, Card, Row} from 'react-bootstrap'
 import AddSong from './AddSong';
-import fetchPostMultiSongs from '../controller/fetchPostMultiSongs';
-import fetchPostPlaylist from '../controller/fetchPostPlaylist';
+import {fetchPostMultiSongs} from '../controller/songsController';
+import {fetchPostPlaylist} from '../controller/playlistController';
 
 // const params = new URLSearchParams(window.location.search);
 // const code = params.get("code");
@@ -52,6 +52,7 @@ export default function CreatePlaylist({ onClose }) {
                     "playlist_name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
                     "email": profileInfo.email,
+                    "shared_casset": false,
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 
                 }
@@ -80,6 +81,7 @@ export default function CreatePlaylist({ onClose }) {
         songsToAdd.map(item => songsItems.push(item));   
 
         // parsing into proper docuemnts
+        songsItems = songsItems.slice(0,12);
         for(let i =0; i < songsItems.length; i++){
             // case if there is multiple artists
             let artists = []

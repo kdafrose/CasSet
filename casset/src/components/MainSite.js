@@ -5,51 +5,164 @@ import { googleLogout } from '@react-oauth/google';
 import CreatePlaylist from './CreatePlaylist'; // Import the CreatePlaylist component
 import {Collapse, Button} from 'react-bootstrap';
 import FindPlaylist  from './FindPlaylist';
+import {fetchAddedFriends} from '../controller/friendsController';
 import EditCasset from './EditCasset';
+import PlayCasset from './PlayCasset';
+import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
-import cassetteTemp from '../media/Rectangle_4.png';
-import fetchPlaylists from '../controller/fetchUserPlaylists';
+import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
+import { fetchSharedPlaylists } from '../controller/playlistController';
+
+//casset options 
+import c1 from '../media/casset_options/c1.png';
+import c2 from '../media/casset_options/c2.png';
+import c3 from '../media/casset_options/c3.png';
+import c4 from '../media/casset_options/c4.png';
+import c5 from '../media/casset_options/c5.png';
+import c6 from '../media/casset_options/c6.png';
+import c7 from '../media/casset_options/c7.png';
+import c8 from '../media/casset_options/c8.png';
+import c9 from '../media/casset_options/c9.png';
+import c10 from '../media/casset_options/c10.png';
+
 
 function MainSite() {
     const CLIENT_ID = "836985c6fb334af49ed4a3fb55e973fe";
     const CLIENT_SECRET = "d62652ceebc54d32a9292f154adc3e7b"; 
-    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
+    const REDIRECT_URL_AFTER_LOGIN = "https://casset.vercel.app/casset";
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);
     const [profileImage, setProfileImage] = useState(placeHold);
-    const [savedPlaylists, setSavedPlaylist] = useState([]);
+    const [savedPlaylists, setSavedPlaylists] = useState([]);
     const [editCasset, setEditCasset] = useState(false);
+    const [playCasset, setPlayCasset] = useState(false);
     const [selectedPlaylistID, setSelectedPlaylistID] = useState("");
+    const [selectedPlaylistName, setSelectedPlaylistName] = useState("");
+    const [filteredPlaylists, setFilteredPlaylists] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedImage, setSelectedImage] = useState(null);
+    const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
+
+    const [activeNav, setActiveNav] = useState('MyCassets'); // Define activeNav state variable
+    const [myCassets, setMyCassets] = useState([]); // Define myCassets state variable
+    const [sharedCassets, setSharedCassets] = useState([]); // Define sharedCassets state variable
 
     useEffect(() => {
-      fetchPlaylists()
-    .then(data => {
-        if (data) {
-            console.log(data);
-            setSavedPlaylist(data);
-        } else {
-            setSavedPlaylist([]);
+      handleRandomImageSelect(); // Initialize with a random image when component mounts
+    }, []);
+
+    const handleRandomImageSelect = () => {
+    const randomIndex = Math.floor(Math.random() * cassetImages.length);
+    const randomImage = cassetImages[randomIndex];
+      setSelectedImage(randomImage);
+    };
+
+    const [profileExists] = useState(()=> {
+      const storedExists = localStorage.getItem("profileExists");
+      console.log("PROFILE????: " + storedExists);
+      return storedExists ? storedExists : null;
+  });
+
+    // Checks friends database for friends
+    const [friends, setFriends] = useState([]);
+
+    // fetching users created/imported playlists
+    useEffect(() => {
+      // Displays added playlists in db
+      fetchPlaylists() 
+      .then(data => {
+          if (data) {
+              console.log(data);
+              setSavedPlaylists(data);
+              setFilteredPlaylists(data);
+          } else {
+              setSavedPlaylists([]);
+              setFilteredPlaylists([]);
+          }
+      })
+      
+      // Displays added friends users made
+      fetchAddedFriends()
+      .then(data => {
+        if(data){
+          const friendsName = data.map(item => item.friend_name)
+          console.log(friendsName)
+          setFriends(friendsName)
         }
-    })      
-  }, []); // The empty array ensures this effect runs once on mount
+        else{
+          setFriends([]);
+        }
+      })
+      
+      // fetching shared playlists from database
+      fetchSharedPlaylists()
+      .then(data => {
+        if(data){
+          console.log(data)
+          setSharedCassets(data);
+        }
+        else{
+          setSharedCassets([]);
+        }
     
+      })
+  }, []); // The empty array ensures this effect runs once on mount
+
+  
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filteredMyCassets = savedPlaylists.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
+    const filteredSharedCassets = sharedCassets.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
+    setFilteredPlaylists(filteredMyCassets);
+    setSharedCassets(filteredSharedCassets);
+  };
+
+
   const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
   const navigate = useNavigate();
 
     function clearAll(){
-      // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
-      // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
       localStorage.removeItem("tokenType");
       localStorage.removeItem("expiresIn");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("profileExists");
 
       return;
+    }
+
+    async function getMe() {
+
+      const access_token_me = localStorage.getItem("accessToken");
+
+      const meParams = {
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'Bearer ' + access_token_me
+        },
+      };
+
+      await fetch('https://api.spotify.com/v1/me', meParams)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem("userSpotifyID", data.id);
+
+        console.log(data.images)
+
+        const profileImage = data.images === undefined || data.images.length === 0 ? placeHold : data.images[0].url;
+
+        console.log(profileImage);
+
+        setProfileImage(profileImage);
+      })
     }
 
     async function tokenCall(inputString) {
@@ -71,13 +184,9 @@ function MainSite() {
           body: requestBody.toString(),
         };
       
-        var waiting = await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
+        await fetch('https://accounts.spotify.com/api/token', tokenExchangeParams)
           .then(response => response.json())
           .then(async data => {
-      
-            if(data.error === "invalid_grant"){
-              return false;
-            }
 
             // ALL OF THIS MOVES WHEN WE HAVE DATABASE CONNECTION
             clearAll();
@@ -86,41 +195,20 @@ function MainSite() {
             localStorage.setItem("tokenType", data.token_type);
             localStorage.setItem("expiresIn", data.expires_in);
             localStorage.setItem("refresh_token", data.refresh_token);
+            localStorage.setItem("profileExists", "true");
 
-            const meParams = {
-              method: 'GET',
-              headers: {
-                  'Content-Type' : 'application/json',
-                  'Authorization' : 'Bearer ' + data.access_token
-              },
-            };
-
-            await fetch('https://api.spotify.com/v1/me', meParams)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              localStorage.setItem("userSpotifyID", data.id);
-
-              const profileImage = data.images[0] === undefined ? placeHold : data.images[0].url;
-
-              console.log(profileImage);
-
-              setProfileImage(profileImage);
-          })
+            getMe();
             
             return;
           })
-      
-        if (waiting === false){
-          return false;
-        }
-      
-        return waiting;
     }
 
     useEffect(() => {
-        if (window.location.search) {
+        if (window.location.search && (!profileExists)) {
           tokenCall(window.location.search);
+        }
+        else{
+          getMe();
         }
         // CHANGE localStorage to database later...
 
@@ -139,8 +227,15 @@ function MainSite() {
       });
     };
 
-    function playCassette() {
-      console.log("This is going to be interesting")
+    function handleEdit(editPlaylistID){
+      setSelectedPlaylistID(editPlaylistID);
+      setEditCasset(true);
+    }
+
+    function handlePlay(playPlaylistID, playPlaylistName){
+      setSelectedPlaylistName(playPlaylistName);
+      setSelectedPlaylistID(playPlaylistID);
+      setPlayCasset(true);
     }
 
     const logOut = () => {
@@ -151,7 +246,7 @@ function MainSite() {
     };
 
     return (
-        <body id="main">
+<body id="main">
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
@@ -163,33 +258,95 @@ function MainSite() {
                           onClick={() => (setShowUploadPlaylist(!showUploadPlaylist))}>import playlist</button>
                     </div>
                     <div id="middle-box" className="scrollable">
-                    {editCasset ? (
-                          <EditCasset onClose={() => setEditCasset(false)}
-                          playlistID = {selectedPlaylistID} />
-                        ) : (
-                          <div>
-                            <div id='search-container'>
-                              <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
-                            </div>
-                            <div id="empty-cassets-box" className="cassettes-container">
-                              {savedPlaylists.map((playlist, i) => {
-                                return (
-                                  <div key= {i} className='cassette-image-div'>
-                                    <p className='cassette-title'>{playlist.playlist_name}</p>
-                                    <img src ={cassetteTemp} alt="PLAYLIST" onClick={() => toggleBoxVisbility(i)}
-                                      style={{cursor: 'pointer'}} className='cassette-img'/>
-                                    <Collapse in={boxVisibility[i]}>
-                                      <div className='cassette-under-box'>
-                                        <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                        <Button onClick={playCassette} className="cassette-button">Play Cassette</Button>
-                                      </div>
-                                    </Collapse>
+                    {playCasset && (
+                      <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
+                    )}
+                    {editCasset && (
+                      <EditCasset playlistID={selectedPlaylistID} friends={friends} onClose={() => setEditCasset(false)} />
+                    )}
+                    {!playCasset && !editCasset && (
+                      <div>
+                        {/* <div id='navigation'>
+                          <button id='my-cassets-nav' onClick={() => setActiveNav({filteredPlaylists})} className={activeNav === 'MyCassets' ? 'active' : ''}>My Cassets</button>
+                          <button id='shared-cassets-nav' onClick={() => setActiveNav({sharedCassets})} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
+                        </div>
+                        <div id='search-container'>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch} />
+                        </div>
+                        <div id="empty-cassets-box">
+                          <div className="all-cassettes">
+                            <div className="cassette-container">
+                              {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
+                              {activeNav === 'SharedCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
+                              {activeNav.map((playlist, i) => (
+                                <div id='cassette-title-and-img'>
+                                  <p id='cassette-title'>{playlist.playlist_name}</p>
+                                  <div key={i} id='cassette-image-div'>
+                                    <img
+                                      src={selectedImage}
+                                      alt="PLAYLIST"
+                                      onClick={() => toggleBoxVisbility(i)}
+                                      style={{ cursor: 'pointer' }}
+                                      id='cassette-img'
+                                    />
                                   </div>
-                                )
-                              })}
+                                  <Collapse in={boxVisibility[i]}>
+                                    <div className='cassette-dropdown'>
+                                      <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
+                                      <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                    </div>
+                                  </Collapse>
+                                </div>
+                              ))}
                             </div>
                           </div>
-                        )}
+                        </div> */}
+                        <div id='navigation'>
+                          <button id='my-cassets-nav' onClick={() => setActiveNav('MyCassets')} className={activeNav === 'MyCassets' ? 'active' : ''}>My Cassets</button>
+                          <button id='shared-cassets-nav' onClick={() => setActiveNav('SharedCassets')} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
+                      </div>
+                      <div id='search-container'>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch} />
+                      </div>
+                      <div id="empty-cassets-box">
+                          <div className="all-cassettes">
+                              <div className="cassette-container">
+                                  {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                                      <p>No cassets yet</p>
+                                  )}
+                                  {activeNav === 'SharedCassets' && sharedCassets.length === 0 && (
+                                      <p>No cassets yet</p>
+                                  )}
+                                  {(activeNav === 'MyCassets' ? filteredPlaylists : sharedCassets).map((playlist, i) => (
+                                      <div id='cassette-title-and-img' key={i}>
+                                          <p id='cassette-title'>{playlist.playlist_name}</p>
+                                          <div id='cassette-image-div'>
+                                              <img
+                                                  src={selectedImage}
+                                                  alt="PLAYLIST"
+                                                  onClick={() => toggleBoxVisbility(i)}
+                                                  style={{ cursor: 'pointer' }}
+                                                  id='cassette-img'
+                                              />
+                                          </div>
+                                          <Collapse in={boxVisibility[i]}>
+                                              <div className='cassette-dropdown'>
+                                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
+                                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                              </div>
+                                          </Collapse>
+                                      </div>
+                                  ))}
+                              </div>
+                          </div>
+                      </div>
+
+                      </div>
+                    )}
                     </div>
                     <div id="bottom-box">
                       {/* used to be for shared cassettes */}
@@ -214,14 +371,12 @@ function MainSite() {
                             </div>
                         )}
                     </div>
-                    <div id="friends-box">
+                    <div id="friends-box" className="scrollable">
                       <div id="friends-top">
                         <p className="russo-one-regular" id="friends">friends</p>
                         <img src={logoSrc} alt="logo" id="logo"/>
                       </div>
-                      <div id="empty-friends-box">
-                        <p>No friends yet :(</p>
-                      </div>
+                      <Friends friends={friends} setFriends={setFriends} />
                     </div>
                 </div>
             </div>

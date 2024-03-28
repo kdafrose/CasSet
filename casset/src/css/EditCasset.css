@@ -16,7 +16,8 @@
 #spotify-cover {
     margin: 3vw 3vw 2vw 3vw;
     width: 10vw;
-    height: auto;
+    height: 10vw;
+    object-fit: cover;
     border-radius: 10px;
 }
 #spotify-desc-title {
@@ -28,23 +29,15 @@
     text-align: justify;
     margin: -1vw 1.5vw 0 1.5vw;
 }
-#date-container {
-    display: flex;
-    align-items: center;
-}
-#date-container p {
-    margin: 1vw 0 0.5vw 0;
-    display: inline-block;
-}
-#date-container p:first-child {
-    margin-right: 5px; /* Add a small margin between the two <p> elements */
-}
-#date-created {
+
+#date-created { /*title*/
+    margin-top: 1vw;
     font-size: 1.3vw;
     color: #DB5EA2;
 }
 #date {
-    font-size: 1.1vw;
+    font-size: 0.95vw;
+    margin: -1vw 1.5vw 0 1.5vw;
 }
 #share-button-div {
     display: flex;
@@ -138,15 +131,14 @@
     margin: 1.5vw;
     height: 4vw;
     align-items: center;
-    /* justify-content: center; */
 }
 
 #spotify-number {
+    font-size: 1.25vw;
     margin: 2vh;
 }
 #spotify-artist-image {
     margin: 1vw;
-    /* margin-left: 2vw; */
     width: 3vw;
     height: 3vw;
     border-radius: 5px;
@@ -158,7 +150,7 @@
     margin: 0;
 }
 #spotify-artistname-format {
-    font-size: small;
+    font-size: 1vw;
     white-space: wrap;
     margin: 0;
 }
@@ -200,4 +192,60 @@
     border-left: 10px solid transparent;
     transform: rotate(35deg);
   }
+
+/* Share Button Pop-up Layout */
+#share-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#share-popup {
+    position: relative;
+    background-color: #f0b8d6;
+    padding: 2vw 0 2vw 2vw;
+    border-radius: 2vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 35vw;
+    height: 30vw;
+}
+.close-button {
+    position: fixed;
+    border: none;
+    margin-right: 30%;
+    outline: none;  
+    background-color: transparent;
+    font-size: 1.3vw;
+    color: #31343B;
+}
+#share-content {
+    margin: 3vw 0;
+}
+#share-prompt {
+    font-size: 1.4vw;
+    color: #31343B;
+}
+.friend-button {
+    width: 30vw;
+    text-align: left;
+    margin: 0 0 1vw 0;
+    padding: 0.5vw 1.5vw;
+    font-size: 1.1vw;
+    color: #8b6178;
+    border: none;
+    outline: none;  
+    background-color: #F2EAE5;
+    border-radius: 1vw;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.friend-button:hover {
+    color: #604454;
+}
   

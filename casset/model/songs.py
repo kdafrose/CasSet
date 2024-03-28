@@ -35,11 +35,17 @@ def postMultipleSongs():
 
         return jsonify({"success":True, "result":"Added songs successfully to database."}), 200
     except Exception as e:
-        return jsonify(str(e))
+        return jsonify(str(e)),400
 
-@songs_bp.route('/deleteSong', methods = ['DELETE'])
-def deleteSong():
-    pass
+@songs_bp.route('/deleteMultipleSongs', methods = ['DELETE'])
+def deleteMultipleSongs():
+    try:
+        data = request.json
+        sg.delete_many({"playlistID":data['playlistID']})
+        return jsonify({"success":True, "result":"Removed songs from database successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400
 
 @songs_bp.route('/getSong', methods = ['POST'])
 def getSong():
