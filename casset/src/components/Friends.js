@@ -54,6 +54,9 @@ export default function Friends({ friends, setFriends }) {
         if (confirmation) {
             // Handle friend removal here
             console.log(`${friend} removed.`);
+            
+            // BUG???
+            // Call playlists with friends to change playlists attribute to false
             removeFriend(friend, profileData['name'], profileData['email']);
 
             // Filter out the friend to be removed from the friends list

@@ -25,7 +25,8 @@ def postNewPlaylist():
             pl.insert_one({
                 "_id": data['_id'] , # PlaylistID (Primary key)
                 "owner": ownerID, # UserID (Foreign key)
-                "playlist_name": data['playlist_name'], 
+                "playlist_name": data['playlist_name'],
+                "shared_casset":data['shared_casset'],
                 "date_created": date_time,
                 "last_edited":date_time,
                 "sharing_link": data['sharing_link'],
@@ -93,6 +94,37 @@ def fetchMultiPlaylistDocuments():
         
     except Exception as e:
         return jsonify(str(e)), 400
+
+@playlist_bp.route('/getSharedPlaylists', methods =['POST'])
+def getSharedPlaylists():
+    try:
+        data = request.json
+        user_name = data['user_name']
+        user_email = data['user_email']
+        ownerID = findUserID(user_name, user_email)
+        sharedCassets = pl.find({"owner": ownerID, "shared_casset":True})
+        sharedCasset_list = list(sharedCassets)
+
+        if not sharedCasset_list:
+            return jsonify({"success":False, "result": "User has no sent/received cassettes."}), 409
+        else:
+            return dumps(sharedCasset_list), 200
+
+    except Exception as e:
+        return jsonify(str(e)), 400
+    
+@playlist_bp.route('/postSharedPlaylist', methods = ['POST'])
+def postSharedPlaylist():
+    try:
+        data = request.json
+        playlistID = data['playlistID']
+        
+        pl.update_one({"_id": playlistID}, {"$set": {"shared_casset": True}})
+        return jsonify({"success":True, "result": "User shared casset successfully."}), 200
+    
+    except Exception as e:
+        return jsonify(str(e)), 400
+
 
 ### HELPER FUNCTIONS ###
 def checkPlaylistInDB(playlistID):

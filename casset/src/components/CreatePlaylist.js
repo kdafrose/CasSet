@@ -52,6 +52,7 @@ export default function CreatePlaylist({ onClose }) {
                     "playlist_name": data.name, // playlist name
                     "owner_name":profileInfo.name, // name of user
                     "email": profileInfo.email,
+                    "shared_casset": false,
                     "sharing_link": data.external_urls.spotify,
                     "note": "fill in later", 
                 }
@@ -80,6 +81,7 @@ export default function CreatePlaylist({ onClose }) {
         songsToAdd.map(item => songsItems.push(item));   
 
         // parsing into proper docuemnts
+        songsItems = songsItems.slice(0,12);
         for(let i =0; i < songsItems.length; i++){
             // case if there is multiple artists
             let artists = []

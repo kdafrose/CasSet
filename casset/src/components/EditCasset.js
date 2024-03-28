@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awe
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
 import {deletePlaylist,fetchCasset} from '../controller/playlistController';
 import {deleteSongs,fetchGetMultiSongs} from '../controller/songsController';
+import { postSharedPlaylist } from '../controller/playlistController';
+import { addSharedCasset } from '../controller/friendsController';
 
 // Hardcoded images here
 import defaultspotifyCover from '../media/defaultplaylist.png';
@@ -110,14 +112,25 @@ function EditCasset({ onClose, playlistID, friends }    ) {
         }   
     };
 
+    // functionality for sharing casset
     const handleFriendSelect = (friend) => {
         // Prompt confirmation before sharing with the selected friend
+        const profileData = JSON.parse(localStorage.getItem('profile'))
         const isConfirmed = window.confirm(`Are you sure you want to share casset "${selectedPlaylist.playlist_name}" with ${friend}?`);
         if (isConfirmed) {
             console.log(`Sharing playlist ${selectedPlaylist.playlist_name} with friend:`, friend);
+            
             // Logic to share the playlist with the selected friend...
-
             setShowSharePopup(false);
+            
+            // makes shared_casset true
+            postSharedPlaylist(selectedPlaylist._id)
+            // add update friends 
+            addSharedCasset(profileData['name'], profileData['email'], friend, selectedPlaylist._id)
+            // .then(data => {
+            //     console.log(data)
+            // })
+
         }
     };
 

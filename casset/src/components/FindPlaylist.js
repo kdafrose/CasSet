@@ -44,6 +44,7 @@ export default function FindPlaylist({onClose}) {
             "playlist_name": data['playlist_name'],
             "owner_name":profile.name,
             "email": profile.email,
+            "shared_casset":false,
             "sharing_link":data['sharing_link'],
             "note": "fill in later",
         }

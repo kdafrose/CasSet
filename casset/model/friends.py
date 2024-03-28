@@ -42,8 +42,12 @@ def addNewSharedCasset():
             return jsonify({"error": "Required fields (userID, friend_name, newSharedPlaylistID) are missing in the request."}), 400
 
         userID = findUserID(user_name, user_email)
-        fr.update_one({"userID": userID, "friend_name":friend_name}, {"$push": {"shared_casset": newCasset}})
-        return jsonify({"success": True, "result": "Shared casset added to the database successfully."}), 200
+        if fr.find_one({"userID":userID, "friend_name":friend_name, "shared_casset":newCasset}) is None:
+            fr.update_one({"userID": userID, "friend_name":friend_name}, {"$push": {"shared_casset": newCasset}})
+            return jsonify({"success": True, "result": "Shared casset added to the database successfully."}), 200
+
+        else:
+            return jsonify({"success":False, "result": "Playlist was already shared with user"}), 409
     
     except Exception as e:
         return jsonify(str(e)), 400
@@ -85,6 +89,16 @@ def removeFriend():
     
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+
+# @friends_bp.route('/addingSharedCasset', methods = ['POST'])
+# def addingSharedCasset():
+#     try:
+#         data = request.json
+#         friend_name = data.get('friend_name')
+#         user_name = data.get('user_name')
+#         user_email = data.get('user_email')
+#         ownerID = findUserID(user_name, user_email)
 
 
 def findIfFriends(userID, friend_name):

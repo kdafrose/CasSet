@@ -14,6 +14,7 @@ import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
 import {fetchPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
+import { fetchSharedPlaylists } from '../controller/playlistController';
 
 //casset options 
 import c1 from '../media/casset_options/c1.png';
@@ -46,6 +47,9 @@ function MainSite() {
     const [selectedImage, setSelectedImage] = useState(null);
     const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
 
+    const [activeNav, setActiveNav] = useState('MyCassets'); // Define activeNav state variable
+    const [myCassets, setMyCassets] = useState([]); // Define myCassets state variable
+    const [sharedCassets, setSharedCassets] = useState([]); // Define sharedCassets state variable
 
     useEffect(() => {
       handleRandomImageSelect(); // Initialize with a random image when component mounts
@@ -63,11 +67,10 @@ function MainSite() {
       return storedExists ? storedExists : null;
   });
 
-    // array of friends (with database later)
     // Checks friends database for friends
-    //const [friends, setFriends] = useState(["Batool Hussaini", "Katherine", "Vera", "Nora", "Gio", "Reese", "Eliza Grace", "Matthew Peter", "Samy Boy", "Chris Joe", "Jojena", "Mary Gary"]);
     const [friends, setFriends] = useState([]);
 
+    // fetching users created/imported playlists
     useEffect(() => {
       // Displays added playlists in db
       fetchPlaylists() 
@@ -94,22 +97,36 @@ function MainSite() {
           setFriends([]);
         }
       })
+      
+      // fetching shared playlists from database
+      fetchSharedPlaylists()
+      .then(data => {
+        if(data){
+          console.log(data)
+          setSharedCassets(data);
+        }
+        else{
+          setSharedCassets([]);
+        }
     
+      })
   }, []); // The empty array ensures this effect runs once on mount
+
   
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    const filtered = savedPlaylists.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
-    setFilteredPlaylists(filtered);
-};
+    const filteredMyCassets = savedPlaylists.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
+    const filteredSharedCassets = sharedCassets.filter(playlist => playlist.playlist_name.toLowerCase().includes(query));
+    setFilteredPlaylists(filteredMyCassets);
+    setSharedCassets(filteredSharedCassets);
+  };
+
 
   const [boxVisibility, setBoxVisibility] = useState(savedPlaylists.map(() => false));
   const navigate = useNavigate();
 
     function clearAll(){
-      // THIS ENTIRE FUNCTION CHANGES WHEN DATABASE HAPPENS
-      // localStorage.removeItem("profile"); removing this for now so that we can add foreign key to playlists db
       localStorage.removeItem("accessToken");
       localStorage.removeItem("userSpotifyID")
       localStorage.removeItem("tokenType");
@@ -249,29 +266,85 @@ function MainSite() {
                     )}
                     {!playCasset && !editCasset && (
                       <div>
+                        {/* <div id='navigation'>
+                          <button id='my-cassets-nav' onClick={() => setActiveNav({filteredPlaylists})} className={activeNav === 'MyCassets' ? 'active' : ''}>My Cassets</button>
+                          <button id='shared-cassets-nav' onClick={() => setActiveNav({sharedCassets})} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
+                        </div>
                         <div id='search-container'>
-                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' />
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch} />
                         </div>
-                        <div id="empty-cassets-box" className="cassettes-container">
-                          {savedPlaylists.map((playlist, i) => (
-                            <div key={i} className='cassette-image-div'>
-                              <p className='cassette-title'>{playlist.playlist_name}</p>
-                              <img
-                                src={selectedImage}
-                                alt="PLAYLIST"
-                                onClick={() => toggleBoxVisbility(i)}
-                                style={{ cursor: 'pointer' }}
-                                className='cassette-img'
-                              />
-                              <Collapse in={boxVisibility[i]}>
-                                <div className='cassette-under-box'>
-                                  <Button onClick={() => {handleEdit(playlist._id)}} className="cassette-button">Edit Cassette</Button>
-                                  <Button onClick={() => {handlePlay(playlist._id, playlist.playlist_name)}} className="cassette-button">Play Cassette</Button>
+                        <div id="empty-cassets-box">
+                          <div className="all-cassettes">
+                            <div className="cassette-container">
+                              {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
+                              {activeNav === 'SharedCassets' && filteredPlaylists.length === 0 && (
+                                <p>No cassets yet</p>
+                              )}
+                              {activeNav.map((playlist, i) => (
+                                <div id='cassette-title-and-img'>
+                                  <p id='cassette-title'>{playlist.playlist_name}</p>
+                                  <div key={i} id='cassette-image-div'>
+                                    <img
+                                      src={selectedImage}
+                                      alt="PLAYLIST"
+                                      onClick={() => toggleBoxVisbility(i)}
+                                      style={{ cursor: 'pointer' }}
+                                      id='cassette-img'
+                                    />
+                                  </div>
+                                  <Collapse in={boxVisibility[i]}>
+                                    <div className='cassette-dropdown'>
+                                      <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
+                                      <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                    </div>
+                                  </Collapse>
                                 </div>
-                              </Collapse>
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        </div> */}
+                        <div id='navigation'>
+                          <button id='my-cassets-nav' onClick={() => setActiveNav('MyCassets')} className={activeNav === 'MyCassets' ? 'active' : ''}>My Cassets</button>
+                          <button id='shared-cassets-nav' onClick={() => setActiveNav('SharedCassets')} className={activeNav === 'SharedCassets' ? 'active' : ''}>Shared Cassets</button>
+                      </div>
+                      <div id='search-container'>
+                          <input type='text' placeholder='&#x1F50D;&#xFE0E;&emsp;search cassets' id='search-bar' onChange={handleSearch} />
+                      </div>
+                      <div id="empty-cassets-box">
+                          <div className="all-cassettes">
+                              <div className="cassette-container">
+                                  {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                                      <p>No cassets yet</p>
+                                  )}
+                                  {activeNav === 'SharedCassets' && sharedCassets.length === 0 && (
+                                      <p>No cassets yet</p>
+                                  )}
+                                  {(activeNav === 'MyCassets' ? filteredPlaylists : sharedCassets).map((playlist, i) => (
+                                      <div id='cassette-title-and-img' key={i}>
+                                          <p id='cassette-title'>{playlist.playlist_name}</p>
+                                          <div id='cassette-image-div'>
+                                              <img
+                                                  src={selectedImage}
+                                                  alt="PLAYLIST"
+                                                  onClick={() => toggleBoxVisbility(i)}
+                                                  style={{ cursor: 'pointer' }}
+                                                  id='cassette-img'
+                                              />
+                                          </div>
+                                          <Collapse in={boxVisibility[i]}>
+                                              <div className='cassette-dropdown'>
+                                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
+                                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                              </div>
+                                          </Collapse>
+                                      </div>
+                                  ))}
+                              </div>
+                          </div>
+                      </div>
+
                       </div>
                     )}
                     </div>
