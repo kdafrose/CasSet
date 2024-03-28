@@ -1,0 +1,1463 @@
+{
+  "id": "e58566b2-8d7a-4af4-b39e-c1ebf4364aad",
+  "version": "2.0",
+  "name": "CasSet GUI testing",
+  "url": "http://localhost:3000/casset",
+  "tests": [{
+    "id": "87544eef-4df6-42f6-a65f-284ea8056c5c",
+    "name": "Google log in",
+    "commands": [{
+      "id": "8a9f91e0-810e-42cf-a8d2-7af2a9f49679",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9b5e8b70-e865-44a8-94aa-99839d835a9b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fe8da81e-b556-4c07-a40d-b48c7cefabc9",
+      "comment": "",
+      "command": "click",
+      "target": "id=GoogleButton",
+      "targets": [
+        ["id=GoogleButton", "id"],
+        ["css=#GoogleButton", "css:finder"],
+        ["xpath=//button[@id='GoogleButton']", "xpath:attributes"],
+        ["xpath=//div[@id='login-container']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'   Login   ')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win9204",
+      "windowTimeout": 2000
+    }, {
+      "id": "6862b822-9e59-42ab-ad91-6563decc66a4",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1c25dce1-a578-44d1-9b09-6c1427cd442f",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win9204}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d7f3c664-f250-4482-9a4e-1e6c0014f06d",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,236)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "28b10a95-d85c-4cf1-9871-32040db433f0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.aZvCDf:nth-child(7) .pGzURd",
+      "targets": [
+        ["css=.aZvCDf:nth-child(7) .pGzURd", "css:finder"],
+        ["xpath=//body[@id='yDmH0d']/div/div/div[2]/div/div/div[2]/div/div/div/form/span/section/div/div/div/div/ul/li[7]/div/div/div/div[2]/div", "xpath:idRelative"],
+        ["xpath=//li[7]/div/div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "33f4b7da-da2f-40b0-bcee-0abab1c89294",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "023b8b1c-8175-43f1-82fa-6992ff9a2e39",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "29f34e47-37f8-4e0e-a243-f0873329fee1",
+    "name": "Spotify log in",
+    "commands": [{
+      "id": "33cb3561-23b3-4299-8603-de57e90e12c1",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c1210134-fe2e-4bcd-8895-8d5d02cb7977",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "50546b0b-cdef-46d4-8c43-768e600798ec",
+      "comment": "",
+      "command": "click",
+      "target": "id=GoogleButton",
+      "targets": [
+        ["id=GoogleButton", "id"],
+        ["css=#GoogleButton", "css:finder"],
+        ["xpath=//button[@id='GoogleButton']", "xpath:attributes"],
+        ["xpath=//div[@id='login-container']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'   Login   ')]", "xpath:innerText"]
+      ],
+      "value": "",
+      "opensWindow": true,
+      "windowHandleName": "win2836",
+      "windowTimeout": 2000
+    }, {
+      "id": "caed7689-5aca-421d-bb97-3487d69ec8f1",
+      "comment": "",
+      "command": "storeWindowHandle",
+      "target": "root",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1fb9a4a0-a4bc-4d90-af36-46882f5ae0b7",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${win2836}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a26d3705-4e26-434e-9a4b-137b7d03a879",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,0)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d66680d5-4979-430f-929c-0bc153bbb3bf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.aZvCDf:nth-child(7) .pGzURd",
+      "targets": [
+        ["css=.aZvCDf:nth-child(7) .pGzURd", "css:finder"],
+        ["xpath=//body[@id='yDmH0d']/div/div/div[2]/div/div/div[2]/div/div/div/form/span/section/div/div/div/div/ul/li[7]/div/div/div/div[2]/div", "xpath:idRelative"],
+        ["xpath=//li[7]/div/div/div/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a306f78c-c475-4185-a1b4-dd11d13c35e7",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "357a3fc7-01b5-4421-a99a-5e4f1a7ea2be",
+      "comment": "",
+      "command": "selectWindow",
+      "target": "handle=${root}",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7f2cae06-159d-468e-bd94-65d195e17817",
+      "comment": "",
+      "command": "click",
+      "target": "id=SpotifyButton",
+      "targets": [
+        ["id=SpotifyButton", "id"],
+        ["css=#SpotifyButton", "css:finder"],
+        ["xpath=//button[@id='SpotifyButton']", "xpath:attributes"],
+        ["xpath=//div[@id='login-container']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Authenticate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8f95534-550d-4c10-a74c-094f84c25bf8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ButtonInner-sc-14ud5tc-0",
+      "targets": [
+        ["css=.ButtonInner-sc-14ud5tc-0", "css:finder"],
+        ["xpath=//main[@id='encore-web-main-content']/div/main/section/div/div/div[3]/button/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"],
+        ["xpath=//span[contains(.,'Agree')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b2f6346c-a0fe-4462-9903-6c8a3af0c59a",
+    "name": "create playlist - song search",
+    "commands": [{
+      "id": "913db2b5-9665-4a95-896e-b54bb40b2225",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3c6c4d33-6303-402d-bd39-0210bddf9fc5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3b401627-1d38-4437-bb0a-1d93063226fa",
+      "comment": "",
+      "command": "click",
+      "target": "id=create-button",
+      "targets": [
+        ["id=create-button", "id"],
+        ["css=#create-button", "css:finder"],
+        ["xpath=//button[@id='create-button']", "xpath:attributes"],
+        ["xpath=//div[@id='top-box']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'create casset')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "431cdf25-106f-44ea-bfab-d504cef2c21c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07349d98-03f5-4830-a1bb-0aeee26f47ea",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "playlist 1"
+    }, {
+      "id": "e3ed206d-86eb-4805-a82b-4536d8bd921d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "98ab2a58-8ea1-493f-9eaf-ced99cdfcea0",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": "this is a test"
+    }, {
+      "id": "8e916a08-2cfe-4ad4-8789-addafb950b7c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Make')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "c431a726-eede-4233-99bc-c12c082728ad",
+    "name": "create playlist - cassette created",
+    "commands": [{
+      "id": "730bb034-d4ac-4b02-931a-8fea146ed688",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0a52ccb-4cfc-41aa-beb9-2539cd056018",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b5e002f2-dcca-4eba-9c3a-55dcc8e97414",
+      "comment": "",
+      "command": "click",
+      "target": "id=create-button",
+      "targets": [
+        ["id=create-button", "id"],
+        ["css=#create-button", "css:finder"],
+        ["xpath=//button[@id='create-button']", "xpath:attributes"],
+        ["xpath=//div[@id='top-box']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'create casset')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "cbfad11f-cc24-4078-884a-b259e08eb3fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d322c72a-6ed0-445b-87e7-cc662be8a086",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "create"
+    }, {
+      "id": "da9f03b6-9220-4c82-a701-90855abdeab6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cdbff17a-1e0e-4116-ab7d-a87e981614c1",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": "test playlist"
+    }, {
+      "id": "7ca76601-18b2-44a5-baba-261f9a6aad4b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Make')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "61c21f8d-a7b9-4a12-a53e-8a6d0862f69a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "30aec476-7b42-473d-b6b3-aa60dff76108",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "song"
+    }, {
+      "id": "4d2978d6-14f9-44aa-b10f-4e7ccdb0dcb4",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d8c5bdf-aa51-46ec-bfe7-27e27befeb7f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(1) > .btn",
+      "targets": [
+        ["css=.card:nth-child(1) > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//body[@id='main']/div[2]/div/form/div[2]/div[2]/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "70c83a02-0baa-4542-9af9-1116a60769c9",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.card:nth-child(1) > .btn",
+      "targets": [
+        ["css=.card:nth-child(1) > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//body[@id='main']/div[2]/div/form/div[2]/div[2]/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d21dcfed-0e4c-4861-b3c4-46261b461bb4",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.card:nth-child(1) > .btn",
+      "targets": [
+        ["css=.card:nth-child(1) > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//body[@id='main']/div[2]/div/form/div[2]/div[2]/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Add to Playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ad68ec2-bba8-4a4f-aaec-bdd2f7fd186e",
+      "comment": "",
+      "command": "click",
+      "target": "id=make-playlist",
+      "targets": [
+        ["id=make-playlist", "id"],
+        ["css=#make-playlist", "css:finder"],
+        ["xpath=//button[@id='make-playlist']", "xpath:attributes"],
+        ["xpath=//div[@id='new-playlist-div']/button[2]", "xpath:idRelative"],
+        ["xpath=//form/div/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Make Playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b3d985a-265e-4a6c-9d3d-753c140ac188",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-img",
+      "targets": [
+        ["css=.cassette-img", "css:finder"],
+        ["xpath=//img[@alt='PLAYLIST']", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c3c5d5c-7238-49a3-bf28-7979cf4179d9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit Cassette')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "937fc87a-d955-4f5f-9979-9ed6e2b13024",
+    "name": "import playlist - check for profile playlists",
+    "commands": [{
+      "id": "74099120-853a-44b5-8a91-118f568d2ba9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2510b13d-4338-4dfe-9c6d-ba27daefd840",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "44ba645e-4dbc-4318-ad36-fa476f4cf2f6",
+      "comment": "",
+      "command": "click",
+      "target": "id=import-button",
+      "targets": [
+        ["id=import-button", "id"],
+        ["css=#import-button", "css:finder"],
+        ["xpath=//button[@id='import-button']", "xpath:attributes"],
+        ["xpath=//div[@id='top-box']/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'import playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8d66959f-7e5a-4ff5-9bce-bc7080fdde0e",
+    "name": "import playlist - cassette from import",
+    "commands": [{
+      "id": "578e1706-6407-4b57-a20f-7e7d47cd2448",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "284c6142-b740-41cc-bfc5-73d0bb60acec",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7b1a4065-9d7e-415c-a4a9-70215a8eda18",
+      "comment": "",
+      "command": "click",
+      "target": "id=import-button",
+      "targets": [
+        ["id=import-button", "id"],
+        ["css=#import-button", "css:finder"],
+        ["xpath=//button[@id='import-button']", "xpath:attributes"],
+        ["xpath=//div[@id='top-box']/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'import playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "684f26fd-7eca-4f9d-ab55-bffc284013a8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.d-flex:nth-child(1) > .btn",
+      "targets": [
+        ["css=.d-flex:nth-child(1) > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[3]", "xpath:attributes"],
+        ["xpath=//body[@id='main']/div[2]/div/form/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//form/div/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Select playlist')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0db00ef4-61de-49b7-980b-cb52a847836c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-img",
+      "targets": [
+        ["css=.cassette-img", "css:finder"],
+        ["xpath=//img[@alt='PLAYLIST']", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "af3632f1-8c4e-40fb-a8db-d37406a37f5c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit Cassette')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5071a41a-2bf1-4c12-98f5-769010e30f1a",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit Cassette')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a92a7058-b27a-4199-af25-b43ab3e946b4",
+    "name": "create playlist - adding songs correctly",
+    "commands": [{
+      "id": "f431c361-7c76-4168-94e6-de33f053d655",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c718e1df-6d6a-40be-9808-bf7aff6fbe10",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d218ce0-e8ce-4a97-a4f9-021e30d45b38",
+      "comment": "",
+      "command": "click",
+      "target": "id=create-button",
+      "targets": [
+        ["id=create-button", "id"],
+        ["css=#create-button", "css:finder"],
+        ["xpath=//button[@id='create-button']", "xpath:attributes"],
+        ["xpath=//div[@id='top-box']/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'create casset')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1235de9-b516-4255-85d1-5d0151da2001",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "695f8b16-f110-4e90-bf1c-f600c6c1f583",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(1)",
+      "targets": [
+        ["css=.form-control:nth-child(1)", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/div/input", "xpath:position"]
+      ],
+      "value": "add songs"
+    }, {
+      "id": "160c7f9a-2fc2-4d70-887d-25e9d70cb0ae",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07e0fb98-5779-438d-bf67-7bb5f605cc77",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control:nth-child(2)",
+      "targets": [
+        ["css=.form-control:nth-child(2)", "css:finder"],
+        ["xpath=(//input[@type='input'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "9898efb3-a488-457d-9810-e8e504b89839",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-3 > .btn",
+      "targets": [
+        ["css=.mb-3 > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[9]", "xpath:attributes"],
+        ["xpath=//div[@id='create-container']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Make')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "97ac9b6f-e6f8-49a4-be8b-c8d1efca7642",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "239d218e-cf5c-483a-9646-f857b75103d7",
+      "comment": "",
+      "command": "type",
+      "target": "css=.form-control",
+      "targets": [
+        ["css=.form-control", "css:finder"],
+        ["xpath=//input[@type='input']", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/input", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "song"
+    }, {
+      "id": "bd252ba2-1cef-48a3-8d84-de3cc9cb9968",
+      "comment": "",
+      "command": "click",
+      "target": "css=.mb-3 > .btn",
+      "targets": [
+        ["css=.mb-3 > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d6439531-63bb-48cb-9e79-d0ef8ef2d2e1",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.mb-3 > .btn",
+      "targets": [
+        ["css=.mb-3 > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "15fda266-3432-4ac9-8841-bc8c711c5076",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.mb-3 > .btn",
+      "targets": [
+        ["css=.mb-3 > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[10]", "xpath:attributes"],
+        ["xpath=//div[@id='add-song-search']/div/button", "xpath:idRelative"],
+        ["xpath=//form/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Search')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d1ed452-6fe7-4ac5-932e-00deee6a115a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card:nth-child(8) > .btn",
+      "targets": [
+        ["css=.card:nth-child(8) > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[18]", "xpath:attributes"],
+        ["xpath=//body[@id='main']/div[2]/div/form/div[2]/div[2]/div/div[8]/button", "xpath:idRelative"],
+        ["xpath=//div[8]/button", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "1d1f25f1-cac2-48b5-ac92-357045c954c7",
+    "name": "adding notes ",
+    "commands": [{
+      "id": "e4dfd653-3418-482c-8f41-256dcc8c322f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b0bd2a68-614b-4723-b0b0-46dd08447291",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "af74d501-9671-42c8-8aa7-87a072ef4f2c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-image-div:nth-child(1) > .cassette-img",
+      "targets": [
+        ["css=.cassette-image-div:nth-child(1) > .cassette-img", "css:finder"],
+        ["xpath=//img[@alt='PLAYLIST']", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e693e3df-9a7c-4b20-acaa-277878a450e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.show > .cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.show > .cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit Cassette')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "15620f96-24f1-4615-a015-cf42e19eaecc",
+      "comment": "",
+      "command": "click",
+      "target": "css=div:nth-child(1) > .note-container .edit-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .edit-button", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'✎')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "655e5635-f275-434f-a51f-f6ab2eaff510",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=div:nth-child(1) > .note-container .edit-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .edit-button", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'✎')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "17a1137f-4ef7-4399-81bb-b1f84405d29a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Empty Note...')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7f648c3-80d5-493c-9587-b1d3fa13a24c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Empty Note...')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "499b068d-5e48-4c0c-8511-732cba67989c",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Empty Note...')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "45f44309-9f75-4da7-be62-f3fa5aaa9879",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'Empty Note...')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b397e73-bc3b-401f-a7b8-ae08abb2e77f",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,0)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "322f069a-c55a-4f30-adfa-15818b2938dd",
+      "comment": "",
+      "command": "editContent",
+      "target": "css=.ql-editor",
+      "targets": [
+        ["css=.ql-editor", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div[2]/div/div[2]/div", "xpath:position"]
+      ],
+      "value": "<p>this song reminds me of my friends :)</p>"
+    }, {
+      "id": "5bcfbb5c-0731-4591-b313-f42f68abdb32",
+      "comment": "",
+      "command": "click",
+      "target": "id=save-button",
+      "targets": [
+        ["id=save-button", "id"],
+        ["css=#save-button", "css:finder"],
+        ["xpath=//button[@id='save-button']", "xpath:attributes"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'save')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a648fffb-d8d9-4ebe-bf58-4c480d1e8d59",
+    "name": "deleting notes",
+    "commands": [{
+      "id": "2d92d087-1ca5-48cb-b124-9db96113cb8a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8f130817-162b-4479-b05e-1562466a9e14",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ab18ec1-bc8f-4212-a6a1-456bc8139dde",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-image-div:nth-child(4) > .cassette-img",
+      "targets": [
+        ["css=.cassette-image-div:nth-child(4) > .cassette-img", "css:finder"],
+        ["xpath=(//img[@alt='PLAYLIST'])[4]", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div[4]/img", "xpath:idRelative"],
+        ["xpath=//div[4]/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "31418093-372a-4ad0-992c-89d11633cf01",
+      "comment": "",
+      "command": "click",
+      "target": "css=.show > .cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.show > .cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div[4]/div/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "02d5438c-b3f2-4b5d-a5de-73cd91b75d3d",
+      "comment": "",
+      "command": "runScript",
+      "target": "window.scrollTo(0,0)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f4f5a48e-ec02-4ac2-a460-026d33a2a69d",
+      "comment": "",
+      "command": "click",
+      "target": "css=div:nth-child(1) > .note-container .expand-collapse-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .expand-collapse-button", "css:finder"],
+        ["xpath=//div[@id='button-center']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'▼')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ce8c49b-434d-469b-aaf4-58f5cbac09f3",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=div:nth-child(1) > .note-container .expand-collapse-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .expand-collapse-button", "css:finder"],
+        ["xpath=//div[@id='button-center']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'▼')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8e8e5ae8-d53b-4a6e-b81c-4ae68a6ba502",
+      "comment": "",
+      "command": "click",
+      "target": "css=div:nth-child(1) > .note-container .edit-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .edit-button", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'✎')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "490598be-de87-431e-ab06-6cbe2cba55d2",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=div:nth-child(1) > .note-container .edit-button",
+      "targets": [
+        ["css=div:nth-child(1) > .note-container .edit-button", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'✎')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c0fb764-377f-429d-ab15-855ad7d059e6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'this song is a banger :fre-emoji:!!!!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d66b18e9-0db9-4d9f-b37f-bc668b52397e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'this song is a banger :fre-emoji:!!!!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6b9ce84-80f9-44b0-bf1c-d0d5707ee38a",
+      "comment": "",
+      "command": "doubleClick",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'this song is a banger :fre-emoji:!!!!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "75f6c378-6cf8-4273-9ea8-d55be44a176e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.ql-editor > p",
+      "targets": [
+        ["css=.ql-editor > p", "css:finder"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div/div[2]/div/p", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div[2]/div/div[2]/div/p", "xpath:position"],
+        ["xpath=//p[contains(.,'this song is a banger :fre-emoji:!!!!')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d68f640-c0ff-4925-8252-12dfeaa9a16e",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6a5578a5-d243-44cd-a1e5-23cf94be02c6",
+      "comment": "",
+      "command": "click",
+      "target": "id=delete-button",
+      "targets": [
+        ["id=delete-button", "id"],
+        ["css=#delete-button", "css:finder"],
+        ["xpath=//button[@id='delete-button']", "xpath:attributes"],
+        ["xpath=//div[@id='casset-list-in-edit']/div/div[2]/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'delete')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2c80526-bb61-40bb-bf0c-1219d0d4b7a6",
+      "comment": "",
+      "command": "assertConfirmation",
+      "target": "Are you sure you want to delete note 1?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "77750aea-733f-4a58-9c24-efa6a3795363",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "a08c2d8b-526c-403d-afc0-38f870aa43c3",
+    "name": "deleting cassettes",
+    "commands": [{
+      "id": "cc3fc606-0469-4876-b955-c26c35ed5d8d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "22dc66b8-3958-44d7-9c86-34c9f000dbd3",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "70c31cda-32b8-4123-8ec8-063b90355c54",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-image-div:nth-child(1) > .cassette-img",
+      "targets": [
+        ["css=.cassette-image-div:nth-child(1) > .cassette-img", "css:finder"],
+        ["xpath=//img[@alt='PLAYLIST']", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "763909cd-5c14-4eb7-89a0-6ede1180aaf3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.show > .cassette-button:nth-child(1)",
+      "targets": [
+        ["css=.show > .cassette-button:nth-child(1)", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Edit Cassette')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2f7fce5-7b3e-432c-a8b1-bbba4f296de1",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd9f58ee-af20-4e6e-88fe-f48263d9d8f3",
+      "comment": "",
+      "command": "click",
+      "target": "css=path",
+      "targets": [
+        ["css=path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6985e43-a461-43c0-ade5-86e1d812fc94",
+      "comment": "",
+      "command": "assertConfirmation",
+      "target": "Are you sure you want to delete this casset?",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "26b6bf61-ec70-4b01-baff-13c580a72c92",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "2a543a84-21ec-42b4-b1a6-d7d8991f956d",
+    "name": "log out",
+    "commands": [{
+      "id": "518d2685-9249-4c4c-8ff2-9bc9e553b614",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "48d43b71-b56e-401a-b59b-aa56fcd21dcb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c49d2851-e3db-432f-9760-99a560079f4e",
+      "comment": "",
+      "command": "click",
+      "target": "id=logout-main",
+      "targets": [
+        ["id=logout-main", "id"],
+        ["css=#logout-main", "css:finder"],
+        ["xpath=//button[@id='logout-main']", "xpath:attributes"],
+        ["xpath=//div[@id='account-bottom']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'logout')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "d27978dd-69f5-424d-b478-ee0b8501e9a1",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=SpotifyButton",
+      "targets": [
+        ["id=SpotifyButton", "id"],
+        ["css=#SpotifyButton", "css:finder"],
+        ["xpath=//button[@id='SpotifyButton']", "xpath:attributes"],
+        ["xpath=//div[@id='login-container']/div/div/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Authenticate')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "2239d981-f9c4-43f3-a7ae-3f780ec4c610",
+    "name": "add friend",
+    "commands": [{
+      "id": "d80efc20-99dc-4e4f-9788-c347d6937526",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f62c53ba-0215-43c0-a26a-51bd72c2ccde",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1f912cfd-79e8-408d-bd80-27aad1b06c54",
+      "comment": "",
+      "command": "click",
+      "target": "id=add-friends-button",
+      "targets": [
+        ["id=add-friends-button", "id"],
+        ["css=#add-friends-button", "css:finder"],
+        ["xpath=//button[@id='add-friends-button']", "xpath:attributes"],
+        ["xpath=//div[@id='friends-bottom']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'+ add friends')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a6a2486-a5e4-4ed7-8ca6-1faf859f5c7a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#add-friend-input > input",
+      "targets": [
+        ["css=#add-friend-input > input", "css:finder"],
+        ["xpath=//input[@value='']", "xpath:attributes"],
+        ["xpath=//div[@id='add-friend-input']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "15669393-3e92-4059-bc2c-3fdce6c5907e",
+      "comment": "",
+      "command": "type",
+      "target": "css=#add-friend-input > input",
+      "targets": [
+        ["css=#add-friend-input > input", "css:finder"],
+        ["xpath=//input[@value='gtdev76@gmail.com']", "xpath:attributes"],
+        ["xpath=//div[@id='add-friend-input']/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/input", "xpath:position"]
+      ],
+      "value": "gtdev76@gmail.com"
+    }, {
+      "id": "97dce9c7-a09f-4fe2-910e-0d963ce2fde6",
+      "comment": "",
+      "command": "click",
+      "target": "id=enter-friends-button",
+      "targets": [
+        ["id=enter-friends-button", "id"],
+        ["css=#enter-friends-button", "css:finder"],
+        ["xpath=//button[@id='enter-friends-button']", "xpath:attributes"],
+        ["xpath=//div[@id='add-friend-buttons']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'enter')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "519ed3f1-fc55-4cbd-a522-f01bde3c5605",
+    "name": "play song w/volume bar",
+    "commands": [{
+      "id": "c2c28f6a-ddff-4225-8e8b-da47848ee2c0",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e32f4f57-4ca4-45e6-9e24-cd4ab8a5304b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "817105cf-af74-465b-9853-553b76dca403",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-image-div:nth-child(4) > .cassette-img",
+      "targets": [
+        ["css=.cassette-image-div:nth-child(4) > .cassette-img", "css:finder"],
+        ["xpath=(//img[@alt='PLAYLIST'])[4]", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div[4]/img", "xpath:idRelative"],
+        ["xpath=//div[4]/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93e36756-0d2d-47fa-a4e5-7217d8c4fd1b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.show > .cassette-button:nth-child(2)",
+      "targets": [
+        ["css=.show > .cassette-button:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[9]", "xpath:attributes"],
+        ["xpath=//div[@id='empty-cassets-box']/div[4]/div/button[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/div/button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "7719a6e4-c7fb-4c14-b35b-15157729d761",
+    "name": "cassette search",
+    "commands": [{
+      "id": "ca09010f-ecd6-406a-ac9e-fd04d5af4b62",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "17cee642-983a-4a80-bf0d-f8411b272a51",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1295x687",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fc340505-e4a8-4469-880b-cec2ed767a1b",
+      "comment": "",
+      "command": "click",
+      "target": "id=search-bar",
+      "targets": [
+        ["id=search-bar", "id"],
+        ["css=#search-bar", "css:finder"],
+        ["xpath=//input[@id='search-bar']", "xpath:attributes"],
+        ["xpath=//div[@id='search-container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6fbc712-6718-44dc-8ea1-2c565df6f978",
+      "comment": "",
+      "command": "type",
+      "target": "id=search-bar",
+      "targets": [
+        ["id=search-bar", "id"],
+        ["css=#search-bar", "css:finder"],
+        ["xpath=//input[@id='search-bar']", "xpath:attributes"],
+        ["xpath=//div[@id='search-container']/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "girlie pop bops"
+    }, {
+      "id": "2c8a4022-f294-40af-848a-ab05234218a1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.cassette-img",
+      "targets": [
+        ["css=.cassette-img", "css:finder"],
+        ["xpath=//img[@alt='PLAYLIST']", "xpath:img"],
+        ["xpath=//div[@id='empty-cassets-box']/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "0392e843-8d66-4c87-89a4-0db8c2be603b",
+    "name": "remove friend",
+    "commands": [{
+      "id": "98c98d2c-cc91-4775-84b7-a722e74c3432",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/casset",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "089a0c88-2533-4958-8f75-6bcad4348027",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "778x672",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1c261972-0233-47c1-8148-bcff43d90ea2",
+      "comment": "",
+      "command": "click",
+      "target": "id=friends-names",
+      "targets": [
+        ["id=friends-names", "id"],
+        ["css=#friends-names", "css:finder"],
+        ["xpath=//button[@id='friends-names']", "xpath:attributes"],
+        ["xpath=//div[@id='friends-names-box']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Gio DeV')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c7f3595-9a1c-4005-85ad-7b298f7dfcea",
+      "comment": "",
+      "command": "chooseOkOnNextConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "14fe5a54-e907-41e7-b2f4-f9c22c704e8f",
+      "comment": "",
+      "command": "click",
+      "target": "id=remove-friends-button",
+      "targets": [
+        ["id=remove-friends-button", "id"],
+        ["css=#remove-friends-button", "css:finder"],
+        ["xpath=//button[@id='remove-friends-button']", "xpath:attributes"],
+        ["xpath=//div[@id='remove-friends-box']/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div[2]/div/div/div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'remove')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ddc80c96-e79b-45f4-bb7e-ff327bf0e24b",
+      "comment": "",
+      "command": "webdriverChooseOkOnVisibleConfirmation",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1914ada9-5b01-47a9-8066-08c808a9f558",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:3000/", "https://cas-setdeploytest.vercel.app/", "localhost:3000/casset", "localhost:3000", "http://localhost:3000/casset"],
+  "plugins": []
+}
