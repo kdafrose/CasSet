@@ -13,6 +13,9 @@
     white-space: normal; 
 }
 .note-content {
+    font-family: "Patrick Hand", cursive;
+    font-weight: 300;
+    font-style: normal;
     padding-right: 3vw;
     margin: 0 2.5vw 0 2.5vw;
     width: 100%;
@@ -20,8 +23,17 @@
     border: none; 
     outline: none; 
     font-size: 1.2vw; 
-    font-family: Arial, sans-serif; 
 }
+.note-content > h1 {
+    font-size: 3.175vw; 
+}
+.note-content > h2 {
+    font-size: 2.5vw; 
+}
+.note-content > h3 {
+    font-size: 2.15vw; 
+}
+
 .default-buttons {
     display: flex;
     flex-direction: row;
