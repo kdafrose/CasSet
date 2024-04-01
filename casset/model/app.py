@@ -18,5 +18,5 @@ app.register_blueprint(comments_bp, url_prefix='/comments')
 app.register_blueprint(songs_bp, url_prefix = '/songs')
 app.register_blueprint(friends_bp, url_prefix = '/friends')
 
-# if __name__ == '__main__':
-#     app.run(debug=True, port=5000)
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
