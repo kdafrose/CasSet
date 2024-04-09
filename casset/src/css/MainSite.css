@@ -16,14 +16,13 @@
 #top-box {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  padding: 0.63vw;
 }
 #title {
-  margin-top: 0.3vw;
-  margin-bottom: 0.3vw;
+  margin: 0.3vw 0 0.3vw 0.1vw;
   width: 20vw;
   height: auto;
-  border-radius: 20px;
+  border-radius: 1.6vw;
 }
 #create-button {
   margin-top: 1vw;
@@ -37,8 +36,8 @@
   background-color: #C9A8CB;
   border: none;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 1.6vw;
+  border-bottom-left-radius: 1.6vw;
 }
 #import-button {
   margin-top: 1vw;
@@ -52,8 +51,8 @@
   background-color: #C9A8CB;
   border: none;
   color: white;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 1.6vw;
+  border-bottom-right-radius: 1.6vw;
 }
 #create-button:hover,
 #import-button:hover {
@@ -64,7 +63,7 @@
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
-  border-radius: 25px;
+  border-radius: 1.9vw;
   flex: 2;
   display: flex;
   flex-direction: column; /* Change to column direction */
@@ -147,6 +146,13 @@
   display: flex;
   margin-top: 5vw;
 }
+.no-cassets {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 0 0 5vw;
+  align-items: center;
+}
 .cassette-container {
   display: flex;
   flex-wrap: wrap;
@@ -216,7 +222,7 @@
   margin-bottom: 1.6vw;
   margin-right: 0.75vw;
   background-color: #FDDFCA;
-  border-radius: 25px;
+  border-radius: 1.9vw;
 }
 #account-top {
   display: flex;
@@ -258,7 +264,7 @@
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  border-radius: 10px;
+  border-radius: 0.8vw;
 }
 #logout-main:hover {
   background-color: #b184b3;
@@ -270,15 +276,15 @@
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
-  border-radius: 25px;
+  border-radius: 1.9vw;
 }
 #friends-top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-top: 1.25vw;
+  padding-left: 1.25vw;
+  padding-right: 1.25vw;
 }
 #friends {
   margin-top: 0.4vw;

@@ -259,7 +259,7 @@ function MainSite() {
                     </div>
                     <div id="middle-box" className="scrollable">
                     {playCasset && (
-                      <PlayCasset playlistID={selectedPlaylistID} playlistName ={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
+                      <PlayCasset playlistID={selectedPlaylistID} playlistName={selectedPlaylistName} onClose={() => setPlayCasset(false)} />
                     )}
                     {editCasset && (
                       <EditCasset playlistID={selectedPlaylistID} friends={friends} onClose={() => setEditCasset(false)} />
@@ -275,13 +275,17 @@ function MainSite() {
                       </div>
                       <div id="empty-cassets-box">
                           <div className="all-cassettes">
-                              <div className="cassette-container">
-                                  {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
-                                      <p>No cassets yet</p>
-                                  )}
-                                  {activeNav === 'SharedCassets' && sharedCassets.length === 0 && (
-                                      <p>No cassets yet</p>
-                                  )}
+                            {activeNav === 'MyCassets' && filteredPlaylists.length === 0 && (
+                              <div className="no-cassets">
+                                <p>No cassets yet</p>
+                              </div>
+                            )}
+                            {activeNav === 'SharedCassets' && sharedCassets.length === 0 && (
+                              <div className="no-cassets">
+                                <p>No cassets yet</p>
+                              </div>
+                            )}
+                            <div className="cassette-container">
                                   {(activeNav === 'MyCassets' ? filteredPlaylists : sharedCassets).map((playlist, i) => (
                                       <div id='cassette-title-and-img' key={i}>
                                           <p id='cassette-title'>{playlist.playlist_name}</p>
@@ -296,8 +300,8 @@ function MainSite() {
                                           </div>
                                           <Collapse in={boxVisibility[i]}>
                                               <div className='cassette-dropdown'>
-                                                  <Button onClick={() => {setEditCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">edit casset</Button>
-                                                  <Button onClick={() => {setPlayCasset(true); setSelectedPlaylistID(playlist._id);}} id="cassette-button">play casset</Button>
+                                                <Button onClick={() => handleEdit(playlist._id)} id="cassette-button">edit casset</Button>
+                                                <Button onClick={() => handlePlay(playlist._id, playlist.playlist_name)} id="cassette-button">play casset</Button>
                                               </div>
                                           </Collapse>
                                       </div>

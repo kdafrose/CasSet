@@ -1,6 +1,5 @@
 import '../css/PlaySong.css';
-import React, {useState, useEffect} from 'react';
-import {Form, Button} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import prevImage from '../media/previous.png';
 import nextImage from '../media/next.png';
 import playImg from '../media/play.png';
@@ -16,6 +15,18 @@ const track = {
     artists: [
         { name: "" }
     ]
+}
+
+export let playerInstance;
+
+export function DisconnectPlayer(player, closer){
+    player.pause();
+    player.removeListener('ready');
+    player.removeListener('not_ready');
+    player.removeListener('player_state_changed');
+    player.disconnect();
+
+    closer();
 }
 
 export default function PlaySong({ playingData, onNext, onPrev, closer }) {
@@ -83,16 +94,6 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
         playlistTransfer(deviceChosen);
     }
 
-    function disconnectPlayer(){
-        player.pause();
-        player.removeListener('ready');
-        player.removeListener('not_ready');
-        player.removeListener('player_state_changed');
-        player.disconnect();
-
-        closer();
-    }
-
     useEffect(() => {
 
         const script = document.createElement("script");
@@ -139,7 +140,7 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
             setPlayer(player);
 
             // Cleanup function
-
+            playerInstance = player;
         };
     }, []);
 
@@ -155,10 +156,6 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
     } else {
         return (
             <>
-                <div id="casset-play-top">
-                    <Button id="back" onClick={disconnectPlayer}>go back</Button>
-                    <p className="russo-one-regular" id="casset-title-play">{playingData.playlistName}</p>
-                </div>
                 <div className="container">
                     <div className="main-wrapper">
                         <div className="now-playing">
@@ -179,12 +176,14 @@ export default function PlaySong({ playingData, onNext, onPrev, closer }) {
                                     </button>
                                 </div>
                         </div>
-                        <Form.Label>
+                         <div id="volume">
                             Volume
-                        </Form.Label>
-                        <Form.Range
-                            onChange={event => {player.setVolume((event.target.value) /100 )}}
-                        />
+                            <div>
+                                <input type="range" id="volume-slider"
+                                    onChange={event => {player.setVolume((event.target.value) /100 )}}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </>

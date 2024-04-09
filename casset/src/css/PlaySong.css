@@ -1,7 +1,6 @@
 .container {
     display: flex;
     justify-content: center;
-    overflow: inherit;
 }
 .main-wrapper {
     display: flex;
@@ -10,9 +9,9 @@
 }
 .now-playing__cover {
     display: flex;
-    width: 20vw;
+    width: 18vw;
     height: auto;
-    border-radius: 20px;
+    border-radius: 1.5vw;
 }
 .now-playing {
     display: flex;
@@ -41,11 +40,13 @@
 .btn-spotify {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .btn-spotify-prev {
     background-color: #F4EDE9;
-    border: 1px solid #31343B;
-    border-radius: 5px;
+    border: 0.1vw solid #31343B;
+    border-radius: 0.4vw;
     margin-right: 3vw; 
     width: 4vw;
     height: 4vw;
@@ -54,16 +55,16 @@
     margin-top: 0.6vw;      
     margin-bottom: 0.6vw;                                                        
     background-color: #F4EDE9;
-    border: 1px solid #31343B;
-    border-radius: 5px;
+    border: 0.1vw solid #31343B;
+    border-radius: 0.4vw;
     margin-right: 3vw; 
     width: 4vw;
     height: 4vw;
 }
 .btn-spotify-next {
     background-color: #F4EDE9;
-    border: 1px solid #31343B;
-    border-radius: 5px;
+    border: 0.1vw solid #31343B;
+    border-radius: 0.4vw;
     width: 4vw;
     height: 4vw;
 }
@@ -84,6 +85,7 @@
     height: 2vw;
 }
 #volume {
+    margin-top: 0.5vw;
     font-family: "Russo One", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -94,26 +96,37 @@
 #volume-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 25vw;
-    height: 8px;
+    width: 28vw;
+    height: 1vw;
     background: #E8D0CB; /* Background color */
-    border-radius: 5px;
     outline: none;
-    margin-top: 10px; /* Add some space */
+    margin: 1vw 0 2vw 0; 
 }
 #volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 16px;
-    height: 16px;
+    width: 0.6vw;
+    height: 2.2vw;
     background: #BC6870; /* Color of the slider thumb */
-    border-radius: 50%;
+    border-radius: 0;
+    outline: none;
     cursor: pointer;
 }
 #volume-slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.6vw;
+    height: 2.2vw;
     background: #BC6870; /* Color of the slider thumb */
-    border-radius: 50%;
+    border-radius: 0;
+    outline: none;
     cursor: pointer;
+}
+#volume-slider::-webkit-slider-thumb:hover {
+    background: #a7555e;
+    box-shadow: 0 0.2vw 0.3vw 0 rgba(0, 0, 0, 0.25);
+}
+#volume-slider::-moz-range-thumb:hover {
+    background: #a7555e;
+    box-shadow: 0 0.2vw 0.3vw 0 rgba(0, 0, 0, 0.25);
 }
