@@ -11,7 +11,7 @@
     justify-content: flex-start;
     margin: 1.5vw;
     background-color: #EFE1EF;
-    border-radius: 30px;
+    border-radius: 2.35vw;
 }
 #spotify-cover {
     margin: 3vw 3vw 2vw 3vw;
@@ -37,7 +37,7 @@
 }
 #date {
     font-size: 0.95vw;
-    margin: -1vw 1.5vw 0 1.5vw;
+    margin: -1vw 1.5vw 2.5vw 1.5vw;
 }
 #share-button-div {
     display: flex;
@@ -54,7 +54,7 @@
     color: white;
     font-weight: bold;
     font-size: 1.6vw;
-    border-radius: 15px;
+    border-radius: 1.15vw;
 }
 #casset-songs {
     display: flex;
@@ -76,7 +76,7 @@
     color: white;
     font-weight: bold;
     font-size: 1.4vw;
-    border-radius: 13px;
+    border-radius: 1vw;
 }
 #share-button:hover,
 #back-button:hover {
@@ -97,7 +97,7 @@
     margin-right: 1.5vw;
     margin-bottom: 1.5vw;
     background-color: #EFE1EF;
-    border-radius: 30px;
+    border-radius: 2.35vw;
 }
 #casset-songs-row {
     margin: 2.5vw 2vw 0 2.5vw;
@@ -135,13 +135,13 @@
 
 #spotify-number {
     font-size: 1.25vw;
-    margin: 2vh;
+    margin: 1.1vw;
 }
 #spotify-artist-image {
     margin: 1vw;
     width: 3vw;
     height: 3vw;
-    border-radius: 5px;
+    border-radius: 0.3vw;
 }
 
 #spotify-songname-format{
@@ -163,8 +163,8 @@
     color: #926395; 
     cursor: pointer; 
     margin-left: auto;
-    margin-right: 20px;
-    margin-top: 25px;
+    margin-right: 1.55vw;
+    margin-top: 1.95vw;
     width: 2.5vw;
     height: 2.5vw; 
 }
@@ -207,11 +207,11 @@
 }
 #share-popup {
     position: relative;
-    background-color: #f0b8d6;
+    background-color: #e7cee2;
     padding: 2vw 0 2vw 2vw;
     border-radius: 2vw;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 35vw;
+    width: 36vw;
     height: 30vw;
 }
 .close-button {
@@ -231,7 +231,7 @@
     color: #31343B;
 }
 .friend-button {
-    width: 30vw;
+    width: 31.8vw;
     text-align: left;
     margin: 0 0 1vw 0;
     padding: 0.5vw 1.5vw;

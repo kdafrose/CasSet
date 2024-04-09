@@ -48,7 +48,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
             try {
                 const songsItems = await fetchGetMultiSongs(playlistID);
                 setSongsDocs(songsItems);
-                console.log(songsDocs);
+                console.log("songDocs:", songsItems);
             } catch (error) {
                 console.error('Error fetching songs:', error);
             }
@@ -136,7 +136,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
 
     return (
         <div id="casset-edit">
-            <div id="casset-side-box">
+            <div id="casset-side-box" className="scrollable">
                 <img src={playlistImage ? playlistImage : defaultspotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
                 <p id="spotify-desc">{playlistDescription.description ? playlistDescription.description: "No description yet!"}</p>
@@ -156,7 +156,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
                 <div id="casset-songs-box-col" className="scrollable">
                     <div id="casset-songs-row">
                         <img src={selectedImage} alt="temp cover" id="casset-cover"/>
-                            <p className="russo-one-regular" id="casset-title">{selectedPlaylist.playlist_name}</p>
+                        <p className="russo-one-regular" id="casset-title">{selectedPlaylist.playlist_name}</p>
                     </div>
                     <div id="casset-list-in-edit">
                         {songsDocs.map((song, index) => (
