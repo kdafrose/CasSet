@@ -16,18 +16,28 @@
     color: #a53171;
 }
 #add-friend-form {
-    margin: 0 0.2vw;
+    margin: 0.5vw 0.2vw 0 0.2vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 #add-friend-input {
-    margin: 0.5vw 0;
     font-size: 1.18vw;
+}
+#friend-input {
+    padding: 0.2vw 0;
+    color: #a53171;
+    font-weight: 500;
+    text-align: center;
+    background-color: #EFE1EF;
+    border: none;
+    border-radius: 5vw;
 }
 #add-friend-buttons {
     display: flex;
+    margin-top: 0.5vw;
+    margin-bottom: -0.48vw;
 }
 #enter-friends-button {
     padding: 0 0.7vw;
