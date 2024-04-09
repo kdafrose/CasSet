@@ -98,6 +98,8 @@ function Note({ noteId, songsItems, playlistItem }) {
                     value={noteContent}
                     onChange={setNoteContent}
                     placeholder="Enter your note here..."
+                    id="edit-content"
+                    className="scrollable"
                   />
                   <div className="edit-buttons">
                     <button onClick={handleSaveButtonClick} className="russo-one-regular" id="save-button">save</button>
