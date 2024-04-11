@@ -58,7 +58,7 @@ button#back {
       6px 6px 5px rgba(0, 0, 0, 0.25), /* Main shadow with slight blur */
       6px 6px 10px rgba(0, 0, 0, 0.25), /* Additional shadow for more blur */
       6px 6px 15px rgba(0, 0, 0, 0.25); /* Additional shadow for more blur */
-    margin: 6vw 5vw 5vw 2vw;
+    margin: 6vw 5vw 2.5vh 2vw;
     border-radius: 10px 8vw 10px 10px;
     min-height: 30vw;
     max-height: 55vh;
@@ -81,4 +81,16 @@ button#back {
 }
 #the-note-text > h3 {
     font-size: 2.2vw;
+}
+#page-num {
+    display: flex;
+    justify-content: right;
+    margin-right: 2.4vw;
+    font-size: 1.6vw;
+    color: #31343B;
+}
+#num {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }

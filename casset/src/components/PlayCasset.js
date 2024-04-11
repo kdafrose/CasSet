@@ -42,8 +42,30 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
     };
 
     const handlePrevNote = () => {
-        setNoteId(prevId => prevId === 1 ? maxNoteId : prevId - 1); // Decrement noteId, but ensure it loops back to maxNoteId
-    };
+        playerInstance.getCurrentState().then(state => {
+            if (state) {
+                console.log("currentID (PlayCasset):", state.track_window.current_track.id);
+                setNoteId(prevId => {
+                    if (prevId === 1) {
+                        return 1;
+                    } else {
+                        const previousSongID = songDocs[prevId - 1]?.songID;
+                        console.log("current ID:", state.track_window.current_track.id);
+                        console.log("previous ID:", previousSongID);
+                        if (state.track_window.current_track.id === previousSongID) {
+                            // If current song is the same as previous song, stay at current
+                            console.log("prevID (same):", prevId);
+                            return prevId;
+                        } else {
+                            // If different songs, decrement noteId
+                            console.log("prevID (decrement):", prevId);
+                            return prevId - 1;
+                        }
+                    }
+                });
+            }
+        });
+    };    
 
     const playlistInfo = {
         "playlistID" : playlistID,
@@ -58,7 +80,7 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
             </div>
             <div id="big-purple-container" className="scrollable">
                 <div id="left-play-song">
-                    <PlaySong playingData={playlistInfo}onNext={handleNextNote} onPrev={handlePrevNote} closer={onClose} />
+                    <PlaySong playingData={playlistInfo}onNext={handleNextNote} onPrev={handlePrevNote}/>
                 </div>
                 <div id="right-cassetandnote">
                     <div id="show-note" className="scrollable">
@@ -66,6 +88,9 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
                             {/* Conditional rendering based on loading state */}
                             {loading ? <p>Loading...</p> : <NoteContent noteId={noteId} songItems={songDocs} />}
                         </div>
+                    </div>
+                    <div id="page-num">
+                        <p id="num" className="russo-one-regular">{noteId}.</p>
                     </div>
                 </div>
             </div>

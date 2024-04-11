@@ -7,6 +7,14 @@
     flex-direction: column;
     justify-content: center;
 }
+.transfer-instance {
+    margin-top: 15vw;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.6vw;
+    color: #31343B;
+}
 .now-playing__cover {
     display: flex;
     width: 18vw;
@@ -26,16 +34,71 @@
     font-weight: 400;
     font-style: normal;
     font-size: 1.5vw;
-    color: #31343B;
+    color: #23252c;
     word-break: break-all; /* Break long words */
 }
 .now-playing__artist {
-    margin: 0.5vw 0;
+    margin: 0.5vw 0 0.3vw 0;
     font-family: "Russo One", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 1.2vw;
-    color: #31343B;
+    color: #23252c;
+}
+#progress-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#progress-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20vw;
+    height: 0.6vw;
+    background: #E8D0CB; /* Background color */
+    border-radius: 0.35vw;
+    outline: none;
+    cursor: pointer;
+}
+#progress-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.25vw;
+    height: 1.25vw;
+    background: #926395; /* Color of the slider thumb */
+    border-radius: 0.35vw;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+#progress-slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.25vw;
+    height: 1.25vw;
+    background: #926395; /* Color of the slider thumb */
+    border-radius: 0.35vw;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+#progress-slider::-webkit-slider-thumb:hover {
+    background: #825685;
+    box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.25);
+}
+#progress-slider::-moz-range-thumb:hover {
+    background: #825685;
+    box-shadow: 0 0.1vw 0.2vw 0 rgba(0, 0, 0, 0.25);
+}
+#timestamp {
+    font-size: 1vw;
+    margin-right: 0.8vw;
+}
+#total-duration {
+    font-size: 1vw;
+    margin-left: 0.8vw;
 }
 .btn-spotify {
     display: flex;
@@ -77,7 +140,7 @@
     height: 2vw;
 }
 #pause {
-    width: 2vw;
+    width: auto;
     height: 2vw;
 }
 #next{
@@ -100,7 +163,8 @@
     height: 1vw;
     background: #E8D0CB; /* Background color */
     outline: none;
-    margin: 1vw 0 2vw 0; 
+    margin: 0.8vw 0 2vw 0; 
+    cursor: pointer;
 }
 #volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
@@ -109,6 +173,7 @@
     height: 2.2vw;
     background: #BC6870; /* Color of the slider thumb */
     border-radius: 0;
+    border: none;
     outline: none;
     cursor: pointer;
 }
@@ -119,6 +184,7 @@
     height: 2.2vw;
     background: #BC6870; /* Color of the slider thumb */
     border-radius: 0;
+    border: none;
     outline: none;
     cursor: pointer;
 }

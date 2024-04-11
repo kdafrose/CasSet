@@ -32,7 +32,7 @@ import c10 from '../media/casset_options/c10.png';
 function MainSite() {
     const CLIENT_ID = "21fea0db3247431798d002572894627c";
     const CLIENT_SECRET = "f83046b5b266477d8cda691fad9be448"; 
-    const REDIRECT_URL_AFTER_LOGIN = "https://casset.onrender.com/casset";
+    const REDIRECT_URL_AFTER_LOGIN = "http://localhost:3000/casset";
     const [showCreatePlaylist, setShowCreatePlaylist] = useState(false);
     const [showUploadPlaylist, setShowUploadPlaylist] = useState(false); 
     const [profile, setProfile] = useState(null);

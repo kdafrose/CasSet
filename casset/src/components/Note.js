@@ -13,6 +13,7 @@ export function NoteContent({ noteId, songItems }) {
   useEffect(() => {
       const content = songItems[noteId-1]['annotation']
       setNoteContent(content);
+      console.log("songItems:", songItems);
   }, [noteId]);
 
   return (
