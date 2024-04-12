@@ -12,9 +12,8 @@ import Friends from './Friends';
 import titleSrc from '../media/casset_title_purple.png';
 import placeHold from '../media/empty_image.webp';
 import logoSrc from '../media/casset.png';
-import {fetchPlaylists} from '../controller/playlistController';
+import {fetchPlaylists, fetchSharedPlaylists} from '../controller/playlistController';
 import iconSrc from '../media/disket.png';
-import { fetchSharedPlaylists } from '../controller/playlistController';
 
 //casset options 
 import c1 from '../media/casset_options/c1.png';

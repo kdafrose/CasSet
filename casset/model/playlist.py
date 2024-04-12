@@ -8,6 +8,7 @@ playlist_bp = Blueprint('playlist_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 pl = client.playlists.playlistInfo
+fr = client.friends.friendsInfo
 us = client.usersInfo.users
 
 ### POST PLAYLIST DOCUMENT IN DATABASE ###
@@ -95,23 +96,26 @@ def fetchMultiPlaylistDocuments():
     except Exception as e:
         return jsonify(str(e)), 400
 
-@playlist_bp.route('/getSharedPlaylists', methods =['POST'])
+@playlist_bp.route('/getSharedPlaylists', methods=['POST'])
 def getSharedPlaylists():
     try:
         data = request.json
         user_name = data['user_name']
-        user_email = data['user_email']
-        ownerID = findUserID(user_name, user_email)
-        sharedCassets = pl.find({"owner": ownerID, "shared_casset":True})
-        sharedCasset_list = list(sharedCassets)
-
-        if not sharedCasset_list:
-            return jsonify({"success":False, "result": "User has no sent/received cassettes."}), 409
+        # Find all documents in the friends collection where friend_name matches user_name
+        sharedCassets = fr.find({"friend_name": user_name})
+        sharedCasset_list = [doc.get('shared_casset') for doc in sharedCassets if 'shared_casset' in doc]
+        sharedCassetPlaylistID = [item for sublist in sharedCasset_list for item in sublist]
+        
+        if not sharedCassetPlaylistID:
+            return jsonify({"success": False, "result": "User has no shared playlists."}), 409
         else:
-            return dumps(sharedCasset_list), 200
+            # Find all playlists based on shared_casset ids
+            playlistDocs = pl.find({"_id": {"$in": sharedCassetPlaylistID}})
+            playlist_list = list(playlistDocs)
+            return dumps(playlist_list), 200
 
     except Exception as e:
-        return jsonify(str(e)), 400
+        return jsonify({"error": str(e)}), 400
     
 @playlist_bp.route('/postSharedPlaylist', methods = ['POST'])
 def postSharedPlaylist():

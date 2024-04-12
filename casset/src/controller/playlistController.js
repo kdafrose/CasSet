@@ -62,7 +62,6 @@ export async function fetchCasset(playlistID){
 export const fetchPlaylists = async () => {
     try {
         const profileInfo = JSON.parse(localStorage.getItem('profile'));
-        console.log(profileInfo);
         const response = await fetch('http://localhost:5000/playlist/fetchMultiPlaylistDocuments', {
             method: 'POST',
             headers: {
@@ -85,13 +84,12 @@ export const fetchPlaylists = async () => {
 export const fetchSharedPlaylists = async () => {
     try {
         const profileInfo = JSON.parse(localStorage.getItem('profile'));
-        console.log(profileInfo);
         const response = await fetch('http://localhost:5000/playlist/getSharedPlaylists', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"user_name":profileInfo['name'], "user_email":profileInfo['email']}), 
+            body: JSON.stringify({"user_name":profileInfo['name']}), 
         });
 
         if (!response.ok) {
@@ -99,11 +97,12 @@ export const fetchSharedPlaylists = async () => {
         }
 
         const sharedCassets = await response.json();
+        console.log(sharedCassets);
         return sharedCassets;
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 export async function postSharedPlaylist(playlistID){
     fetch('http://localhost:5000/playlist/postSharedPlaylist', {
@@ -120,5 +119,5 @@ export async function postSharedPlaylist(playlistID){
     .catch(error => {
         console.error('Error:', error);
     });
-}
+};
 
