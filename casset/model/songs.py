@@ -2,11 +2,13 @@ from flask import request, jsonify, Blueprint
 from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
+import datetime
 
 songs_bp = Blueprint('songs_bp', __name__)
 
 client = MongoClient(CONNECTION_STRING)
 sg = client.song.songInfo
+pl = client.playlists.playlistInfo
 
 @songs_bp.route('/postSong', methods = ['POST'])
 def postSong():
@@ -81,8 +83,11 @@ def getMultiSongs():
 def editNote():
     try:
         data = request.json
+        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+        
+        #edits notes and updates last_edited attribute in playlist documents
         sg.update_one({"songID":data['songID'], "playlistID":data['playlistID']}, {"$set": {"annotation": data['new_note']}})
-
+        pl.update_one({"_id":data['playlistID']}, {"$set":{"last_edited":date_time}})
         return jsonify({"success": True, "result":"Note was edited and saved to the database successfully"})
     
     except Exception as e:

@@ -76,7 +76,7 @@ export async function editSongNote(songID, playlistID, new_note){
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
+        
         const newNote = await response.json();
         return newNote['result'];
     } catch (error) {

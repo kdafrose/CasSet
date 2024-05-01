@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Note from './Note'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //senorita awesome!
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'; // Import the trash icon
-import {deletePlaylist,fetchCasset} from '../controller/playlistController';
+import {deletePlaylist,fetchCasset, fetchPlaylistOwnerInfo} from '../controller/playlistController';
 import {deleteSongs,fetchGetMultiSongs} from '../controller/songsController';
 import { postSharedPlaylist } from '../controller/playlistController';
 import { addSharedCasset } from '../controller/friendsController';
@@ -28,6 +28,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
     const [songsDocs, setSongsDocs] = useState([]);
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
     const [playlistDescription, setPlaylistDescription] = useState([]);
+    const [selectedPlaylistOwnerInfo, setSelectedPlaylistOwnerInfo] = useState([]);
     const [playlistImage, setPlaylistImage] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const cassetImages = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10]
@@ -96,6 +97,21 @@ function EditCasset({ onClose, playlistID, friends }    ) {
         fetchSelectedPlaylist();
     }, [playlistID]);
 
+    // once selected playlist found, find playlist owner
+    useEffect(() => {
+        const fetchOwner = async () => {
+            try{
+                const ownerID = selectedPlaylist.owner.$oid
+                const playlistOwner = await fetchPlaylistOwnerInfo(ownerID);
+                setSelectedPlaylistOwnerInfo(playlistOwner);
+            } catch(err){
+                console.log(err)
+            }
+        }
+        fetchOwner();
+        console.log(selectedPlaylistOwnerInfo)
+    }, [selectedPlaylist])
+
     const [showSharePopup, setShowSharePopup] = useState(false);
 
     const toggleSharePopup = () => {
@@ -140,8 +156,12 @@ function EditCasset({ onClose, playlistID, friends }    ) {
                 <img src={playlistImage ? playlistImage : defaultspotifyCover} alt="spotify cover" id="spotify-cover"/>
                 <p className="russo-one-regular" id="spotify-desc-title">description</p>
                 <p id="spotify-desc">{playlistDescription.description ? playlistDescription.description: "No description yet!"}</p>
+                <p className="russo-one-regular" id="date-created">created by:</p>
+                <p id="date">{selectedPlaylistOwnerInfo.name}</p>
                 <p className="russo-one-regular" id="date-created">date created:</p>
                 <p id="date">{selectedPlaylist.date_created}</p>
+                <p className="russo-one-regular" id="date-created">last edited:</p>
+                <p id="date">{selectedPlaylist.last_edited}</p>
                 <div id="share-button-div">
                     <button type="button" className="russo-one-regular" id="share-button" onClick={toggleSharePopup}>share</button>
                 </div>
@@ -166,7 +186,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
                                     <img src={song.song_image} alt="artist image" id="spotify-artist-image"/>
                                     <div>
                                         <p id="spotify-songname-format"><strong>{song.name}</strong></p>
-                                        <p id="spotify-artistname-format">{song.artist}</p>
+                                        <p id="spotify-artistname-format">{song.artist.join(', ')}</p>
                                     </div>
                                 </div>
                                 {/* corresponding Note component for each song */}

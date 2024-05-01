@@ -15,12 +15,15 @@ def addFriend():
         data = request.json
         userID = findUserID(data['user_name'], data['user_email'])
         foundFriend = findIfFriends(userID, data['friend_name'])
+        friendUserID = findUserID(data['friend_name'], data['friend_email'])
+        
+        friendDocs = [
+            {"userID":userID,"friend_name":data['friend_name']}, # this is user adding the friend
+            {"userID":friendUserID, "friend_name":data['user_name']} #  new friend being friends with user (to know who added them in the database)
+        ]
        
         if not foundFriend:
-            fr.insert_one({
-                "userID":userID,
-                "friend_name":data['friend_name']
-            })
+            fr.insert_many(friendDocs)
             return jsonify({"success":True, "result":"Friend added to database successfully"}), 200
 
         else: 
@@ -75,31 +78,28 @@ def findAddedFriends():
 def removeFriend():
     try:
         data = request.json
-        user_name = data.get('user_name')
-        user_email = data.get('user_email')
-        friend_name = data.get('friend_name')
+        user_name = data['user_name']
+        user_email = data['user_email']
+        friend_name = data['friend_name']
+        friend_email = data['friend_email']
 
-        if not (user_name and user_email and friend_name):
-            return jsonify({"error": "Required fields (user_name, user_email, friend_name) are missing in the request."}), 400
+        if not (user_name and user_email and friend_name and friend_email):
+            return jsonify({"error": "Required fields (user_name, user_email, friend_name, and friend_email) are missing in the request."}), 400
         
         userID = findUserID(user_name, user_email)
-        fr.delete_one({"userID": userID, "friend_name": friend_name})
-
+        friendUserID = findUserID(friend_name, friend_email)
+        friendDocs = {
+            "$or": [
+                {"userID": userID, "friend_name": friend_name},
+                {"userID": friendUserID, "friend_name": user_name}
+            ]
+        }
+        
+        fr.delete_many(friendDocs)
         return jsonify({"success": True, "result": "Friend has been successfully deleted."}), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 400
-
-
-# @friends_bp.route('/addingSharedCasset', methods = ['POST'])
-# def addingSharedCasset():
-#     try:
-#         data = request.json
-#         friend_name = data.get('friend_name')
-#         user_name = data.get('user_name')
-#         user_email = data.get('user_email')
-#         ownerID = findUserID(user_name, user_email)
-
 
 def findIfFriends(userID, friend_name):
     if fr.find_one({"userID": userID, "friend_name":friend_name}):

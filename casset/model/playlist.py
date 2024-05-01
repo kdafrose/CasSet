@@ -1,4 +1,5 @@
 from flask import request, jsonify, Blueprint
+from bson import ObjectId
 from bson.json_util import dumps
 from pymongo import MongoClient
 from connectDB import CONNECTION_STRING
@@ -57,7 +58,8 @@ def deletePlaylist():
 def changePlaylistNote():
     try:
         data = request.json
-        pl.update_one({"name": data['playlist_name'], "_id": data['_id']},{"$set": { "note": data['new_note']} })
+        date_time = datetime.datetime.now().strftime("%B %d, %Y - %I:%M %p")
+        pl.update_one({"name": data['playlist_name'], "_id": data['_id']},{"$set": { "note": data['new_note'], "last_edited":date_time} })
 
         return jsonify({"success":True, "status":"Edited playlist note successfully"}), 200
     except Exception as e:
@@ -128,7 +130,24 @@ def postSharedPlaylist():
     
     except Exception as e:
         return jsonify(str(e)), 400
+    
 
+@playlist_bp.route('/fetchPlaylistOwnerInfo', methods=['POST'])
+def fetchPlaylistOwnerInfo():
+    try:
+        data = request.json
+        ownerID = ObjectId(data['ownerID'])
+        ownerInfo = us.find_one({"_id": ownerID})
+        
+        if ownerInfo is None:
+            return jsonify({"error": "Owner not found"}), 404
+
+        # Convert ObjectId to string
+        ownerInfo['_id'] = str(ownerInfo['_id'])
+        return jsonify(ownerInfo), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 ### HELPER FUNCTIONS ###
 def checkPlaylistInDB(playlistID):
