@@ -69,13 +69,16 @@
 #friends-list {
     margin: 1.8vw 1.5vw;
 }
-#friends-names-box {   
+#friends-names-box {  
+    display: flex; 
+    flex-direction: column;
     margin-bottom: 1vw;
     padding: 0.5vw 1vw;
     background-color: #F2EAE5;
     border-radius: 1vw;
 }
 #friends-names {
+    text-align: left;
     font-size: 1.1vw;
     color: #8b6178;
     border: none;

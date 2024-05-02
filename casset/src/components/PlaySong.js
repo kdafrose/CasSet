@@ -20,28 +20,56 @@ const track = {
 export let playerInstance;
 
 // Cleanup function
-export function DisconnectPlayer(player, closer){
+export function DisconnectPlayer(player, cassetCloser){
+    console.log("disconnecting..."); 
     player.pause();
     player.removeListener('ready');
     player.removeListener('not_ready');
     player.removeListener('player_state_changed');
     player.disconnect();
 
-    closer();
+    cassetCloser();
 }
 
-export default function PlaySong({ playingData, onNext, onPrev }) {
+export default function PlaySong({ playingData, onNext, onPrev, songCloser }) {
 
     const [is_paused, setPaused] = useState(true);
     const [is_active, setActive] = useState(false);
+    const [selectDevice, setSelectDevice] = useState(null); // Select device for handling end of playlist
     const [player, setPlayer] = useState(undefined);
-    const [current_track, setTrack] = useState(track);
+    const [current_track, setCurrTrack] = useState(track);
+    const [restart, setRestart] = useState(false);
+    const [restart_track, setRestartTrack] = useState(null);
     const [accessToken] = useState(() => {
         const storedToken = localStorage.getItem("accessToken");
         return storedToken ? storedToken : null;
     });;
     const [position, setPosition] = useState(0); // Track position in milliseconds
-    const [duration, setDuration] = useState(0); // Track duration in milliseconds
+    const [duration, setDuration] = useState(751); // Track duration in milliseconds (make diff to handle nextCheck())
+
+    // async function transferAndPlayPlaylist(deviceSpecific) {
+    //     const playlistURIPlay = "spotify:playlist:" + playingData.playlistID;
+    
+    //     const transferParams = {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type' : 'application/json',
+    //             'Authorization' : 'Bearer ' + accessToken
+    //         },
+    //         body: JSON.stringify({
+    //             'device_ids' : [deviceSpecific],
+    //             'play' : true,
+    //             'context_uri': playlistURIPlay,
+    //             'offset': {
+    //                 'position': 0
+    //             },
+    //             "position_ms": 0
+    //         }),
+    //     };
+    
+    //     await fetch('https://api.spotify.com/v1/me/player', transferParams);
+    // }
+    
 
     async function transferAuto(deviceSpecific){
 
@@ -61,7 +89,7 @@ export default function PlaySong({ playingData, onNext, onPrev }) {
         turnOffShuffle(deviceSpecific);
     }
 
-    async function playlistTransfer(selectDevice){
+    async function playlistTransfer(deviceSpecific){
 
         const playlistURIPlay = "spotify:playlist:" + playingData.playlistID;
         console.log("New playlistID: " + playingData.playlistID);
@@ -81,7 +109,7 @@ export default function PlaySong({ playingData, onNext, onPrev }) {
             }),
         };
     
-        await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + selectDevice, transferParams);
+        await fetch('https://api.spotify.com/v1/me/player/play?device_id=' + deviceSpecific, transferParams);
     }
 
     async function turnOffShuffle(deviceChosen){
@@ -96,6 +124,53 @@ export default function PlaySong({ playingData, onNext, onPrev }) {
         await fetch('https://api.spotify.com/v1/me/player/shuffle?state=false&device_id=' + deviceChosen, shuffleParams);
         playlistTransfer(deviceChosen);
     }
+
+    function restartPlaylist(player, device) {
+        console.log("restarting...");
+        songCloser();
+        
+        setRestart(false);
+        setRestartTrack(null);
+        player.pause();
+        player.removeListener('ready');
+        player.removeListener('not_ready');
+        player.removeListener('player_state_changed');
+        player.disconnect(); 
+    }
+
+    function restartCheck() {
+        // Check if playlist has completed
+        if (restart) {
+            console.log("RESTART TRACK (check):", restart_track.id);
+            if (restart_track.id == current_track.id)
+                restartPlaylist(player, selectDevice);
+        }   
+    }   
+
+    /* KINDA BUGGY
+        * sometimes doesn't switch note (1/2 second delay may not be enought sometimes)
+        * also player has bugs, when it goes to next song without button, you can't interact with progression slider
+        * need to debug second issue, maybe combine transferAuto and playlistTransfer? look at documentation too
+    */
+    function nextCheck() {
+        console.log("POSITION (check):", position);
+        console.log("DURATION (check):", duration);
+        if (position >= (duration - 750)) { // allow to be 3/4 a second off
+            player.nextTrack();
+            setTimeout(() => {
+                onNext();
+            }, 500); // Delay execution by 500 milliseconds
+            console.log("going next...");
+        }
+    }
+
+    useEffect(() => {
+        restartCheck(); 
+    }, [current_track]);
+
+    useEffect(() => {
+        nextCheck();
+    }, [position]);
 
     useEffect(() => {
 
@@ -117,27 +192,39 @@ export default function PlaySong({ playingData, onNext, onPrev }) {
                 console.log('Ready with Device ID', device_id);
 
                 transferAuto(device_id);
+                setSelectDevice(device_id);
             });
 
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
             });
 
-            player.addListener('player_state_changed', ( state => {
+            player.addListener('player_state_changed', (state) => {
 
                 if (!state) {
                     return;
                 }
 
-                setTrack(state.track_window.current_track);
+                setCurrTrack(state.track_window.current_track);
                 setPaused(state.paused);
                 setPosition(state.position);
                 setDuration(state.duration);
 
-                player.getCurrentState().then( state => { 
+                player.getCurrentState().then(state => { 
                     (!state)? setActive(false) : setActive(true) 
                 });
-            }));
+    
+                console.log("CURRENT TRACK:", state.track_window.current_track.id);
+                console.log("NEXT TRACK:", state.track_window.next_tracks[0].id);
+                console.log("LAST TRACK:", playingData.lastSongID);
+
+                // Check if its the last song
+                if (state.track_window.current_track.id == playingData.lastSongID) {
+                    setRestart(true);
+                    console.log("RESTART TRACK SET", state.track_window.next_tracks[0].id);
+                    setRestartTrack(state.track_window.next_tracks[0]);
+                }  
+            });
 
             player.connect();
 

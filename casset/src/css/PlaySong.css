@@ -131,6 +131,11 @@
     width: 4vw;
     height: 4vw;
 }
+.btn-spotify-prev:hover, 
+.btn-spotify-pp:hover,
+.btn-spotify-next:hover {
+    background-color: #fcfbfb;
+}
 #prev {
     width: 2vw;
     height: 2vw;

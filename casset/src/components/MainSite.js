@@ -217,6 +217,8 @@ function MainSite() {
         if (storedProfile) {
             setProfile(JSON.parse(storedProfile));
         }
+
+        navigate('/casset');
     }, []);
 
     const toggleBoxVisbility = (index) => {
@@ -250,7 +252,9 @@ function MainSite() {
             <div id="everything-box">
                 <div id="left-side">
                     <div id="top-box">
+                      <a href="http://localhost:3000/casset">
                         <img src={titleSrc} alt="CASSET" id="title" />
+                      </a>
                         {/* When the button is clicked, toggle the state to show/hide the create playlist form */}
                         <button type="button" className="russo-one-regular" id="create-button" 
                           onClick={() => (setShowCreatePlaylist(!showCreatePlaylist))}>create casset</button>
@@ -339,14 +343,18 @@ function MainSite() {
                     <div id="friends-box" className="scrollable">
                       <div id="friends-top">
                         <p className="russo-one-regular" id="friends">friends</p>
-                        <img src={logoSrc} alt="logo" id="logo"/>
+                        <a href="http://localhost:3000/casset">
+                          <img src={logoSrc} alt="logo" id="logo"/>
+                        </a>
                       </div>
                       <Friends friends={friends} setFriends={setFriends} />
                     </div>
                 </div>
             </div>
             <footer>
-              <img src={iconSrc} alt="icon" style={{maxWidth: "32px"}}/>
+              <a href="http://localhost:3000/casset">
+                <img src={iconSrc} alt="icon" style={{maxWidth: "32px"}}/>
+              </a>
               &emsp;© 2024 CasSet&emsp;About&emsp;Privacy Policy&emsp;Contact
             </footer> 
             {/* Conditionally render the CreatePlaylist component based on the state */}

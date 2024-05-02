@@ -217,7 +217,8 @@
 .close-button {
     position: fixed;
     border: none;
-    margin-right: 30%;
+    margin-top: -1vw;
+    margin-left: -1vw;
     outline: none;  
     background-color: transparent;
     font-size: 1.3vw;

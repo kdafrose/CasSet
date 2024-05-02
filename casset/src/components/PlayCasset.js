@@ -7,7 +7,9 @@ import PlaySong, { DisconnectPlayer, playerInstance } from './PlaySong';
 import { NoteContent } from './Note';
 
 function PlayCasset({ playlistID, playlistName, onClose }) {
+    const [playSong, setPlaySong] = useState(true);
     const [songDocs, setSongDocs] = useState([]);
+    const [lastSong, setLastSong] = useState("");
     const [selectedPlaylist, setSelectedPlaylist] = useState([]);
     const [noteId, setNoteId] = useState(1);
     const [loading, setLoading] = useState(true); // Loading state
@@ -15,7 +17,7 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
     // gets playlist information
     useEffect(() => {
         const fetchSelectedPlaylist = async () => {
-            try {
+            try {   
                 await fetchCasset(playlistID)
                     .then((data) => {
                         setSelectedPlaylist(data);
@@ -23,6 +25,8 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
                 await fetchGetMultiSongs(playlistID)
                     .then((response) => {
                         setSongDocs(response);
+                        setLastSong(response[response.length - 1]?.songID);
+                        console.log("lastSong:", response[response.length - 1]?.songID);
                     })
                 setLoading(false);
             } catch (error) {
@@ -67,9 +71,22 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
         });
     };    
 
-    const playlistInfo = {
-        "playlistID" : playlistID,
-        "playlistName" : playlistName
+    const handleRestartPlaylist = () => {
+        // Once playlist completes re-render PlaySong component
+        setPlaySong(false);
+        setTimeout(() => {
+            setPlaySong(true);
+        }, 500); // Delay execution by 500 milliseconds
+    }
+
+    let playlistInfo = {};
+
+    if (lastSong !== undefined) {
+        playlistInfo = {
+            "playlistID" : playlistID,
+            "playlistName" : playlistName,
+            "lastSongID" : lastSong
+        };
     }
 
     return (
@@ -80,7 +97,26 @@ function PlayCasset({ playlistID, playlistName, onClose }) {
             </div>
             <div id="big-purple-container" className="scrollable">
                 <div id="left-play-song">
-                    <PlaySong playingData={playlistInfo}onNext={handleNextNote} onPrev={handlePrevNote}/>
+                    {playSong ? (
+                        !lastSong ? (
+                            <div className="container">
+                                <div className="main-wrapper">
+                                    <b className="transfer-instance"> Transferring the instance to CasSet... </b>
+                                </div>
+                            </div>
+                        ) : (
+                            <PlaySong
+                                playingData={playlistInfo}
+                                onNext={handleNextNote}
+                                onPrev={handlePrevNote}
+                                songCloser={() => handleRestartPlaylist()}
+                            />
+                        )
+                    ) : <div className="container">
+                            <div className="main-wrapper">
+                                <b className="transfer-instance"> Restarting playlist... </b>
+                            </div>
+                        </div>}
                 </div>
                 <div id="right-cassetandnote">
                     <div id="show-note" className="scrollable">

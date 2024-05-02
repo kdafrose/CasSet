@@ -181,7 +181,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
                 <div id="share-popup">
                     {/* Close button */}
                     <button className="close-button" onClick={toggleSharePopup}>
-                        <b>X</b>
+                        X
                     </button>
                     {/* Share content */}
                     <div id="share-content" className="scrollable">
