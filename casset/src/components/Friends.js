@@ -69,22 +69,25 @@ export default function Friends({ friends, setFriends }) {
 
     return (
         <div id="friends-bottom">
-            <button 
+            {!showAddFriendForm && (
+                <button 
                 type="button" 
                 className="russo-one-regular" 
                 id="add-friends-button"
                 onClick={() => setShowAddFriendForm(true)}
-            >
-                <b>&#x2b;</b> add friends
-            </button>
+                >
+                    <b>&#x2b;</b> add friends
+                </button>
+            )}
             {showAddFriendForm && (
                 <div id="add-friend-form">
                     <div id="add-friend-input">
                         <input
                             type="email"
-                            placeholder="type email and click enter"
+                            placeholder="enter email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            id="friend-input"
                         />
                     </div>
                     <div id="add-friend-buttons">

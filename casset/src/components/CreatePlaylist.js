@@ -129,7 +129,8 @@ export default function CreatePlaylist({ onClose }) {
             <div className="form-container">
                 {playlistMade === false ? (
                     <form className="create-playlist-form">
-                        <button className="close-button" onClick={handleClose}>X</button>
+                        <button id="close-button" onClick={handleClose}>X</button>
+                        <p id="create-prompt" className="russo-one-regular" >Enter the details below to create your casset:</p>
                         <Container id="create-container">
                             <InputGroup className='mb-3' size='lg'>
                                 <FormControl
@@ -143,17 +144,20 @@ export default function CreatePlaylist({ onClose }) {
                                     onChange={event => {
                                         setPlaylistName(event.target.value);
                                     }}
+                                    id="playlist-name"
                                 />
-                                <Button onClick={makePlaylist}>
+                                <Button onClick={makePlaylist} id="make-button">
                                     Make
                                 </Button>
                             </InputGroup>
+                            <p id="optional">optional</p>
                             <FormControl 
                                 placeholder="Enter description here" 
                                 type="input"
                                 onChange={event =>{
                                     setPLaylistDescription(event.target.value);
                                 }}
+                                id="description"
                                 >
                             </FormControl>
                         </Container>
@@ -162,17 +166,17 @@ export default function CreatePlaylist({ onClose }) {
                     <>
                         <form className="new-playlist-songs">
                             <div id="new-playlist-div">
-                                <button className="close-button" onClick={handleClose}>X</button>
+                                <button id="close-button" onClick={handleClose}>X</button>
                                 <h1 id="newly-playlist-title">{playlistName}</h1>
                                 <Button id="make-playlist" 
                                 onClick={handleSongAdd}>
-                                    Make Playlist
+                                    create
                                 </Button>
                             </div>
                             <AddSong onSongUpdate={updateSongList}/>
                             <div id="songs-added">
                                 {songsToAdd.length === 0 ? (
-                                    <h4>No songs yet</h4>
+                                    <h5 id="no-songs-yet">No songs yet</h5>
                                 ) : null}
                                 <Row className="mx-2 row row-cols-1">
                                 {songsToAdd.map((song) => {

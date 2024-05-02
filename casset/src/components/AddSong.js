@@ -62,11 +62,12 @@ export default function AddSong(props){
         <Container id="add-song-search">
           <InputGroup className="mb-3" size="lg">
             <FormControl
-              placeholder="Search For a Song"
+              placeholder="Search for songs"
               type="input"
               onChange={event => setSearchInput(event.target.value)}
+              id="search-form"
             />
-            <Button onClick={searchSong}>
+            <Button onClick={searchSong} id="search-button">
               Search
             </Button>
           </InputGroup>

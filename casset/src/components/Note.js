@@ -13,6 +13,7 @@ export function NoteContent({ noteId, songItems }) {
   useEffect(() => {
       const content = songItems[noteId-1]['annotation']
       setNoteContent(content);
+      console.log("songItems:", songItems);
   }, [noteId]);
 
   return (
@@ -98,6 +99,8 @@ function Note({ noteId, songsItems, playlistItem }) {
                     value={noteContent}
                     onChange={setNoteContent}
                     placeholder="Enter your note here..."
+                    id="edit-content"
+                    className="scrollable"
                   />
                   <div className="edit-buttons">
                     <button onClick={handleSaveButtonClick} className="russo-one-regular" id="save-button">save</button>
