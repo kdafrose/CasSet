@@ -14,16 +14,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-}
-.find-playlist-form {
-    background-color: #C9A8CB;
-    padding: 20px;
-    border-radius: 10px;
     height: 90vh;
-    width: 200vh;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    overflow: auto;
+}
+#find-playlist-form {
+    background-color: #e8cfe9;
+    padding: 2vw;
+    border-radius: 1vw;
+    height: 90vh;
+    width: 91.5vw;
 }
 .close-button {
     border: none;
@@ -31,6 +29,63 @@
     background-color: transparent;
     display: block;
     color: black;
+}
+#card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    box-shadow: 
+      4px 4px 3px rgba(0, 0, 0, 0.15), /* Main shadow with slight blur */
+      4px 4px 7px rgba(0, 0, 0, 0.15), /* Additional shadow for more blur */
+      4px 4px 9px rgba(0, 0, 0, 0.15); /* Additional shadow for more blur */
+    background-color: #F2EAE5;
+    border: none;
+    height: 28vw;
+    width: 23vw;
+    padding: 1vw 0.5vw;
+    margin: 2vw;
+}
+#card-img {
+    height: 15vw; 
+    width: 15vw;
+    object-fit: cover;
+    margin-bottom: 0.5vw;
+}
+#card-body {
+    width: 22vw;
+}
+#card-title {
+    color: #31343B;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5vw;
+    margin-bottom: 0.5vw;
+}
+#card-subtitle {
+    color: #31343B;
+    font-size: 1.2vw;
+    text-align: justify;
+    margin-bottom: 0.5vw;
+}
+#card-select-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Russo One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.2vw;
+    padding: 0.8vw 1.5vw;
+    border: none;
+    border-radius: 0.5vw;
+    background-color: #845986;
+}
+#card-select-button:hover {
+    background-color: #6d466f;
+    transition: all 0.2s ease;  
 }
 body.dark-theme {
     background: #222222;
