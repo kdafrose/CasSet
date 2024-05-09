@@ -60,19 +60,28 @@
 .expand-collapse-button:hover {
     color: #95416e;
 }
+.ql-editor {
+    font-size: 1.015vw;
+}
 #save-button {
     margin: 0.5vw 1vw 1vw 0.5vw;
     border: none;
-    background-color: #e0b2cb;
-    color: #31343B;
+    background-color: #cf99b7;
+    color: #FFFF;
     padding: 0.2vw 0.5vw;
-    border-radius: 5px;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
 }
 #delete-button {
     margin: 0.5vw 0;
     border: none;
-    background-color: #e0b2cb;
-    color: #31343B;
+    background-color: #cf99b7;
+    color: #FFFF;
     padding: 0.2vw 0.5vw;
-    border-radius: 5px;
+    font-size: 1.2vw;
+    border-radius: 0.5vw;
+}
+#save-button:hover,
+#delete-button:hover {
+    background-color: #CD77A5;
 }

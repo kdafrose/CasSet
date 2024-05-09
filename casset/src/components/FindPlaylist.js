@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {Container, Button, Row, Spinner, Card} from 'react-bootstrap'
+import {Container, Button, Row, Spinner, Card, Col} from 'react-bootstrap'
 import '../css/FindPlaylist.css';
 import {fetchPostPlaylist} from '../controller/playlistController';
 import {fetchPostMultiSongs} from '../controller/songsController';
@@ -116,37 +116,37 @@ export default function FindPlaylist({onClose}) {
     return(
         <div className='overlay-find'>
             <div className="form-container-find">
-                <form className="find-playlist-form">
+                <form id="find-playlist-form" className="scrollable">
                     <button className="close-button" onClick={handleClose}>X</button>
                     {playlists.length !== 0 ? (
                         <Container>
-                            <Row className="mx-2 row row-cols-2">
+                            <Row className="mx-3 row row-cols-3">
                                 {playlists.map( (playlist, i) => {
                                 return (
-                                    <Card className='d-flex flex-row' key={playlist.name}>
-                                        <Card.Img src={playlist.images?.[0]?.url} style={{ height: '150px', width: '150px', objectFit:'cover'}}/>
-                                        <Card.Body className='flex-grow-1' style={{width:'300px'}}>
-                                            <Card.Title>{playlist.name}</Card.Title>
-                                            <Card.Subtitle>{playlist.description}</Card.Subtitle>
+                                    <Card id='card' className="scrollable" key={playlist.name}>
+                                        <Card.Img src={playlist.images?.[0]?.url} id='card-img'/>
+                                        <Card.Body id='card-body'>
+                                            <Card.Title id='card-title'>{playlist.name}</Card.Title>
+                                            <Card.Subtitle id='card-subtitle'>{playlist.description}</Card.Subtitle>
                                         </Card.Body>
-                                    <Button  
-                                        style={{height:'150px', width: '150px', objectFit:'cover'}} 
-                                        onClick={() => {
-                                        // Change this to hold the selected playlistID with database connection
-                                        localStorage.removeItem("playlistID");
-                                        localStorage.setItem("playlistID", playlist.id);
+                                        <Button  
+                                            id='card-select-button'
+                                            onClick={() => {
+                                            // Change this to hold the selected playlistID with database connection
+                                            localStorage.removeItem("playlistID");
+                                            localStorage.setItem("playlistID", playlist.id);
 
-                                        const playlistInfo = {
-                                            "_id": playlist.id,
-                                            "playlist_name": playlist.name, 
-                                            "sharing_link":playlist.external_urls.spotify,
-                                        }
-                                    
-                                        handlePlaylistChoice(playlistInfo);
-                                    }}>
-                                    Select playlist
-                                </Button>
-                                </Card>
+                                            const playlistInfo = {
+                                                "_id": playlist.id,
+                                                "playlist_name": playlist.name, 
+                                                "sharing_link":playlist.external_urls.spotify,
+                                            }
+                                        
+                                            handlePlaylistChoice(playlistInfo);
+                                        }}>
+                                            select
+                                        </Button>
+                                    </Card>
                                 )
                             })}
                         </Row>

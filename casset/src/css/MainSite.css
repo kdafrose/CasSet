@@ -1,3 +1,4 @@
+/* MAIN SITE */
 #main {
   margin: 0;
   height: 100vh;
@@ -16,14 +17,13 @@
 #top-box {
   display: flex;
   flex-direction: row;
-  padding: 10px;
+  padding: 0.63vw;
 }
 #title {
-  margin-top: 0.3vw;
-  margin-bottom: 0.3vw;
+  margin: 0.3vw 0 0.3vw 0.1vw;
   width: 20vw;
   height: auto;
-  border-radius: 20px;
+  border-radius: 1.6vw;
 }
 #create-button {
   margin-top: 1vw;
@@ -37,8 +37,8 @@
   background-color: #C9A8CB;
   border: none;
   color: white;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 1.6vw;
+  border-bottom-left-radius: 1.6vw;
 }
 #import-button {
   margin-top: 1vw;
@@ -52,8 +52,8 @@
   background-color: #C9A8CB;
   border: none;
   color: white;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 1.6vw;
+  border-bottom-right-radius: 1.6vw;
 }
 #create-button:hover,
 #import-button:hover {
@@ -64,13 +64,23 @@
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
-  border-radius: 25px;
+  border-radius: 1.9vw;
   flex: 2;
   display: flex;
   flex-direction: column; /* Change to column direction */
   justify-content: flex-start; /* Align content to the start (top) */
   align-items: stretch; /* Stretches search, maybe need to adjust after cassets are added */
 }
+#bottom-box {
+  display: flex;
+  flex-direction: column
+}
+#right-side {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+/* NAVIGATION */
 #navigation {
   display: flex;
   flex-direction: row;
@@ -106,18 +116,11 @@
   background-color: #EFE1EF;
   color: #a53171;
 }
+/* SEARCH */
 #search-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-#create-container{
-  display:flex;
-  flex-direction: column;
-  background-color: #C9A8CB;
-  border-radius: 20px;
-  border: #b7b1b1 solid 1px ;
-  
 }
 #search-bar {
   padding-right: 2vw;
@@ -136,6 +139,7 @@
 #search-bar::placeholder {
   text-align: center; /* Center-align placeholder text */
 }
+/* CASSETS */
 #empty-cassets-box {
   display: flex;
   flex-direction: column;
@@ -146,6 +150,13 @@
 .all-cassettes {
   display: flex;
   margin-top: 5vw;
+}
+.no-cassets {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0 0 0 5vw;
+  align-items: center;
 }
 .cassette-container {
   display: flex;
@@ -200,15 +211,7 @@
 #cassette-button:hover{
   color: #866487;
 }
-#bottom-box {
-  display: flex;
-  flex-direction: column
-}
-#right-side {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
+/* ACCOUNT MENU */
 #account-menu {
   display: flex;
   flex-direction: column;
@@ -216,7 +219,7 @@
   margin-bottom: 1.6vw;
   margin-right: 0.75vw;
   background-color: #FDDFCA;
-  border-radius: 25px;
+  border-radius: 1.9vw;
 }
 #account-top {
   display: flex;
@@ -258,11 +261,12 @@
   color: white;
   font-weight: bold;
   font-size: 1.2vw;
-  border-radius: 10px;
+  border-radius: 0.8vw;
 }
 #logout-main:hover {
   background-color: #b184b3;
 }
+/* FRIENDS */
 #friends-box {
   display: flex;
   flex-direction: column;
@@ -270,15 +274,15 @@
   margin-right: 0.75vw;
   margin-bottom: 0.75vw;
   border: 3px solid #C9A8CB;
-  border-radius: 25px;
+  border-radius: 1.9vw;
 }
 #friends-top {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-top: 1.25vw;
+  padding-left: 1.25vw;
+  padding-right: 1.25vw;
 }
 #friends {
   margin-top: 0.4vw;
@@ -292,7 +296,7 @@
   max-width: 5.75vw;
   border-radius: 3px;
 }
-
+/* CREATE CASSET */
 .overlay {
   position: fixed;
   top: 0; 
@@ -308,22 +312,86 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  align-items: center;
+  height: 80vh;
+  align-items: center;  
   height: 80vh;
 }
 .create-playlist-form {
-  background-color: #845986;
-  padding: 10px;
-  border-radius: 20px;
-  width: 500px;
+  background-color: #e8cfe9;
+  border: #845986 solid 0.3vw;
+  padding: 0.9vw;
+  border-radius: 1.9vw;
+  height: 32vw;
+  width: 38vw;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
+#close-button {
+  position: fixed;
+  border: none;
+  outline: none; 
+  background-color: transparent;
+  font-size: 1.3vw;
+  color: #31343B;
+}
+#create-container{
+  display:flex;
+  flex-direction: column;
+  height: 30vw;
+  width: auto;
+}
+#create-prompt {
+  text-align: center;
+  margin-top: 3vw;
+  margin-bottom: -5vw;
+  font-size: 1.5vw;
+  color: #31343B;
+}
+#playlist-name {
+  color: #31343B;
+  height: 3.5vw;
+  border: none;
+  font-size: 1.5vw;
+  border-top-left-radius: 0.6vw;
+  border-bottom-left-radius: 0.6vw;
+  padding: 1vw;
+  margin-bottom: 1vw;
+}
+#make-button {
+  display: flex;
+  background-color: #845986;
+  height: 3.5vw;
+  width: 6vw;
+  border: none;
+  font-size: 1.5vw;
+  border-top-right-radius: 0.6vw;
+  border-bottom-right-radius: 0.6vw;
+  align-items: center;
+  justify-content: center;
+}
+#make-button:hover {
+  background-color: #6d466f;
+}
+#optional {
+  margin-bottom: 0;
+  font-size: 1.1vw;
+  color: #31343B;
+} 
+#description {
+  color: #31343B;
+  height: 3vw;
+  border: none;
+  font-size: 1.3vw;
+  border-radius: 0.6vw;
+  padding: 1vw;
+}
 .new-playlist-songs{
-  position:absolute;
+  position: absolute;
   background-color: #f4e2f5;
-  left: 1%;
-  border-radius: 10px;
-  width: 980px;
-  height: 80;
+  left: 3%;
+  border-radius: 1vw;
+  width: 75vw;
+  height: 91.5vh;
   overflow:auto;
 }
 #song-playlist-add{
@@ -344,95 +412,158 @@
 }
 #make-playlist {
   margin-left: auto;
-  margin-top: auto;
-  margin-right: 10px;
-  background-color:  #C9A8CB; 
-  border: 2px solid #79637a; 
-  color: #5f5760; 
+  margin-top: 0.6vw ;
+  margin-right: 0.6vw;
+  background-color:  #b4628e; 
+  border: none; 
+  color: #f4e2f5;
   font-family: "Russo One", sans-serif;
-  font-style: italic;
-  padding: 10px 20px;
-  border-radius: 20px; 
-  cursor: pointer; 
-  transition: all 0.3s ease; 
+  font-size: 1.6vw;
+  padding: 0.5vw 1.4vw;
+  border-radius: 1.2vw; 
+  transition: all 0.2s ease; 
 }
-
 #make-playlist:hover {
-  background-color: #e08695; 
-  color: #fff;
-  border-color: #D6336C; 
-}
-#add-song-search{
-  display:flex;
-  border-radius: 20px;
-  border-bottom-left-radius: 35%;
-  border-bottom-right-radius: 35%;
-  border-bottom: 10px;
-  height: auto;
-  width:600px;
-  padding: 7px; 
-  background-color: #c9a8cba1; 
-  flex-direction: column;
-  margin-bottom: 10px;
-  
-}
-#songs-added{
-  display:flex;
-  background-color: #c693b5;
-  position:fixed;
-  top:4%;
-  right:5%;
-  overflow-y: auto;
-  width:210px;
-  height: 91.5vh;
-  border-radius: 10px;
-  border: #614257 solid 2px;
-}
-.song-list-display{
-  display:flex;
+  background-color: #9d4d78; 
+  color: #f4e2f5;
 }
 h1#newly-playlist-title{
   margin-left: 5%;
-  margin-top: 10px;
-  font-size:200%;
+  margin-top: 0.8vw;
+  font-size: 2.5vw;
   font-family: "Russo One", sans-serif;
-  color: #927a93;
+  color: #79637a;
 }
-.loading-container{
+#songs-added{
   display:flex;
-  justify-content: center;
+  background-color: #e7cbe6;
+  position:fixed;
+  top: 4%;
+  right: 3vw;
+  overflow-y: auto;
+  width: 18vw;
+  height: 91.5vh;
+  border-radius: 10px;
+  border: #ae5b87 solid 0.2vw;
+}
+#no-songs-yet {
+  display: flex;
+  flex: 1;
+  margin-left: 1vw;
   align-items: center;
+  justify-content: center;
+  font-size: 1.6vw;
+  color: #31343B;
+}
+.song-list-display{
+  display:flex;
 }
 .remove-song-select{
   width:30px;
   height:110px;
   background-color: transparent;
   border:none;
-  
+}
+/* ADD SONG */
+#add-song-search{
+  display:flex;
+  border-radius: 1.5vw;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 35%;
+  border-bottom: 1vw;
+  height: auto;
+  width: 48vw;
+  padding: 7px; 
+  background-color: #c9a8cba1; 
+  flex-direction: column;
+  margin-bottom: 10px; 
+}
+#search-form {
+  color: #31343B;
+  height: 3.5vw;
+  border: none;
+  font-size: 1.5vw;
+  border-top-left-radius: 0.6vw;
+  border-bottom-left-radius: 0.6vw;
+  padding: 1vw;
+  margin-bottom: 1vw;
+}
+#search-button {
+  display: flex;
+  background-color: #845986;
+  height: 3.5vw;
+  width: 7vw;
+  border: none;
+  font-size: 1.5vw;
+  border-top-right-radius: 0.6vw;
+  border-bottom-right-radius: 0.6vw;
+  align-items: center;
+  justify-content: center;
+}
+#search-button:hover {
+  background-color: #6d466f;
+}
+#song-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #dbe5ed;
+  border: 0.8vw solid #f4e2f5;
+  border-radius: 1.5vw;
+  height: 25vw;
+  padding: 1vw 0.5vw;
+}
+#song-card-img {
+  width: 12vw;
+  height: 12vw;
+  margin-bottom: 0;
+}
+#song-card-title {
+  color: #31343B;
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.4vw;
+  margin-bottom: 0.5vw;
+}
+#song-card-subtitle {
+  color: #31343B;
+  font-size: 1.1vw;
+  margin-bottom: 0;
+}
+#song-card-add-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Russo One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.1vw;
+  padding: 0.4vw 1.5vw;
+  border: none;
+  border-radius: 0.5vw;
+  color: #dbe5ed;
+  background-color: #6488a3;
+}
+#song-card-add-button:hover {
+  background-color: #577b97;
+}
+.loading-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 #spin{
   margin-top: 150px;
   size: 80vh;
 }
-#close-button {
-  border: none;
-  margin-left: 10%;
-  outline: none;  
-  background-color: transparent;
-  display: block;
-}
-
 footer {
   color: #443566;
   text-align: center;
   padding: 15px;
   font-size: 15px;
   min-height:50px;
-}
-
-/* Don't know if we are going to use this? */
-#close-button:hover{
-  background-color: transparent;
 }
 .remove-song-select:hover{
   background-color: transparent;
@@ -442,7 +573,6 @@ body.dark-theme {
   color: white;
   
 }
-
 body.dark-theme button {
   background-color: #222222;
   color: white;

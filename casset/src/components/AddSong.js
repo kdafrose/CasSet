@@ -62,11 +62,12 @@ export default function AddSong(props){
         <Container id="add-song-search">
           <InputGroup className="mb-3" size="lg">
             <FormControl
-              placeholder="Search For a Song"
+              placeholder="Search for songs"
               type="input"
               onChange={event => setSearchInput(event.target.value)}
+              id="search-form"
             />
-            <Button onClick={searchSong}>
+            <Button onClick={searchSong} id="search-button">
               Search
             </Button>
           </InputGroup>
@@ -76,15 +77,16 @@ export default function AddSong(props){
             {songs.map( (song, i) => {
               //console.log(song)
               return (
-                <Card key={song.id}>
-                <Card.Img src={song.album.images[0].url}/>
+                <Card id='song-card' className='scrollable' key={song.id}>
+                <Card.Img id='song-card-img' src={song.album.images[0].url}/>
                 <Card.Body>
-                  <Card.Title>{song.name}</Card.Title>
-                  <Card.Subtitle>{song.artists[0].name}</Card.Subtitle>
+                  <Card.Title id='song-card-title'>{song.name}</Card.Title>
+                  <Card.Subtitle id='song-card-subtitle'>{song.artists[0].name}</Card.Subtitle>
                 </Card.Body>
                 <Button 
+                  id='song-card-add-button'
                   onClick={() => onSongUpdate(song)}>
-                  Add to Playlist
+                  add
                 </Button>
               </Card>
               )
