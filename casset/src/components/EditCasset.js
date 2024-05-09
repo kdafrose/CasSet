@@ -109,7 +109,6 @@ function EditCasset({ onClose, playlistID, friends }    ) {
             }
         }
         fetchOwner();
-        console.log(selectedPlaylistOwnerInfo)
     }, [selectedPlaylist])
 
     const [showSharePopup, setShowSharePopup] = useState(false);
@@ -143,9 +142,7 @@ function EditCasset({ onClose, playlistID, friends }    ) {
             postSharedPlaylist(selectedPlaylist._id)
             // add update friends 
             addSharedCasset(profileData['name'], profileData['email'], friend, selectedPlaylist._id)
-            // .then(data => {
-            //     console.log(data)
-            // })
+
 
         }
     };

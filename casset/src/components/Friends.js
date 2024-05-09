@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../css/Friends.css';
 import {fetchUsers} from '../controller/usersController';
 import {removeFriend,addNewFriend} from '../controller/friendsController';
@@ -45,7 +45,6 @@ export default function Friends({ friends, setFriends}) {
         setShowAddFriendForm(false);
     };
     
-    console.log(friendsInfo)
     const handleCancelAddFriend = () => {
         // Reset the form and hide it when cancel is clicked
         setEmail('');
