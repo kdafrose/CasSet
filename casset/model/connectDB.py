@@ -1,1 +1,5 @@
-CONNECTION_STRING = "mongodb+srv://noramellik0:nwFjr39WeSfR2eYR@cluster0.sjmnwkz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+CONNECTION_STRING = os.getenv("MONGO_CONNECTION_STRING")
