@@ -124,23 +124,23 @@ export default function FindPlaylist({onClose}) {
                             <Row className="mx-3 row row-cols-3">
                                 {playlists.map( (playlist, i) => {
                                 return (
-                                    <Card id='card' className="scrollable" key={playlist?.name}>
+                                    <Card id='card' className="scrollable" key={playlist.name}>
                                         <Card.Img src={playlist?.images?.[0]?.url} id='card-img'/>
                                         <Card.Body id='card-body'>
-                                            <Card.Title id='card-title'>{playlist?.name}</Card.Title>
-                                            <Card.Subtitle id='card-subtitle'>{playlist?.description}</Card.Subtitle>
+                                            <Card.Title id='card-title'>{playlist.name}</Card.Title>
+                                            <Card.Subtitle id='card-subtitle'>{playlist.description}</Card.Subtitle>
                                         </Card.Body>
                                         <Button  
                                             id='card-select-button'
                                             onClick={() => {
                                             // Change this to hold the selected playlistID with database connection
                                             localStorage.removeItem("playlistID");
-                                            localStorage.setItem("playlistID", playlist?.id);
+                                            localStorage.setItem("playlistID", playlist.id);
 
                                             const playlistInfo = {
-                                                "_id": playlist?.id,
-                                                "playlist_name": playlist?.name, 
-                                                "sharing_link":playlist?.external_urls.spotify,
+                                                "_id": playlist.id,
+                                                "playlist_name": playlist.name, 
+                                                "sharing_link":playlist.external_urls.spotify,
                                             }
                                         
                                             handlePlaylistChoice(playlistInfo);
