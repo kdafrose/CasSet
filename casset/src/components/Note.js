@@ -36,13 +36,6 @@ function Note({ noteId, songsItems, playlistItem }) {
         
     }, [noteId]);
 
-    // save note content 
-    useEffect(() => {
-        const noteStatus = editSongNote(songsItems[noteId-1].songID, songsItems[noteId -1].playlistID, noteContent);
-        console.log(noteStatus)
-
-    }, [noteContent, noteId]);
-
     const handleEditButtonClick = () => {
         setIsEditing(true);
         setIsExpanded(true); // Expand the note when editing
@@ -52,6 +45,8 @@ function Note({ noteId, songsItems, playlistItem }) {
         setIsEditing(false);
         setIsExpanded(false);
         // Here you can save the note content or perform any other necessary actions
+        const noteStatus = editSongNote(songsItems[noteId-1].songID, songsItems[noteId -1].playlistID, noteContent);
+        console.log(noteStatus)
     };
 
     const handleDeleteButtonClick = () => {

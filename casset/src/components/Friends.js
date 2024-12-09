@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../css/Friends.css';
 import {fetchUsers} from '../controller/usersController';
-import {removeFriend,addNewFriend } from '../controller/friendsController';
+import {removeFriend,addNewFriend} from '../controller/friendsController';
 
-export default function Friends({ friends, setFriends }) {
+export default function Friends({ friends, setFriends}) {
     const [showAddFriendForm, setShowAddFriendForm] = useState(false);
-    const [email, setEmail] = useState('');    
+    const [email, setEmail] = useState('');
+    const [friendsInfo, setFriendsInfo] = useState([])    
     const [selectedFriend, setSelectedFriend] = useState(null);
     const profileData = JSON.parse(localStorage.getItem('profile'))
 
@@ -19,14 +20,15 @@ export default function Friends({ friends, setFriends }) {
                 if(data){
                     // shows on UI
                     if(!friends.includes(data['name'])){
-                        setFriends(alreadyFriends => [...alreadyFriends, data['name']])
+                        setFriends(alreadyFriends => [...alreadyFriends, data['name']]) // What shows on the UI
+                        setFriendsInfo(alreadyFriends => [...alreadyFriends, {"friend_name":data['name'], "friend_email":email}])
                         window.alert('Friend added successfully!');
                     }
                     else{
                         window.alert('Already friends!');
                     }
                     // Adds friend to backend, takes care of both adding if not in db, and not add if already friends
-                    addNewFriend(data['name'], profileData['name'], profileData['email'])
+                    addNewFriend(data['name'], profileData['name'], profileData['email'], email)
                 }
                 else{
                     window.alert("Email not found!")
@@ -36,13 +38,13 @@ export default function Friends({ friends, setFriends }) {
         else{
             window.alert("Can't add yourself silly!");
         }
-
+        
         // Reset the form after adding friend
-
+        
         setEmail('');
         setShowAddFriendForm(false);
     };
-
+    
     const handleCancelAddFriend = () => {
         // Reset the form and hide it when cancel is clicked
         setEmail('');
@@ -54,15 +56,18 @@ export default function Friends({ friends, setFriends }) {
         if (confirmation) {
             // Handle friend removal here
             console.log(`${friend} removed.`);
-            
-            // BUG???
-            // Call playlists with friends to change playlists attribute to false
-            removeFriend(friend, profileData['name'], profileData['email']);
 
+            for(let i =0; i< friendsInfo.length; i++){
+                if(friend === friendsInfo[i].friend_name){
+                    removeFriend(friendsInfo[i].friend_name, profileData['name'], profileData['email'],friendsInfo[i].friend_email);
+                    friendsInfo.splice(i,1);
+                }
+            }
             // Filter out the friend to be removed from the friends list
             const updatedFriends = friends.filter(f => f !== friend);
             setFriends(updatedFriends);
             setSelectedFriend(null);
+            console.log(friendsInfo)
         }
         setSelectedFriend(null); // reset selected friend after removal
     };
